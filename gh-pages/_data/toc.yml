@@ -1,0 +1,35 @@
+- title: Documentation
+  url: docs
+#  links:
+#    - title: "Getting Started"
+#      url: "docs/getting-started"
+#      children:
+#        - title: Features
+#          url: "docs/getting-started#getting-started"
+#        - title: Development
+#          url: "docs/getting-started#development"
+#        - title: Customization
+#          url: "docs/getting-started#customization"
+#    - title: "About"
+#      url: "about"
+#    - title: "News"
+#      url: "news"
+- title: "Tutorials"
+  url: "docs/tutorials"
+  links:
+    - title: Data processing
+      url: "docs/tutorials"
+      children:
+        - title: Data processing without Singularity
+          url: "docs/tutorials/tutorial-no-singularity"
+        - title: Data processing with Singularity
+          url: "docs/tutorials/tutorial-no-singularity"
+    - title: Analytics
+      url: "docs/tutorials"
+      children:
+        - title: Core analytics with visualisation
+          url: "docs/tutorials/tutorial-no-singularity"
+        - title: Classification with Random Forest
+          url: "docs/tutorials/tutorial-no-singularity"
+  #  - title: Tags Page
+  #    url: "tags"
