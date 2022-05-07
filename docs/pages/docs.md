@@ -9,6 +9,14 @@ permalink: /docs/
 Welcome to the {{ site.title }} Documentation pages! Here you can quickly jump to a 
 particular page.
 
+ - [Installation](installation)
+ - [Requirements](requirements)
+ - [Tutorials](tutorials)
+
+<!-- Would you like to see another question type, or another kind of extra? Please [open an issue]({{ site.repo }}/issues/new). -->
+
+
+<!--
 <div class="section-index">
     <hr class="panel-line">
     {% for post in site.docs  %}        
@@ -17,3 +25,4 @@ particular page.
     <p>{{ post.description }}</p>
     </div>{% endfor %}
 </div>
+-->

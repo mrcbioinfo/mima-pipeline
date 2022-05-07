@@ -1,17 +1,17 @@
 - title: Documentation
   url: docs
-#  links:
-#    - title: "Getting Started"
-#      url: "docs/getting-started"
+  links:
+    - title: "Installation"
+      url: "docs/installation"
 #      children:
-#        - title: Features
-#          url: "docs/getting-started#getting-started"
+#        - title: Installation
+#          url: "docs/installation"
 #        - title: Development
 #          url: "docs/getting-started#development"
 #        - title: Customization
 #          url: "docs/getting-started#customization"
-#    - title: "About"
-#      url: "about"
+    - title: "Requirements"
+      url: "requirements"
 #    - title: "News"
 #      url: "news"
 - title: "Tutorials"

@@ -6,13 +6,11 @@ title: Tutorial without Singularity
 
 # Data processing without Singularity
 
-{:toc}
-
-This tutorial takes you through the steps of running the MIMA pipeline. The pipeline requires the following setup:
+This tutorial takes you through the steps of running the MIMA pipeline for data processing of shotgun metagenomics sequenced reads using the assembly-free approach. The pipeline depend on the following setup:
 
 **Compute environment**
 - OpenPBS system on a high-performance cluster (HPC)
-- Your HPC setup needs to allow running of Singularity containers
+- You have already setup the environment with the MIMA Conda package as specified in the [Installation guide]({{ site.baseurl }}/docs/installation)
 
 **Reference databases**
 - Many of the data processing steps require access to reference databases that are too big to be included in the Singularity container
@@ -32,16 +30,14 @@ The pipeline consists of the following components which are shown in the schema 
 ![]({{ site.baseurl}}/assets/img/tutorials/no-singularity/tut_OverallSchema.png)
 
 **Data processing**
-1) Quality control (QC) of the sequenced reads
-2) Taoxonomy profiling after QC (this step can be run in paralle with step 3)
-3) Functional profilinng after QC (this step can be run in parallel with step 2)
+
+1. Quality control (QC) of the sequenced reads
+2. Taoxonomy profiling after QC (this step can be run in parallel with step 3)
+3. Functional profilinng after QC (this step can be run in parallel with step 2)
 
 In steps 1 to 3, the pipeline generates PBS scripts (currently only supports OpenPBS) which then have to be submitted to the PBS manager to actually process the sequenced reads and generate the output.
 
-**Analysis and visualisation**
-
-4) Visualisation and core diversity analysis after all samples have been processed (either step 1 + 2, or step 1 + 3)
-5) Other analyses e.g. classification
+**Analysis and visualisation** comes after the data has been processed and is covered in separate tutorial.
 
 ## How the tutorial works
 
@@ -130,7 +126,8 @@ There is an optional step in the diagram (QC_report) that generates a summary re
 - In the terminal, type the following command
     - Replace `<your.email@address.com>` with your own email address
     - Replace `<PROJECT_PATH>` with where you created the folder, inside which should have the `raw_data` subfolder with the downloaded *.fastq.gz files
-    - Hence forth, we will use `<PROJECT_PATH>` to refer to the root project folder
+        - Hence forth, we will use `<PROJECT_PATH>` to refer to the root project folder
+        - The `output` sub-directory will be automatically created with this step within the `<PROJECT_PATH>`, if you named it something different, just replace every subsequent mention of `<PROJECT_PATH>/output`
     - *Note* full pathnames are required for the input (`-i`) and output (`-o`) parameters
 
 ```
@@ -154,13 +151,12 @@ note:* the command above can all be typed on one line without the backslash `\` 
 *Manifest.csv* file example
 ```
 Sample_ID,FileID_R1,FileID_R2
-AMD-01,ERR1397928.sra_1.fastq.gz,ERR1397928.sra_2.fastq.gz
-AMD-02,ERR1397929.sra_1.fastq.gz,ERR1397929.sra_2.fastq.gz
-AMD-03,ERR1397930.sra_1.fastq.gz,ERR1397930.sra_2.fastq.gz
+SRR17380113,SRR17380113.sra_1.fastq.gz,SRR17380113.sra_2.fastq.gz
+SRR17380114,SRR17380114.sra_1.fastq.gz,SRR17380114.sra_2.fastq.gz
+SRR17380115,SRR17380115.sra_1.fastq.gz,SRR17380115.sra_2.fastq.gz
+SRR17380116,SRR17380116.sra_1.fastq.gz,SRR17380116.sra_2.fastq.gz
+SRR17380117,SRR17380117.sra_1.fastq.gz,SRR17380117.sra_2.fastq.gz
 ...
-C-01,ERR1397940.sra_1.fastq.gz,ERR1397940.sra_2.fastq.gz
-C-02,ERR1397941.sra_1.fastq.gz,ERR1397941.sra_2.fastq.gz
-C-03,ERR1397942.sra_1.fastq.gz,ERR1397942.sra_2.fastq.gz
 ```
 
 **Expected output**
@@ -172,20 +168,22 @@ C-03,ERR1397942.sra_1.fastq.gz,ERR1397942.sra_2.fastq.gz
 
 ```
 <PROJECT_PATH>
-├── output/
-│   └── QC_module
-│       ├── ...
-│       ├── AMD-12.pbs
-│       ├── C-01.pbs
-│       ├── ...
-│       ├── CleanReads
-│       └── QCReport
+output/
+├── QC_module
+│   ├── CleanReads
+│   ├── QCReport
+│   ├── SRR17380113.pbs
+│   ├── SRR17380114.pbs
+│   ├── SRR17380115.pbs
+│   ├── SRR17380116.pbs
+│   ├── ...
+│
 └── raw_data/
 ```
 
 ## c) QC: Submit PBS jobs
 
-- Navigate to the `<PROJECT_PATH>/output/QC_module` (replace `<PROJECT_PATH>` with where you saved the output from step 1-b above)
+- Navigate to the `<PROJECT_PATH>/output/QC_module` (replace `<PROJECT_PATH>` with where you created the folder)
 - List the files in this directory, you should see one `*.pbs` file for each of your samples that was listed in the *manifest.csv* file
 - Submit the job by typing the `qsub` command
 - You can check the job has been submitted with `qstat`
@@ -193,7 +191,7 @@ C-03,ERR1397942.sra_1.fastq.gz,ERR1397942.sra_2.fastq.gz
 ```
 $ cd <PROJECT_PATH>/output/QC_module
 $ ls
-$ qsub AMD-01.pbs
+$ qsub SRR17380113.pbs
 $ qstat -u $USER
 ```
 
@@ -202,28 +200,31 @@ $ qstat -u $USER
 
 ## d) QC: Outputs
 
-- The output directory structure will look like this (we only show the output of two samples `AMD-12` and `C-01` in the diagram below, the `...` means *"and others"*)
+- The output directory structure will look like this (we only show the output of two samples `SRR17380113` and `SRR17380114` in the diagram below, the `...` means *"and others"*)
 
 ```
 <PROJECT_PATH>
-├── output/
-│   └── QC_module
-│       ├── ...
-│       ├── AMD-12.pbs
-│       ├── AMD-12_singletons.fq.gz
-│       ├── C-01.pbs
-│       ├── C-01_qc_module.o2806088
-│       ├── C-01_qc_module.o2806288
-│       ├── ...
-│       ├── CleanReads
-│       │   ├── C-01_clean_1.fastq
-│       │   └── C-01_clean_2.fastq
-│       └── QCReport
-│           ├── AMD-12.json
-│           ├── AMD-12.outreport.html
-│           ├── C-01.json
-│           └── C-01.outreport.html
-└── raw_data/
+└── output/
+    └── QC_module
+        ├── CleanReads
+        │   ├── SRR17380113_clean_1.fastq.gz
+        │   ├── SRR17380113_clean_2.fastq.gz
+        │   ├── SRR17380114_clean_1.fastq.gz
+        │   ├── SRR17380114_clean_2.fastq.gz
+        │   └── ...
+        ├── QCReport
+        │   ├── SRR17380113.json
+        │   ├── SRR17380113.outreport.html
+        │   ├── SRR17380114.json
+        │   ├── SRR17380114.outreport.html
+        │   └── ...
+        ├── SRR17380113.pbs
+        ├── SRR17380113_qc_module.o2806827
+        ├── SRR17380113_singletons.fq.gz
+        ├── SRR17380114.pbs
+        ├── SRR17380114_qc_module.o2806830
+        ├── SRR17380114_singletons.fq.gz
+        └── ...
 ```
 
 **Output files**
@@ -238,13 +239,13 @@ $ qstat -u $USER
 
 **PBS logs**
 
-- When the job is done, you should have two log files
-    1. `*.e{PBS_JOBID}` - error log file when something goes wrong or might just have output messages from the processes
-    2. `*.o{PBS_JOBID}` - console output from the processes
+- When the job is done, you should have one or two log files (you will only have one log file if `#PBS -j oe` was set in the PBS script which concats both logs)
+    1. `*.o{PBS_JOBID}` - console output from the processes
+    2. `*.e{PBS_JOBID}` - error log file when something goes wrong or might just have output messages from the processes
     - where `{PBS_JOBID}` is often a sequence of numbers that was your PBS job ID
     - check the outputs in both log files to ensure the job completed with no errors
 - Check that you have outputs in the `CleanReads` folder before moving onto the next step
-- Replace the `<output/path/>` section with what you input above in the `-o parameter`
+- Replace `<PROJECT_PATH>` with where you created the folder
 
 ```bash
 $ cd <PROJECT_PATH>/output/QC_module/CleanReads
@@ -252,6 +253,8 @@ $ ls -lh
 ```
 
 ## e) (Optional) QC Report
+
+{% include alert.html type="warning" title="Note" content="This step occurs after all the PBS jobs for QC have completed" %}
 
 - You can also generate a summary QC Report after *all samples* have been quality checked
 - This step can be run directly from commandline and does not generate a PBS script
@@ -267,7 +270,7 @@ $ python3 qc_report.py -i /<PROJECT_PATH>/output/QC_module \
 --manifest <PROJECT_PATH>/manifest.csv
 ```
 
-- Output is a comma-seperated table file located in `<output>/QC_module/QC_report.csv` where `<output>` is the path provided in the `-o` parameter
+- Output is a comma-seperated table file located in `<PATH_PROJECT>/output/QC_module/QC_report.csv`
 
 
 ---
@@ -303,7 +306,7 @@ $ python3 taxa_module.py -i <PROJECT_PATH>/output/QC_module/CleanReads \
 -o <PROJECT_PATH>/output \
 -e <your.email@address.com> 
 --reference-path /srv/scratch/mrcbio/db/GTDB/GTDB_Kraken \
---taxon-profiler kraken2 --walltime 2 --mem 300
+--taxon-profiler kraken2 --walltime 6 --mem 300
 ```
 
 **Required parameters**
@@ -336,13 +339,9 @@ $ python3 taxa_module.py -i <PROJECT_PATH>/output/QC_module/CleanReads \
         ├── featureTables/
         │   └── generate_bracken_feature_table.py
         ├── kraken2/
-        ├── taxaProfile_AMD-01.pbs
-        ├── taxaProfile_AMD-02.pbs
-        ├── taxaProfile_AMD-03.pbs
-        ├── ...
-        ├── taxaProfile_C-01.pbs
-        ├── taxaProfile_C-02.pbs
-        ├── taxaProfile_C-03.pbs
+        ├── SRR17380113.pbs
+        ├── SRR17380114.pbs
+        ├── SRR17380115.pbs
         └── ...
 ```
 
@@ -354,43 +353,40 @@ $ python3 taxa_module.py -i <PROJECT_PATH>/output/QC_module/CleanReads \
 
 ```
 $ cd <PROJECT_PATH>/output/Taxonomy_profiling
-$ qsub taxaProfile_AMD-01.pbs
+$ qsub SRR17380113.pbs
 $ qstat -u $USER
 ```
 
 ## d) Taxa: Outputs
 
 - After the PBS jobs have completed, you should get the following files for one sample
-- We only show the outputs for **one** sample, *AMD-01*, in the tree below and `...` means *"and others"*
+- We only show the outputs for **one** sample, *SRR17380113*, in the tree below and `...` means *"and others"*
 
 ```
 <PROJECT_PATH>
 └── output/
     └── Taxonomy_profiling/
-        ├── AMD-01_taxaAnnot.e2806731
-        ├── AMD-01_taxaAnnot.o2806731
-        ├── ...
-        ├── bracken/
-        │   ├── AMD-01_class
-        │   ├── AMD-01_family
-        │   ├── AMD-01_genus
-        │   ├── AMD-01.k2_bracken_classes.report
-        │   ├── AMD-01.k2_bracken_families.report
-        │   ├── AMD-01.k2_bracken_genuses.report
-        │   ├── AMD-01.k2_bracken_orders.report
-        │   ├── AMD-01.k2_bracken_phylums.report
-        │   ├── AMD-01.k2_bracken_species.report
-        │   ├── AMD-01_order
-        │   ├── AMD-01_phylum
-        │   ├── AMD-01_species
+        ├── bracken
+        │   ├── SRR17380113_class
+        │   ├── SRR17380113_family
+        │   ├── SRR17380113_genus
+        │   ├── SRR17380113.k2_bracken_classes.report
+        │   ├── SRR17380113.k2_bracken_families.report
+        │   ├── SRR17380113.k2_bracken_genuses.report
+        │   ├── SRR17380113.k2_bracken_orders.report
+        │   ├── SRR17380113.k2_bracken_phylums.report
+        │   ├── SRR17380113.k2_bracken_species.report
+        │   ├── SRR17380113_order
+        │   ├── SRR17380113_phylum
+        │   ├── SRR17380113_species
         │   └── ...
-        ├── featureTables/
-        │   └── generate_bracken_feature_table.py
-        ├── kraken2/
-        │   ├── AMD-01.kraken2.output
-        │   ├── AMD-01.kraken2.report
+        ├── featureTables
+        ├── kraken2
+        │   ├── SRR17380113.kraken2.output
+        │   ├── SRR17380113.kraken2.report
         │   └── ...
-        ├── taxaProfile_AMD-01.pbs
+        ├── SRR17380113.pbs
+        ├── SRR17380113_taxaAnnot.o2807163
         └── ...
 ```
 
@@ -412,7 +408,9 @@ $ qstat -u $USER
 
 ## e) Taxa: Generate taxonomic feature table(s)
 
-- After *all samples* have been taxonomically annotated, we need to combine the estimated abundances into a single feature table
+{% include alert.html type="warning" title="Note" content="This step occurs after all the PBS jobs for Taxonomy profiling have completed" %}
+
+- After **all samples** have been taxonomically annotated, we need to combine the estimated abundances into a single feature table
 - We will combine the output from Bracken for each taxonomic ranks from Phylum to Species, so we should have 7 output files
 
 - In the terminal, navigate to the `<PROJECT_PATH>/output/Taxonomy_profiling/featureTables` directory and there should be a file called "generate_bracken_feature_table" (line 1)
@@ -523,11 +521,12 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 <PROJECT_PATH>
 └── output/
     ├── Function_profiling/
-    │   ├── AMD-01.pbs
-    │   ├── AMD-02.pbs
+    │   ├──featureTables/
+    │   │   └── generate_func_feature_tables.pbs
+    │   ├── SRR17380113.pbs
+    │   ├── SRR17380114.pbs
+    │   ├── SRR17380115.pbs
     │   ├── ...
-    │   ├── C-11.pbs
-    │   └── featureTables/
     └── ...
 
 ```
@@ -540,14 +539,30 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 
 ```
 $ cd <PROJECT_PATH>/output/Taxonomy_profiling
-$ qsub AMD-01.pbs
+$ qsub SRR17380113.pbs
 $ qstat -u $USER
 ```
 
 ## d) Func: Outputs
 
 - After the PBS jobs have completed, you should get the following files
-- We only show the outputs for **one** sample, *AMD-01* in the tree view below
+- We only show the outputs for **one** sample, *SRR17380208* in the tree view below
+
+```
+<PROJECT_PATH>/
+└── output/
+    ├── Function_profiling
+    │   ├── featureTables/
+    │   │   └── generate_func_feature_tables.pbs    
+    │   ├── SRR17380208_combine_genefamilies.tsv
+    │   ├── SRR17380208_combine_pathabundance.tsv
+    │   ├── SRR17380208_combine_pathcoverage.tsv
+    │   ├── SRR17380208_humann.o2807590
+    │   ├── SRR17380208.pbs
+    │   ├── SRR17380208_combine_humann_temp/
+    │   └── ...
+    └── ...
+```
 
 **Profiler output**
 
@@ -555,10 +570,48 @@ $ qstat -u $USER
 
 ## e) Func: Generate function feature table(s)
 
-- After *all samples* have been functionally annotated, we need to combine the tables together
+{% include alert.html type="warning" title="Note" content="This step occurs after all the PBS jobs for Function profiling have completed" %}
+
+- After **all samples** have been functionally annotated, we need to combine the tables together
 - There will be a table for
     - genefamilies
     - pathabundances
     - pathcoverages
 
 - In the terminal, navigate to the `<PROJECT_PATH>/output/Fuctional_profiling/featureTables`
+- Submit the PBS script
+
+```
+$ cd <PROJECT_PATH>/output/Functional_profiling/featureTables
+$ qsub generate_humann_feature_tables.pbs
+```
+
+**Output**
+
+ - Once the job completes you will have 7 output files, those starting with `merge_humann3table_` prefixes
+
+```
+<PROJECT_PATH>/
+└── output/
+    ├── Function_profiling
+    │   ├── featureTables
+    │   ├── func_table.o2807928
+    │   ├── generate_func_feature_tables.pbs
+    │   ├── merge_humann3table_genefamilies.cmp_uniref90_KO.txt
+    │   ├── merge_humann3table_genefamilies.cpm.txt
+    │   ├── merge_humann3table_genefamilies.txt
+    │   ├── merge_humann3table_pathabundance.cmp.txt
+    │   ├── merge_humann3table_pathabundance.txt
+    │   ├── merge_humann3table_pathcoverage.cmp.txt
+    │   └── merge_humann3table_pathcoverage.txt
+    ├── ...
+
+```
+
+---
+
+# Congratulations !
+
+You have completed processing your metagenomics data and are now ready for further analyses
+
+Analyses usually take in the feature-tables that were created in Step 2e) Taxonomy feature tables and Step 3e) Function feature tables
