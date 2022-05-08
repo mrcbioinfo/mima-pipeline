@@ -1,0 +1,13 @@
+install.packages(c('argparse',
+                   'futile.logger',
+                   'tidyverse',
+                   'funrar',
+                   'data.table',
+                   'reshape2',
+                   'vegan',
+                   'ape',
+                   'ggfortify',
+                   'ggpubr',
+                   'otuSummary',
+                   'devtools'))
+devtools::install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis")
