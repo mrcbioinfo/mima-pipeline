@@ -51,39 +51,35 @@ The tutorial is step up as such:
 
 ---
 
-## Set up for tutorial
+## Tutorial data
 
-{% include alert.html type="info" title="Download data" content="In this tutorial we will use data from this study:" %}
+In this tutorial we will use data from the study by *Tourlousse, et al. (2022)*, **Characteriziation and Demonstration of Mock Communities as Control Reagents for Accurate Human Microbiome Community Measures**, Microbiology Spectrum [link](https://journals.asm.org/doi/10.1128/spectrum.01915-21). They assessed a mock community sequenced by different platforms ...
 
-- **INSERT STUDY**: they assessed a mock community sequenced by different platforms ...
-
-- The raw reads are available from NCBI SRA [link]
-- There are 56 paired-end samples, 112 fastq files **might provide a subset of data instead**
+- The raw reads are available from NCBI SRA [Project PRJNA747117](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA747117)
+- There are 56 paired-end metagenomics samples (112 fastq files)
     - As the data is very big we will work with a smaller subset to speed up processing
     - You can download the fastq files using this script which requires the `sratoolkit`
 
 **Data files**
 
-{% include alert.html type="danger" title="to-do" content="Add files" %}
+{% include alert.html type="danger" title="to-do" content="Add script to download fastq files" %}
 
-- [manifest.csv] file
-- [metadata.csv] file
-- Choose one:
-    - [link to full SRA download (N=56 samples)]
-    - [link to mini SRA download (N=X samples)]
+- [mini-SRA-accession-list]({{ site.baseurl }}/assets/mini-SRA-accession-list) (N=9 samples to download fastq)
+- [mini-manifest.csv]({{ site.baseurl }}/assets/mini-manifest.csv) (N=9 samples 18 fastq files)
+- [mini-metadata.tsv]({{ site.baseurl }}/assets/mini-metadata.tsv) (N=9 samples with metadata)
  
 **Folder structure**
 
-This tutorial will assume the following folder structure
+This tutorial will assume the following folder structure where `Sample_A_1.fastq.gz` is the forward read file for *sample_A* and `Sample_B_1.fastq.gz` is the reverse read file for *sample_A*. The naming may not be exactly the same depending on the sequencing platform but generally follows some format.
 
 ```
 <PROJECT_PATH>
 ├── manifest.csv
 └── raw_data/
-    ├── Sample_1_R1.fastq.gz
-    ├── Sample_1_R2.fastq.gz
-    ├── Sample_2_R1.fastq.gz
-    ├── Sample_2_R2.fastq.gz
+    ├── Sample_A_1.fastq.gz
+    ├── Sample_A_2.fastq.gz
+    ├── Sample_B_1.fastq.gz
+    ├── Sample_B_2.fastq.gz
     └── ...
 ```
 
@@ -151,11 +147,11 @@ note:* the command above can all be typed on one line without the backslash `\` 
 *Manifest.csv* file example
 ```
 Sample_ID,FileID_R1,FileID_R2
-SRR17380113,SRR17380113.sra_1.fastq.gz,SRR17380113.sra_2.fastq.gz
-SRR17380114,SRR17380114.sra_1.fastq.gz,SRR17380114.sra_2.fastq.gz
-SRR17380115,SRR17380115.sra_1.fastq.gz,SRR17380115.sra_2.fastq.gz
-SRR17380116,SRR17380116.sra_1.fastq.gz,SRR17380116.sra_2.fastq.gz
-SRR17380117,SRR17380117.sra_1.fastq.gz,SRR17380117.sra_2.fastq.gz
+SRR17380209,SRR17380209.sra_1.fastq.gz,SRR17380209.sra_2.fastq.gz
+SRR17380232,SRR17380232.sra_1.fastq.gz,SRR17380232.sra_2.fastq.gz
+SRR17380236,SRR17380236.sra_1.fastq.gz,SRR17380236.sra_2.fastq.gz
+SRR17380231,SRR17380231.sra_1.fastq.gz,SRR17380231.sra_2.fastq.gz
+SRR17380218,SRR17380218.sra_1.fastq.gz,SRR17380218.sra_2.fastq.gz
 ...
 ```
 
@@ -172,10 +168,10 @@ output/
 ├── QC_module
 │   ├── CleanReads
 │   ├── QCReport
-│   ├── SRR17380113.pbs
-│   ├── SRR17380114.pbs
-│   ├── SRR17380115.pbs
-│   ├── SRR17380116.pbs
+│   ├── SRR17380209.pbs
+│   ├── SRR17380231.pbs
+│   ├── SRR17380232.pbs
+│   ├── SRR17380236.pbs
 │   ├── ...
 │
 └── raw_data/
@@ -191,7 +187,7 @@ output/
 ```
 $ cd <PROJECT_PATH>/output/QC_module
 $ ls
-$ qsub SRR17380113.pbs
+$ qsub SRR17380209.pbs
 $ qstat -u $USER
 ```
 
@@ -200,30 +196,30 @@ $ qstat -u $USER
 
 ## d) QC: Outputs
 
-- The output directory structure will look like this (we only show the output of two samples `SRR17380113` and `SRR17380114` in the diagram below, the `...` means *"and others"*)
+- The output directory structure will look like this (we only show the output of two samples `SRR17380209` and `SRR17380231` in the diagram below, the `...` means *"and others"*)
 
 ```
 <PROJECT_PATH>
 └── output/
     └── QC_module
         ├── CleanReads
-        │   ├── SRR17380113_clean_1.fastq.gz
-        │   ├── SRR17380113_clean_2.fastq.gz
-        │   ├── SRR17380114_clean_1.fastq.gz
-        │   ├── SRR17380114_clean_2.fastq.gz
+        │   ├── SRR17380209_clean_1.fastq.gz
+        │   ├── SRR17380209_clean_2.fastq.gz
+        │   ├── SRR17380231_clean_1.fastq.gz
+        │   ├── SRR17380231_clean_2.fastq.gz
         │   └── ...
         ├── QCReport
-        │   ├── SRR17380113.json
-        │   ├── SRR17380113.outreport.html
-        │   ├── SRR17380114.json
-        │   ├── SRR17380114.outreport.html
+        │   ├── SRR17380209.json
+        │   ├── SRR17380209.outreport.html
+        │   ├── SRR17380231.json
+        │   ├── SRR17380231.outreport.html
         │   └── ...
-        ├── SRR17380113.pbs
-        ├── SRR17380113_qc_module.o2806827
-        ├── SRR17380113_singletons.fq.gz
-        ├── SRR17380114.pbs
-        ├── SRR17380114_qc_module.o2806830
-        ├── SRR17380114_singletons.fq.gz
+        ├── SRR17380209.pbs
+        ├── SRR17380209_qc_module.o2806827
+        ├── SRR17380209_singletons.fq.gz
+        ├── SRR17380231.pbs
+        ├── SRR17380231_qc_module.o2806830
+        ├── SRR17380231_singletons.fq.gz
         └── ...
 ```
 
@@ -339,9 +335,8 @@ $ python3 taxa_module.py -i <PROJECT_PATH>/output/QC_module/CleanReads \
         ├── featureTables/
         │   └── generate_bracken_feature_table.py
         ├── kraken2/
-        ├── SRR17380113.pbs
-        ├── SRR17380114.pbs
-        ├── SRR17380115.pbs
+        ├── SRR17380209.pbs
+        ├── SRR17380231.pbs
         └── ...
 ```
 
@@ -353,40 +348,40 @@ $ python3 taxa_module.py -i <PROJECT_PATH>/output/QC_module/CleanReads \
 
 ```
 $ cd <PROJECT_PATH>/output/Taxonomy_profiling
-$ qsub SRR17380113.pbs
+$ qsub SRR17380209.pbs
 $ qstat -u $USER
 ```
 
 ## d) Taxa: Outputs
 
 - After the PBS jobs have completed, you should get the following files for one sample
-- We only show the outputs for **one** sample, *SRR17380113*, in the tree below and `...` means *"and others"*
+- We only show the outputs for **one** sample, *SRR17380209*, in the tree below and `...` means *"and others"*
 
 ```
 <PROJECT_PATH>
 └── output/
     └── Taxonomy_profiling/
         ├── bracken
-        │   ├── SRR17380113_class
-        │   ├── SRR17380113_family
-        │   ├── SRR17380113_genus
-        │   ├── SRR17380113.k2_bracken_classes.report
-        │   ├── SRR17380113.k2_bracken_families.report
-        │   ├── SRR17380113.k2_bracken_genuses.report
-        │   ├── SRR17380113.k2_bracken_orders.report
-        │   ├── SRR17380113.k2_bracken_phylums.report
-        │   ├── SRR17380113.k2_bracken_species.report
-        │   ├── SRR17380113_order
-        │   ├── SRR17380113_phylum
-        │   ├── SRR17380113_species
+        │   ├── SRR17380209_class
+        │   ├── SRR17380209_family
+        │   ├── SRR17380209_genus
+        │   ├── SRR17380209.k2_bracken_classes.report
+        │   ├── SRR17380209.k2_bracken_families.report
+        │   ├── SRR17380209.k2_bracken_genuses.report
+        │   ├── SRR17380209.k2_bracken_orders.report
+        │   ├── SRR17380209.k2_bracken_phylums.report
+        │   ├── SRR17380209.k2_bracken_species.report
+        │   ├── SRR17380209_order
+        │   ├── SRR17380209_phylum
+        │   ├── SRR17380209_species
         │   └── ...
         ├── featureTables
         ├── kraken2
-        │   ├── SRR17380113.kraken2.output
-        │   ├── SRR17380113.kraken2.report
+        │   ├── SRR17380209.kraken2.output
+        │   ├── SRR17380209.kraken2.report
         │   └── ...
-        ├── SRR17380113.pbs
-        ├── SRR17380113_taxaAnnot.o2807163
+        ├── SRR17380209.pbs
+        ├── SRR17380209_taxaAnnot.o2807163
         └── ...
 ```
 
@@ -487,12 +482,15 @@ The PBS scripts generated in this step performs the following mini-pipline:
     - Replace all the `<PROJECT_PATH>` with where you created the folder during setup
     - *Note* full pathnames are required for the input (`-i`), output (`-o`), and reference paths parameters
 
+{% include alert.html type="danger" title="ALERT" content="must provide the `--nucleotide-database` and `--protein-database` paths, while there is a default value set, this is unlikely to be the right location" %}
+
 ```
 $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 -o /<PROJECT_PATH>/output \
 -e <your.email@address.com> \
---reference-path \
 --function-profiler humann3 \
+--nucleotide-database <PATH/to/humann/chocophlan> \
+--protein-database <PATH/to/humann/uniref> \
 --walltime 12 --mem 32 --threads 28
 ```
 
@@ -503,8 +501,9 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 | `-i <input>`| full path to the `<PROJECT_PATH>/output/QC_module/CleanReads` directory that was generated from Step 1) QC, above. This directory should hold all the `*_clean.fastq` files |
 | `-o <output>` | full path to the `<PROJECT_PATH>/output` output directory where you would like the output files to be saved, can be the same as Step 1) QC |
 | `-e <email>`| address for the PBS script so that you are notified when your PBS jobs complete (note that the current configuration generates one PBS script per sample file, so you will get an alert per job. So, if you have 100 samples in your  study, you will have 100 emails) |
-| `--reference-path <path/to/reference>` | is the path to the reference database that is required by the profile, in this example by Kraken2 |
 | `--function-profiler <profiler>` | is an optional setting (default=humann3), as there are other profiler options available |
+| `--nucleotide-database <path>` | directory containing the nucleotide database, DEFAULT: /refdb/humann/chocophlan |
+| `--protein-database <path>` | directory containing the protein database, DEFAULT: /refdb/humann/uniref |
 
 **PBS parameters**
 
@@ -523,9 +522,8 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
     ├── Function_profiling/
     │   ├──featureTables/
     │   │   └── generate_func_feature_tables.pbs
-    │   ├── SRR17380113.pbs
-    │   ├── SRR17380114.pbs
-    │   ├── SRR17380115.pbs
+    │   ├── SRR17380209.pbs
+    │   ├── SRR17380231.pbs
     │   ├── ...
     └── ...
 
@@ -539,14 +537,14 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 
 ```
 $ cd <PROJECT_PATH>/output/Taxonomy_profiling
-$ qsub SRR17380113.pbs
+$ qsub SRR17380209.pbs
 $ qstat -u $USER
 ```
 
 ## d) Func: Outputs
 
 - After the PBS jobs have completed, you should get the following files
-- We only show the outputs for **one** sample, *SRR17380208* in the tree view below
+- We only show the outputs for **one** sample, *SRR17380209* in the tree view below
 
 ```
 <PROJECT_PATH>/
@@ -554,12 +552,12 @@ $ qstat -u $USER
     ├── Function_profiling
     │   ├── featureTables/
     │   │   └── generate_func_feature_tables.pbs    
-    │   ├── SRR17380208_combine_genefamilies.tsv
-    │   ├── SRR17380208_combine_pathabundance.tsv
-    │   ├── SRR17380208_combine_pathcoverage.tsv
-    │   ├── SRR17380208_humann.o2807590
-    │   ├── SRR17380208.pbs
-    │   ├── SRR17380208_combine_humann_temp/
+    │   ├── SRR17380209_combine_genefamilies.tsv
+    │   ├── SRR17380209_combine_pathabundance.tsv
+    │   ├── SRR17380209_combine_pathcoverage.tsv
+    │   ├── SRR17380209_humann.o2807590
+    │   ├── SRR17380209.pbs
+    │   ├── SRR17380209_combine_humann_temp/
     │   └── ...
     └── ...
 ```
