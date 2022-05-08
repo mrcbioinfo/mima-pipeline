@@ -1,4 +1,5 @@
 install.packages(c('argparse',
+                   'devtools',                   
                    'futile.logger',
                    'tidyverse',
                    'funrar',
@@ -10,7 +11,6 @@ install.packages(c('argparse',
                    'ggfortify',
                    'ggpubr',
                    'otuSummary',
-                   'devtools',
                    'BiocManager'))
 BiocManager::install('EnhancedVolcano', ask=F)
 devtools::install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis")
