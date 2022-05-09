@@ -33,7 +33,7 @@ url: "https://xychua.github.io" # the base hostname & protocol for your site
 repo: "https://github.com/xychua/test-gitpages"
 github_user: "xychua"
 github_repo: "test-gitpages"
-github_branch: "gh-pages"
+github_branch: "master"
 
 # Optional
 #twitter: vsoch
