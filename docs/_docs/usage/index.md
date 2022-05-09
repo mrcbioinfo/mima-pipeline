@@ -7,12 +7,12 @@ This section contains the usage documentation and explanation for each module in
 
 Currently there are:
 
-[QC module](qc_module)
+[QC module](usage/qc_module)
 
-[QC report](qc_report)
+[QC report](usage/qc_report)
 
-[Taxonomic Profiling](taxonomy_profiling)
+[Taxonomic Profiling](usage/taxonomy_profiling)
 
-[Functional Profiling](function_profiling)
+[Functional Profiling](usage/function_profiling)
 
 [Data visualisation]
