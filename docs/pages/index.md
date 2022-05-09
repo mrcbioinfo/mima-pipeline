@@ -1,41 +1,43 @@
 ---
 layout: page
-title: metagenomics pipeline
+title: Documentation
 permalink: /
 ---
 
-# Welcome to Docsy Jekyll
+# Documentation
 
-This is a starter template for a docsy jekyll theme.
+Welcome to the {{ site.title }} Documentation pages! 
 
-![assets/img/docsy-jekyll.png](assets/img/docsy-jekyll.png)
+The MRC Metagenomics pipeline consists of four modules:
 
-## Purpose
+1. Quality checking module (entry point)
+2. Taxonomy profiling module - can run in parallel with [3]
+3. Functional profiling module - can run in parallel with [2]
+4. Data visualisation and analysis (core) module - run after steps [2] or [3]
 
-GitHub pages uses Jekyll natively, so when I make documentation, I typically
-look for Jekyll templates. Why? Using Jekyll means that I can use markdown,
-and allow for users to easily contribute, and build automatically just by
-way of pushing to a master branch (or general GitHub pages).
-I found Docsy, a beautiful Hugo template, but it requires hugo with GoLang
-which doesn't render natively on GitHub pages. For this reason, I've spent
-some time creating a custom Jekyll template that is (almost) as beautiful,
-and includes all the features that I might want.
+This repository contains helper scripts for generating PBS job scripts to process multiple samples.
+Each module will generate outputs in a predefined directory structure and some filenames will be hard-coded. These are used for later modules. 
 
-## Features
+!!**CAUTION**: Please beware that changing the output file names or paths might not make subsequent scripts in the pipeline work. We are in the process of making this more robust and configurable.
 
-What are these features? You should see the {% include doc.html name="Getting Started" path="getting-started" %}
-guide for a complete summary. Briefly:
+Here you can quickly jump to a particular page.
 
- - *User interaction* including consistent permalinks, links to ask questions via GitHub issues, and edit the file on GitHub directly.
- - *Search* across posts, documentation, and other site pages, with an ability to exclude from search.
- - *External Search* meaning an ability to link any page tag to trigger an external search.
- - *Documentation* A documentation collection that was easy to organize on the filesystem, render with nested headings for the user, and refer to in markdown.
- - *Pages* A separate folder for more traditional pages (e.g, about).
- - *Navigation*: Control over the main navigation on the left of the page, and automatic generation of table of contents for each page on the right.
- - *News* A posts feed for news and updates, along with an archive (organized by year).
- - *Templates* or specifically, "includes" that make it easy to create an alert, documentation link, or other content.
- - *Continuous Integration* recipes to preview the site
+ - [Installation](docs/installation)
+ - [Requirements](docs/requirements)
+ - [Tutorials](docs/tutorials)
+ - [User documentation](docs/usage)
 
 
-For features, getting started with development, see the {% include doc.html name="Getting Started" path="getting-started" %} page. Would you like to request a feature or contribute?
-[Open an issue]({{ site.repo }}/issues)
+<!-- Would you like to see another question type, or another kind of extra? Please [open an issue]({{ site.repo }}/issues/new). -->
+
+
+<!--
+<div class="section-index">
+    <hr class="panel-line">
+    {% for post in site.docs  %}        
+    <div class="entry">
+    <h5><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h5>
+    <p>{{ post.description }}</p>
+    </div>{% endfor %}
+</div>
+-->

@@ -2,8 +2,6 @@
 title: Tutorial without Singularity
 ---
 
-[HOME](./index.html)
-
 # Data processing without Singularity
 
 This tutorial takes you through the steps of running the MIMA pipeline for data processing of shotgun metagenomics sequenced reads using the assembly-free approach. The pipeline depend on the following setup:

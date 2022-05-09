@@ -1,19 +1,21 @@
 - title: Documentation
-  url: docs
+  url: ""
   links:
     - title: "Installation"
       url: "docs/installation"
-#      children:
-#        - title: Installation
-#          url: "docs/installation"
-#        - title: Development
-#          url: "docs/getting-started#development"
-#        - title: Customization
-#          url: "docs/getting-started#customization"
     - title: "Requirements"
-      url: "requirements"
-#    - title: "News"
-#      url: "news"
+      url: "docs/requirements"
+    - title: "Usage"
+      url: "docs/usage"
+      children:
+        - title: qc_module.py
+          url: "docs/usage/qc_module"
+        - title: qc_report.py
+          url: "docs/usage/qc_report"
+        - title: taxa_module.py
+          url: "docs/usage/taxonomy_profiling"
+        - title: func_profiling.py
+          url: "docs/usage/function_profiling"
 - title: "Tutorials"
   url: "docs/tutorials"
   links:
@@ -23,13 +25,13 @@
         - title: Data processing without Singularity
           url: "docs/tutorials/tutorial-no-singularity"
         - title: Data processing with Singularity
-          url: "docs/tutorials/tutorial-no-singularity"
+          url: "docs/tutorials/tutorial-with-singularity"
     - title: Analytics
       url: "docs/tutorials"
       children:
-        - title: Core analytics with visualisation
-          url: "docs/tutorials/tutorial-no-singularity"
+        - title: Core diversity analysis and visualisation
+          url: "docs/tutorials/core-diversity-analysis-visualisation"
         - title: Classification with Random Forest
-          url: "docs/tutorials/tutorial-no-singularity"
+          url: "docs/tutorials/classification-random-forest"
   #  - title: Tags Page
   #    url: "tags"

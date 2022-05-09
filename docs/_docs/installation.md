@@ -2,46 +2,67 @@
 title: Installation
 ---
 
-# Setting up the MIMA environent
+# Installation
+
+There are two options for using this pipeline
+
+1. Singularity container
+2. Independently without Singularity
+
+Both options require access to external reference databases (see [Requirements]( {{ site.baseurl}}/docs/requirements ))
+
+---
+
+## Option 1) Singularity container
+
+* All tools required by the pipeline are encapsulated into a Singularity container, the image named (IMAGE_NAME)
+* You will also need to download the reference databases that are required by the third party tools (see [Requirements]({{ site.baseurl }}/docs/requirements))
+
+---
+
+## Option 2) Setting up the MIMA environent
 
 In order to use the MIMA pipeline **without Singularity**, you will need to install the following
 
 1. Install Miniconda [guide](https://docs.conda.io/en/latest/miniconda.html#installing)
-2. Download the `mima-conda-env.yml` configuration file [download]()
-3. Create the MIMA environment, in the terminal where you downloaded the `mima-conda-env.yml` file, type
+2. Download [`mima.tar.gz`]() from Release
+3. Untar the file:  `tar -xf mima.tar.gz`
+4. There are two directories in the file: `requirements/` and `scripts/`
 
-```
-$ conda env create -f mima-conda-env.yml
-```
+    ```
+    mima.tar.gz
+    ├── requirements/
+    │   ├── mima-conda-env.yml
+    │   ├── Rpackages.R
+    │   └── test_Rpackages.R
+    └── scripts/
+        ├── func_profiling.py
+        ├── qc_module.py
+        ├── qc_report.py
+        ├── taxa_module.py
+        ├── utils/
+        └── visualisation
+            ├── ...
+            ├── taxa_plot_v2.pl
+            └── visualisation.py
 
-Test the installation:
+    ```
 
-```
-$ conda activate mima
-```
+5. Create the MIMA environment, in the terminal where you downloaded the `mima-conda-env.yml` file, type
 
+    ```
+    $ conda env create -f requirements/mima-conda-env.yml
+    ```
 
-{% include alert.html type="danger" title="Install MIMA" content="Need instructions to install the mima scripts within the mima conda environment" %}
+6. Test the installation:
 
+    ```
+    $ conda activate mima
+    ```
 
+7. You can now start using the MIMA scripts from within the `scripts/` folder
 
-
-
-```
-conda activate mpa3.7
-conda install -c bioconda bbmap
-conda install -c bioconda fastp
-conda install -c bioconda minimap2
-conda install -c bioconda kraken2
-conda install -c bioconda bracken
-conda install -c biobakery humann
-conda install -c anaconda pandas
-```
-
-tested versions from bioconda, biobakery and anaconda
-- bbmap v38.96
-- minimap2 v2.24
-- fastp v0.23.2
-- kraken2 v2.1.2
-- bracken v2.6.2
-- humann v3.0.1
+    ```
+    $ cd scripts
+    $ python3 qc_module.py --help
+    ```
