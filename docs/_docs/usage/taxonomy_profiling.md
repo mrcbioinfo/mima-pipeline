@@ -17,10 +17,7 @@ Currently supported taxonomy annotation approaches (select one or more):
 # Basic usage
 
 ```
-$ python3 taxa_module.py -i </full_path/project_output>/QC_module/CleanReads \
--o </full_path/project_output> \
--e email \
---reference-path </full_path/to/reference_database>
+$ python3 taxa_module.py -i </full_path/project_output>/QC_module/CleanReads -o </full_path/project_output> -e email --reference-path </full_path/to/reference_database>
 ```
 
 ## Required inputs

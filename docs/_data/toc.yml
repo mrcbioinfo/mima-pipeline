@@ -16,6 +16,12 @@
           url: "docs/usage/taxonomy_profiling"
         - title: func_profiling.py
           url: "docs/usage/function_profiling"
+        - title: visualisation.py
+          url: "docs/usage/visualisation"
+        - title: taxa_plot.py
+          url: "docs/usage/taxa_plot"
+        - title: classification_randomForest.R
+          url: "docs/usage/classfication_random_forest"
 - title: "Tutorials"
   url: "docs/tutorials"
   links:
