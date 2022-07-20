@@ -99,6 +99,9 @@ Function profiling module part of the MRC Metagenomics pipeline
   --protein-database PROTEIN_DATABASE
                         HUMAnN3 directory containing the protein database
                         [default=/refdb/humann/data/uniref]
+  --metaphlan-database METAPHLAN_DATABASE
+                        Metaphlan3 reference database (CHOCOPhlAn) 
+                        [default=/refdb/humann/metaphlan_databases]
 
 [3] PBS settings:
   --mode MODE           Mode to generate PBS scripts, currently supports

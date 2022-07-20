@@ -489,6 +489,7 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 --function-profiler humann3 \
 --nucleotide-database <PATH/to/humann/chocophlan> \
 --protein-database <PATH/to/humann/uniref> \
+--metaphlan-database <PATH/to/metaphlan_databases> \
 --walltime 12 --mem 32 --threads 28
 ```
 
@@ -502,6 +503,7 @@ $ python3 func_profiling.py -i /<PROJECT_PATH>/output/QC_module/CleanReads \
 | `--function-profiler <profiler>` | is an optional setting (default=humann3), as there are other profiler options available |
 | `--nucleotide-database <path>` | directory containing the nucleotide database, DEFAULT: /refdb/humann/chocophlan |
 | `--protein-database <path>` | directory containing the protein database, DEFAULT: /refdb/humann/uniref |
+| `--metaphlan-database <path>` | directory containing the metaphlan database, DEFAULT: /refdb/humann/metaphlan_databases |
 
 **PBS parameters**
 

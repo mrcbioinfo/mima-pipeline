@@ -8,11 +8,7 @@ This module currently creates one PBS script for each sample (with the *_clean1.
 
 Currently supported taxonomy annotation approaches (select one or more): 
 
-1. Metaphlan2 (https://bitbucket.org/biobakery/metaphlan2/src/default/)
-1. Metaphlan3 ()
-1. KrakenUniq (https://github.com/fbreitwieser/krakenuniq)
-1. IGGsearch (https://github.com/snayfach/IGGsearch)
-1. Samtools/1.9
+1. Kraken2 (https://ccb.jhu.edu/software/kraken2/) - abundance estimation with Bracken
 
 
 ***
@@ -62,9 +58,10 @@ output_dir
 usage: taxa_module.py -i INPUT_DIR -o OUTPUT_DIR -e EMAIL
                       [--taxon-profiler {kraken2,metaphlan3,metaphlan2,krakenUniq,IGG}]
                       [--fwd-suffix FWD_SUFFIX] [--rev-suffix REV_SUFFIX]
-                      --reference-path REFERENCE_PATH [--mode MODE]
-                      [-w WALLTIME] [-M MEM] [-t THREADS] [-h] [-f FILE_TYPE]
-                      [--verbose] [--debug]
+                      --reference-path REFERENCE_PATH [--read-length READ_LENGTH]
+                      [--threshold THRESHOLD] [--mode MODE]
+                      [-w WALLTIME] [-M MEM] [-t THREADS] [-h]
+                      [-f FILE_TYPE] [--verbose] [--debug]
 
 Taxonomy profiling module part of the MRC Metagenomics pipeline
 
@@ -79,9 +76,14 @@ Taxonomy profiling module part of the MRC Metagenomics pipeline
   --reference-path REFERENCE_PATH
                         specify the path to the reference required for the
                         selected taxonomic profiler
+  --read-length READ_LENGTH
+                        read length for Bracken estimation of abundances
+  --threshold THRESHOLD
+                        threshold [default=1000] for Bracken estimation of 
+                        abundances, species with reads below threshold are removed
 
 [2] Taxonomy profile settings:
-  --taxon-profiler {kraken2,metaphlan3,metaphlan2,krakenUniq,IGG}
+  --taxon-profiler {kraken2}
                         select which taxonomy profiler to use, default
                         [default=kraken2]
   --fwd-suffix FWD_SUFFIX
