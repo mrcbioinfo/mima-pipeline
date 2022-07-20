@@ -21,7 +21,7 @@
         - title: taxa_plot.py
           url: "docs/usage/taxa_plot"
         - title: classification_randomForest.R
-          url: "docs/usage/classfication_random_forest"
+          url: "docs/usage/classification_random_forest"
 - title: "Tutorials"
   url: "docs/tutorials"
   links:
