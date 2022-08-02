@@ -20,16 +20,18 @@ python qc_report.py -i path/to/input_dir -o path/to/output_dir -m path/to/METADA
 
 ## Required inputs
 
-**Input_dir** - Path to directory where your PBS log files are located from the [[qc_module.py|QC module]]
+| Parameter | Description |
+|:----------|:------------|
+| `-i <input_dir>` | Path to directory where your PBS log files are located from the [QC module](../qc_module) |
+| `-o <output_dir>` | Path to output directory where QC_report.csv is saved |
+| `-m <manifest.csv>` | The manifest file is a CSV text file that contains metadata about the raw FastQ files. The current version expected paired-end reads with separate files for the forward and reverse reads. The CSV format contains three columns with the headings: **Sample_ID,FileID_R1,FileID_R2**. The headings are case sensitive with no spaces between commas (see example below) |
 
-**output_dir** - Path to output directory where QC_report.csv is saved
+```
+      Sample_ID,FileID_R1,FileID_R2
+      SRR123456,SRR123456_R1_001.fastq.gz,SRR123456_R2_001.fastq.gz
+      SRR999999,SRR999999_R1_001.fastq.gz,SRR999999_R2_001.fastq.gz
+```
 
-**manifest (CSV)** - the manifest file is a CSV text file that contains metadata about the raw FastQ files. The current version expected paired-end reads with separate files for the forward and reverse reads. The CSV format contains three columns with the following headings (case sensitive and no spaces between commas):
-
-|Sample_ID|FileID_R1|FileID_R2|
-|:-------|:-------|:------|
-|test1|test1_R1_001.fastq.gz|test1_R2_001.fastq.gz|
-|test2|test2_R1_001.fastq.gz|test2_R2_001.fastq.gz|
 
 
 ## Outputs

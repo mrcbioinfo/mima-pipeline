@@ -2,47 +2,42 @@
 title: func_profiling.py
 ---
 
-The Functional Profiling module takes the CleanReads after quality check ([[QC module]]) and annotates each sequence read to a taxon depending on the selected approach.
+The Functional Profiling module takes the CleanReads after [quality check](../qc_module) and matches each read against a reference database of gene sequences. One PBS script per sample is then generated for submission to the job handler.
 
-This module currently creates one PBS script for each sample (with the *_clean1.fq.gz suffix, output from the [[QC module]])
-
-Currently supported functional annotation approaches (select one or more): 
-
-1. Humann2 ()
-1. Humann3 ()
-
-
-1. Create output directory **FunctProfiling**  <br/>
-2. Set input directory as **CleanReads**  <br/>
-3. Use julia to call the function below, ensuring --pipeline_dir is set to filepath for pipeline scripts  <br/>
-
+Currently, the pipeline supports Humann3.
 
 ***
 
 # Basic usage
 
+**note** the command below is all on one line, parameters are put on separate lines for readability (the ending backslash `\` informs the terminal that the command continues onto the next line)
 ```
 $ python3 functional_profiling.py -i </full_path/project_output>/QC_module/CleanReads \
 -o </full_path/project_output> \
--e <your.email@address.com> \
---function-profiler humann3 \
+--fwd-suffix <_clean_1.fq.gz> \
+--rev-suffix <_clean_1.fq.gz> \
 --nucleotide-database </path_to/chocophlan> \
---protein-database </path_to/uniref>
+--protein-database </path_to/uniref> \
+--metaphlan-database </path_to/metaphlan_databases> \
+-e <your.email@address.com>
 ```
 
 ## Required inputs
 
-* **Input_dir** - Path to directory with all the *_clean1.fq.gz output from [[QC module]]
+| Parameter | Description |
+|:----------|:------------|
+| `-i <input_dir>` | Path to directory with all the cleaned reads output from [QC module](../qc_module) |
+| `-o <output_dir>` | Path to directory where the PBS scripts and sub-directories will be generated |
+| `--fwd-suffix`/`--rev-suffix` | file suffix for cleaned reads from [QC module](../qc_module) |
+| `--nucleotide-database` | Path to the Humann3 Chocophlan reference database for nucleotide search |
+| `--protein-database` | Path to the Humann3 Uniref reference database for protein search |
+| `--metaphlan-database` | Path to the Metaphlan3 reference database for species matching |
+| `-e <email>` | Email address to include in the PBS wrapper script, notification of job ending or aborting will be sent to this address |
 
-* **Output_dir**  - Path to directory where output will be generated, the "PBS_scripts" subdirectory will be created
-
-* **Email** - to generate the PBS script
-
-* **Profiler** - select which approach to use currently 'humann3'
 
 ## Outputs
 
-The Functional profiling module will create two directories in the specified `<output_dir>` and a PBS script for each sample.
+The Functional profiling module will create a root sub-directory, `Functional_profiling` in the specified `<output_dir>` path. Within this will be the PBS scripts, one per sample. The scripts need to be submitted to the job handler which will then generated the Humann3 output files. 
 
 ```
 output_dir
@@ -50,13 +45,16 @@ output_dir
     ├── featureTables/
 ```
 
-|Directory | Description |
+| Output | Description |
 |:---------|:-------------|
-| Functional_profiling | root directory of the functional profiling module, will have a subdirectory for each approach (e.g., humann3) |
-| PBS_scripts | currently one PBS script is generated for each sample |
+| `Functional_profiling` | Root sub-directory of the functional profiling module |
+| `Functional_profiling/*.pbs` |  PBS scripts (one per sample) to be submitted to the job handler. After the job completes, a set of output files per sample will be located in the `Functional_pofiling/` directory. The user then needs to **combine functional feature tables**. |
 
 
-see [Combining function output](#combining-function-output) below
+### Combine functional feature tables
+
+Once all samples have been processed, the user can then submit the `featureTables/generate_func_feature_tables.pbs` script to concatenate and normalise the abundances for the three functional feature tables: i) gene families, ii) path abundances and iii) path coverage.
+
 
 
 ***
@@ -64,13 +62,15 @@ see [Combining function output](#combining-function-output) below
 # Full help
 
 ```
-usage: func_profiling.py -i INPUT_DIR -o OUTPUT_DIR -e EMAIL
+usage: func_profiling.py -i INPUT_DIR -o OUTPUT_DIR
                          [--function-profiler {humann3,humann2}]
                          [--fwd-suffix FWD_SUFFIX] [--rev-suffix REV_SUFFIX]
                          [--nucleotide-database NUCLEOTIDE_DATABASE]
-                         [--protein-database PROTEIN_DATABASE] [--mode MODE]
-                         [-w WALLTIME] [-M MEM] [-t THREADS] [-h]
-                         [--pipeline-dir PIPELINE_DIR] [--verbose] [--debug]
+                         [--protein-database PROTEIN_DATABASE]
+                         [--metaphlan-database METAPHLAN_DATABASE] -e EMAIL
+                         [--mode {single,singularity}] [-w WALLTIME] [-M MEM]
+                         [-t THREADS] [-h] [--pipeline-dir PIPELINE_DIR]
+                         [--verbose] [--debug]
 
 Function profiling module part of the MRC Metagenomics pipeline
 
@@ -100,18 +100,19 @@ Function profiling module part of the MRC Metagenomics pipeline
                         HUMAnN3 directory containing the protein database
                         [default=/refdb/humann/data/uniref]
   --metaphlan-database METAPHLAN_DATABASE
-                        Metaphlan3 reference database (CHOCOPhlAn) 
+                        Metaphlan3 reference database (CHOCOPhlAn)
                         [default=/refdb/humann/metaphlan_databases]
 
 [3] PBS settings:
-  --mode MODE           Mode to generate PBS scripts, currently supports
+  --mode {single,singularity}
+                        Mode to generate PBS scripts, currently supports
                         single sample mode only [default=single]
   -w WALLTIME, --walltime WALLTIME
                         walltime hours required for PBS job of MODE
-                        [default=20]
-  -M MEM, --mem MEM     memory (GB) required for PBS job of MODE [default=60]
+                        [default=24]
+  -M MEM, --mem MEM     memory (GB) required for PBS job of MODE [default=64]
   -t THREADS, --threads THREADS
-                        number of threads for PBS job of MODE [default=4]
+                        number of threads for PBS job of MODE [default=28]
 
 [4] Optional arguments:
   -h, --help            show this help message and exit

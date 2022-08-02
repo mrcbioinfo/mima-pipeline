@@ -2,51 +2,60 @@
 title: qc_module.py
 ---
 
-The Quality Checking (QC) module is the entry point to the pipeline. It will generate a PBS script for each sample, with the script consisting of the following key steps:
+The Quality Checking (QC) module is the entry point to the pipeline. It will generate a bash script for each sample consisting of the following key steps:
 
-- **Deduplicate** - removes duplicate reads
-- **Quality control** - removes reads that are too low in quality, too short or too long
-- **Host decontamination** - removes reads that map to the Human genome
+1. **Deduplicate** - removes duplicate reads
+2. **Quality control** - removes reads that are too low in quality, too short or too long
+3. **Host decontamination** - removes reads that map to the Human genome
+
+The bash script is then wrapped within a PBS script for submission to the job handler. At most, $N$ (default=4) PBS scripts are generated the the number of samples are evenly distributed among the PBS scripts. For example, given a study with 20 samples, and 4 PBS scripts are generated, each PBS script will execute 5 samples for QC processing. By the end of all PBS jobs, there should be 30 sets of outputs (see below), one per sample.
 
 ***
 
 # Basic usage
 
 ```
-$python3 qc_module.py -i </full_path/to/input_dir> -o </full_path/to/output_dir> -m </full_path/to/manifest.csv> -e email
+$python3 qc_module.py -i </full_path/to/raw_data> -o </full_path/to/output_dir> -m </full_path/to/manifest.csv> -e <email>
 ```
 
 ## Required inputs
 
-**Input_dir** - Path to directory with all the fastQ files
+| Parameter | Description |
+|:----------|:------------|
+| `-i <raw_data>` | Path to directory with all the raw read (fastQ) files |
+| `-o <output_dir>` | Path to directory where the bash scripts and PBS wrapper will be generated |
+| `-e <email>` | Email address to include in the PBS wrapper script, notification of job ending or aborting will be sent to this address |
+| `-m <manifest.csv>` | The manifest file is a CSV text file that contains metadata about the raw FastQ files. The current version expected paired-end reads with separate files for the forward and reverse reads. The CSV format contains three columns with the headings: **Sample_ID,FileID_R1,FileID_R2**. The headings are case sensitive with no spaces between commas (see example below) |
 
-**Output_dir**  - Path to directory where output will be generated
+```
+      Sample_ID,FileID_R1,FileID_R2
+      SRR123456,SRR123456_R1_001.fastq.gz,SRR123456_R2_001.fastq.gz
+      SRR999999,SRR999999_R1_001.fastq.gz,SRR999999_R2_001.fastq.gz
+```
 
-**Manifest (CSV)** - the manifest file is a CSV text file that contains metadata about the raw FastQ files. The current version expected paired-end reads with separate files for the forward and reverse reads. The CSV format contains three columns with the following headings (case sensitive and no spaces between commas):
 
-|Sample_ID|FileID_R1|FileID_R2|
-|:-------|:-------|:------|
-|test1|test1_R1_001.fastq.gz|test1_R2_001.fastq.gz|
-|test2|test2_R1_001.fastq.gz|test2_R2_001.fastq.gz|
-
-**Email** - to generate the PBS script
 
 ## Outputs
 
-The QC module will create three directories in the specified  `<output_dir>` and a PBS script for each sampleID provided in the manifest.
+The QC module will create the output directory `QC_module` in the specified  `<output_dir>`. Within `QC_module/` directory will be one bash scripts (`*.sh` extension) per sample and $N$ number of PBS scripts as specified by the `--num--pbs-jobs` parameter (see below).
 
+There are also two subdirectories `CleanReads` and `QCReport` that hold the outputs from the bash script. These are described in the table below.
+
+The directory structure resembles:
 ```
 <output_dir>
-├── QCmodule
-    ├── CleanReads
-    ├── QCReport
+├── QC_module/
+    ├── CleanReads/
+    ├── QCReport/
 ```
 
-|Directory | Description |
+| Output | Description |
 |:---------|:-------------|
-| CleanReads| contains the final processed reads and is used as the input directory for [[Taxonomic Profiling]] and [[Functional profiling]] |
-| QCReport  | contains Fastp reports for each sample, one HTML and Json file per sample |
-| RawReads  | contains the raw reads files (unzipped) |
+| `QC_module/` | Root sub-directory that contains all output from the QC module |
+| `QC_module/CleanReads/` | directory that contains the final processed reads and is used as the input directory for [Taxonomic Profiling](../taxonomy_profiling) and [Functional profiling](../functional_profiling) |
+| `QC_module/QCReport/`  | directory that contains Fastp reports for each sample, one HTML and json file per sample |
+| `QC_module/*.sh` | the root sub-directory will contain bash scripts, one for each sample |
+| `QC_module/*.pbs` | the root sub-directory will contain $N$ number of PBS wrapper scripts as specified by the `--num-pbs-jobs` parameter. These are submitted to the job manager and after the jobs completes, the output files will be located in `CleanReads/` and `QCReport/`. |
 
 
 ***
@@ -55,10 +64,9 @@ The QC module will create three directories in the specified  `<output_dir>` and
 # Full help
 
 ```
-usage: qc_module.py -i INPUT_DIR -o OUTPUT_DIR -m MANIFEST -e EMAIL [-s SUBS]
-                    [-r REF] [--mode {single,singularity}] [-w WALLTIME]
-                    [-M MEM] [-t THREADS]
-                    [--singularity-pbs-file SINGULARITY_PBS_FILE] [-h]
+usage: qc_module.py -i INPUT_DIR -o OUTPUT_DIR -m MANIFEST [-s SUBS] [-r REF]
+                    -e EMAIL [--mode {single,singularity}] [-w WALLTIME]
+                    [-M MEM] [-t THREADS] [--num-pbs-jobs NUM_PBS_JOBS] [-h]
                     [--verbose] [--debug]
 
 Quality checking module part of the MRC Metagenomics pipeline
@@ -87,13 +95,14 @@ Quality checking module part of the MRC Metagenomics pipeline
                         single sample mode only [default=single]
   -w WALLTIME, --walltime WALLTIME
                         walltime hours required for PBS job of MODE
-                        [default=100]
-  -M MEM, --mem MEM     memory (GB) required for PBS job of MODE [default=60]
+                        [default=2]
+  -M MEM, --mem MEM     memory (GB) required for PBS job of MODE [default=64]
   -t THREADS, --threads THREADS
                         number of threads for PBS job of MODE [default=8]
-  --singularity-pbs-file SINGULARITY_PBS_FILE
-                        only used if --mode singularity is set, path to file
-                        with singularity parameters to include in PBS scripts
+  --num-pbs-jobs NUM_PBS_JOBS
+                        Number of PBS jobs where the number of samples
+                        processed will be equally distributed amongst the
+                        number of jobs [default=4]
 
 [4] Optional arguments:
   -h, --help            show this help message and exit
