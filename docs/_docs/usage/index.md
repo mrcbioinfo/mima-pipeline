@@ -1,6 +1,6 @@
 ---
 title: Usage
-permalink: docs/usage
+description: user documentation for individual scripts
 ---
 
 This section contains the usage documentation and explanation for each module in the pipeline.
@@ -15,4 +15,8 @@ Currently there are:
 
 [Functional Profiling](function_profiling)
 
-[Data visualisation]
+Visualisation: [taxa_plot](taxa_plot)
+
+Visualisation: [visualisation](visualisation) core analysis
+
+Classification: [random forest](classification_random_forest)

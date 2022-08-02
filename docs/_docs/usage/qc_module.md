@@ -52,7 +52,7 @@ The directory structure resembles:
 | Output | Description |
 |:---------|:-------------|
 | `QC_module/` | Root sub-directory that contains all output from the QC module |
-| `QC_module/CleanReads/` | directory that contains the final processed reads and is used as the input directory for [Taxonomic Profiling](../taxonomy_profiling) and [Functional profiling](../functional_profiling) |
+| `QC_module/CleanReads/` | directory that contains the final processed reads and is used as the input directory for [Taxonomic Profiling](taxonomy_profiling) and [Functional profiling](functional_profiling) |
 | `QC_module/QCReport/`  | directory that contains Fastp reports for each sample, one HTML and json file per sample |
 | `QC_module/*.sh` | the root sub-directory will contain bash scripts, one for each sample |
 | `QC_module/*.pbs` | the root sub-directory will contain $N$ number of PBS wrapper scripts as specified by the `--num-pbs-jobs` parameter. These are submitted to the job manager and after the jobs completes, the output files will be located in `CleanReads/` and `QCReport/`. |
