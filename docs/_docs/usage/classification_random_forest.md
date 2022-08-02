@@ -29,7 +29,7 @@ Options:
 
 ## Required inputs
 
-- all input is required
+All input parameters listed above are required.
 
 
 ## Outputs
