@@ -430,12 +430,12 @@ $ qstat -u $USER
 - We will combine the output from Bracken for each taxonomic ranks (Phylum to Species), so we should have 7 output files
 
 - In the terminal, navigate to the `<PROJECT_PATH>/output/Taxonomy_profiling/featureTables` directory and there should be a file named `generate_bracken_feature_table.py` (line 1 below)
-- Activate the `mpa3.7` conda environment if not already done (line 2)
+- Activate the `mima` conda environment if not already done (line 2)
 - Execute this script (line 3)
 
 ```
 $ cd <PROJECT_PATH>/output/Taxonomy_profiling/featureTables
-$ conda activate mpa3.7
+$ conda activate mima
 $ python3 generate_bracken_feature_table.py
 ```
 
