@@ -16,7 +16,7 @@ This tutorial steps through two main components:
 
 The data set used for this tutorial is the same as that processed in the [Data processing without Singularity]({{ site.baseurl }}/docs/tutorials/../../../tutorial-no-singularity#tutorial-data) tutorial.
 
-This data is from ...
+> This data set consists of two mock communities: *DNA-mock* and *Cell-mock*. The mock communities consists of bacteria that are mainly detected the human gastrointestinal tract ecosystem with a small mixture of some skin microbiota. The data was processed in three different labs: A, B and C.  In the previous tutorial, , we only processed a subset of the samples (n=9). In this tutorial we will be working with the full data set which has been pre-processed using the same pipeline. In total there were 56 samples of which 4 samples fell below the abundance threshold and therefore the final taxonomy abundance table has 52 samples. We will train the random forest classifier to distinguish between the three labs.
 
 In the previous tutorial, we only processed a subset of the samples (n=9). In this tutorial we will be working with the full data set which has already been processed for you. There are 52 samples (4 samples did not have any Kraken2 output).
 

@@ -21,22 +21,20 @@ We will use a real data from human stool microbiome, from the Human Microbiome P
 ## Preparation
 
 1. Install the MIMA pipeline
-2. Download the data from here or use the `wget` command below
+2. Download example data set: [HMPv1-stool-samples.tar.gz](https://github.com/xychua/test-gitpages/raw/master/examples/HMPv1-stool-samples.gz) or use the `wget` command below
 3. Extract the files using the following commands
 
 ```
-$ wget
-$ tar -xf random-forest-example.tar.gz
-$ tree random-forest-example
+$ wget https://github.com/xychua/test-gitpages/raw/master/examples/HMPv1-stool-samples.tar.gz
+$ tar -xf HMPv1-stool-samples.tar.gz
+$ tree HMPv1-stool-samples
 ```
 
 - expected output:
 ```
-ranodm-forest-example
+HMPv1-stool-samples
 ├── hmp1-stool-visit-1.features.tsv
-├── hmp1-stool-visit-1.metadata.tsv
-├── mock-bracken_FT_species_counts
-└── mock-metadata.tsv
+└── hmp1-stool-visit-1.metadata.tsv
 ```
 
 ----
