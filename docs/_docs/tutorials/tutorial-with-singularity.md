@@ -2,13 +2,62 @@
 title: Tutorial with Singularity
 ---
 
-# Requirements
+# Data processing with Singularity
 
-- System must have `Singularity` installed
-- The tutorial assumes that you will be running the pipeline one a PBS (or have a queuing management system) system with `Singuarlity` installed via `modules`
-- You need to have 20GB of disk space preferably in your **home directory*- (`~`)
+This tutorial takes you through the steps of running the MIMA pipeline for data processing of shotgun metagenomics sequenced reads using the assembly-free approach. 
 
-# Step 1: Set up
+This tutorial depends on the following:
+
+- **Compute environment**
+  - OpenPBS system on a high-performance cluster (HPC)
+  - You have already setup the environment with the MIMA Conda package as specified in the \[Installation guide\]\(\{\{ site\.baseurl \}\}/docs/installation\)
+  - System must have `Singularity` installed
+
+{% include alert.html type="danger" title="to-do" content="The tutorial assumes that you will be running the pipeline one a PBS (or have a queuing management system) system with `Singuarlity` installed via `modules`" %}
+
+- **Reference databases**
+  - Many of the data processing steps require access to reference databases that are too big to be included in the Singularity container
+  - You will need to have these already installed on your system or HPC environment and tell the pipeline of the location (this will be detailed in the relevant steps)
+
+- **Study data assumptions**
+  - Paired-end sequencing with two files \_R1 and \_R2 files
+  - By default the pipeline assumes human-host metagenomics studies and decontamination is done against the human genome, you can provide alternative references (see the tutorial or command usage documentation)
+
+# The pipeline
+
+The pipeline consists of the following components which are shown in the schema and briefly described below.
+
+\!\[\]\(\{\{ site\.baseurl\}\}/assets/img/tutorials/no\-singularity/tut\_OverallSchema\.png\)
+
+**Data processing**
+
+1. Quality control (QC) of the sequenced reads
+2. Taxonomy profiling after QC (this step can be run in parallel with step 3)
+3. Functional profilinng after QC (this step can be run in parallel with step 2)
+
+In steps 1 to 3, the pipeline generates PBS scripts (currently only supports OpenPBS) which then have to be submitted to the PBS manager to actually process the sequenced reads and generate the output.
+
+**Analysis and visualisation** comes after the data has been processed and is covered in a separate tutorial.
+
+# How this tutorial works
+
+The tutorial have five sub-sections for each of the three steps mentioned above:
+
+Step:
+    
+a) Brief introduction
+
+b) Command to generate PBS scripts 
+
+c) Command to submit PBS scripts as jobs
+
+d) Expected outputs after PBS job completes
+
+e) Post-processing step (some are optional)
+
+---
+
+# Set up
 
 ## MIMA pipeline Singularity container
 
@@ -138,21 +187,59 @@ Rscript (R) version 4.2.1 (2022-06-23)
 humann v3.1.1
 ```
 
-## Tutorial data
+# Tutorial data
 
-- Download the tutorial data
-- Inside you should have the `metadata.tsv` and `manifest.tsv` files
+In this tutorial we will use data from the study by [*Tourlousse, et al. (2022)*](https://journals.asm.org/doi/10.1128/spectrum.01915-21), **Characterization and Demonstration of Mock Communities as Control Reagents for Accurate Human Microbiome Community Measures**, Microbiology Spectrum.
 
-# Step 2: QC module
+> This data set consists of two mock communities: *DNA-mock* and *Cell-mock*. The mock communities consists of bacteria that are mainly detected the human gastrointestinal tract ecosystem with a small mixture of some skin microbiota. The data was processed in three different labs: A, B and C. In the previous tutorial, , we only processed a subset of the samples (n=9). In this tutorial we will be working with the full data set which has been pre-processed using the same pipeline. In total there were 56 samples of which 4 samples fell below the abundance threshold and therefore the final taxonomy abundance table has 52 samples. We will train the random forest classifier to distinguish between the three labs.
 
-## 2a) Create the PBS scripts
+* The raw reads are available from NCBI SRA [Project PRJNA747117](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA747117)
+* There are 56 paired-end samples (112 fastq files)
+    * As the data is very big we will work with a smaller subset to speed up processing
+    * You can download the fastq files using this script which requires the `sratoolkit`
+
+**Data files**
+
+{% include alert.html type="danger" title="to-do" content="Add script to download fastq files" %}
+
+* \[mini\-SRA\-accession\-list\]\(\{\{ site\.baseurl \}\}/assets/mini\-SRA\-accession\-list\) \(N=9 samples to download fastq\)
+* \[mini\-manifest\.csv\]\(\{\{ site\.baseurl \}\}/assets/mini\-manifest\.csv\) \(N=9 samples 18 fastq files\)
+* \[mini\-metadata\.tsv\]\(\{\{ site\.baseurl \}\}/assets/mini\-metadata\.tsv\) \(N=9 samples with metadata\)
+
+**Folder structure**
+
+This tutorial will assume the following folder structure where `Sample_A_1.fastq.gz` is the forward read file for *sample\_A* and `Sample_A_2.fastq.gz` is the reverse read file for *sample\_A*. The naming may not be exactly the same depending on the sequencing platform but generally follows some format (e.g. \*\_1/2, \*\_R1/R2, etc).
+
+```
+<PROJECT_PATH>
+├── manifest.csv
+└── raw_data/
+    ├── Sample_A_1.fastq.gz
+    ├── Sample_A_2.fastq.gz
+    ├── Sample_B_1.fastq.gz
+    ├── Sample_B_2.fastq.gz
+    └── ...
+```
+
+From here on, `<PROJECT_PATH>` will refer to the root directory as depicted above. Replace this with the path to where you downloaded the tutorial data.
+
+- You need to have 20GB of disk space preferably in your **home directory*- (`~`)
+
+
+----
+
+# Step 1: QC module
+
+## 1a) QC: introduction
+
+## 1b) QC: Generate PBS scripts
 
 - The following command is all one line without the backslashes (`\`)
     - the backslash (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come
     - we break up the command for readability purposes to explain each parameter
 
 ```
-$ python3 qc_module.py -i ~/mima_tutorial/data \
+$ python3 qc_module.py -i ~/mima_tutorial/raw_data \
 -o ~/mima_tutorial/output \
 -m ~/mima_tutorial/manifest.csv \
 -e your.email@addr.com \
@@ -186,7 +273,7 @@ $ tree ~/mima_tutorial/output/QC_module
 └── SRR17380236.sh
 ```
 
-## 2b) Submit the PBS jobs
+## 1c) QC: Submit PBS jobs
 
 - Examine one of the PBS scripts to be submitted
 
@@ -223,6 +310,8 @@ singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03
 $ qsub qcModule_0.pbs
 ```
 
+## 1d) QC: outputs
+
 - After the PBS job completes then you should have the following outputs
 
 ```
@@ -253,11 +342,16 @@ $ tree ~/mima_tutorial/output/QC_module
 └── ...
 ```
 
-## 2c) Post-process (optional) generate a QC report
+## 1e) (Optional) QC report
 
-# Step 3: Taxonomy profiling
 
-## 3a) Create the PBS scripts
+----
+
+# Step 2: Taxonomy profiling
+
+## 2a) Taxa: introduction
+
+## 2b) Taxa: Generate PBS script
 
 - The following command is all one line without the backslashes (`\`)
     - the backslash (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come
@@ -299,7 +393,7 @@ $ tree .
 └── SRR17380236.sh
 ```
 
-## 3b) Submit the PBS job
+## 2c) Taxa: Submit PBS job
 
 - First we'll examine the PBS script to be submitted
 
@@ -344,6 +438,8 @@ singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03
 $ cd ~/mima_tutorial/output/Taxonomy_profiling
 $ qsub run_taxa_profiling.pbs
 ```
+
+## 2d) Taxa: outputs
 
 - After the PBS job completes then you should have the following outputs
 
@@ -391,7 +487,7 @@ $ tree ~/mima_tutorial/output/Taxonomy_profiling
 └── SRR17380236.sh
 ```
 
-## 3c) Post-processing: Generate taxonomy abundance table
+## 2e) Taxa: Generate taxonomy abundance table
 
 ```
 $ cd ~/mima_tutorial/output/Taxonomy_profiling/featureTables
@@ -436,9 +532,15 @@ $ tree .
 └── generate_bracken_feature_table.py
 ```
 
-# Step 4: Functional profiling
 
-## 4a) Create the PBS scripts
+---
+
+# Step 3: Functional profiling
+
+## 3a) Function: introduction
+
+
+## 3b) Function: Generate PBS scripts
 
 - The following command is all one line without the backslashes (`\`)
     - the backslash (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come
@@ -476,7 +578,7 @@ $ tree ~/mima_tutorial/output/Function_profiling
 └── SRR17380236.pbs
 ```
 
-## 4b) Submit the PBS job
+## 3c) Function: Submit PBS jobs
 
 ```
 $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
@@ -512,6 +614,9 @@ singularity exec ${IMAGE_DIR} humann -i ${outdir}SRR17380209_combine.fq.gz --thr
 --search-mode uniref90
 ```
 
+
+## 3d) Function: output
+
 - After the PBS job completes then you should have the following outputs
 
 ```
@@ -524,4 +629,4 @@ $ tree ~/mima_tutorial/output/Function_profiling
 ```
 ```
 
-## 4c) Post-processing: Generate feature abundance table
+## 3e) Function: Generate function feature tables

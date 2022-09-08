@@ -1,25 +1,23 @@
-## {:f
-
+---
 title: Tutorial without Singularity
+---
 
 # Data processing without Singularity
 
 This tutorial takes you through the steps of running the MIMA pipeline for data processing of shotgun metagenomics sequenced reads using the assembly-free approach. The pipeline depend on the following setup:
 
-**Compute environment**
 
-* OpenPBS system on a high-performance cluster (HPC)
-* You have already setup the environment with the MIMA Conda package as specified in the \[Installation guide\]\(\{\{ site\.baseurl \}\}/docs/installation\)
+- **Compute environment**
+  - OpenPBS system on a high-performance cluster (HPC)
+  - You have already setup the environment with the MIMA Conda package as specified in the \[Installation guide\]\(\{\{ site\.baseurl \}\}/docs/installation\)
 
-**Reference databases**
+- **Reference databases**
+  - Many of the data processing steps require access to reference databases that are too big to be included in the Singularity container
+  - You will need to have these already installed on your system or HPC environment and tell the pipeline of the location (this will be detailed in the relevant steps)
 
-* Many of the data processing steps require access to reference databases that are too big to be included in the Singularity container
-* You will need to have these already installed on your system or HPC environment and tell the pipeline of the location (this will be detailed in the relevant steps)
-
-**Study data assumptions**
-
-* Paired-end sequencing with two files \_R1 and \_R2 files
-* By default the pipeline assumes human-host metagenomics studies and decontamination is done against the human genome, you can provide alternative references (see the tutorial or command usage documentation)
+- **Study data assumptions**
+  - Paired-end sequencing with two files \_R1 and \_R2 files
+  - By default the pipeline assumes human-host metagenomics studies and decontamination is done against the human genome, you can provide alternative references (see the tutorial or command usage documentation)
 
 # The pipeline
 
@@ -39,15 +37,21 @@ In steps 1 to 3, the pipeline generates PBS scripts (currently only supports Ope
 
 # How this tutorial works
 
-The tutorial is step up as such:
+The tutorial have five sub-sections for each of the three steps mentioned above:
 
-* Brief introduction
-* Command to generate scripts - followed by explanation of the parameters in the command
-* Command to submit the PBS scripts as jobs
-* Expected outputs after PBS job completes
-* Post-processing step (some are optional)
+Step:
+    
+a) Brief introduction
 
-- - -
+b) Command to generate PBS scripts 
+
+c) Command to submit PBS scripts as jobs
+
+d) Expected outputs after PBS job completes
+
+e) Post-processing step (some are optional)
+
+---
 
 # Tutorial data
 
@@ -85,9 +89,9 @@ This tutorial will assume the following folder structure where `Sample_A_1.fastq
 
 From here on, `<PROJECT_PATH>` will refer to the root directory as depicted above. Replace this with the path to where you downloaded the tutorial data.
 
-- - -
+---
 
-# STEP 1: QC module
+# Step 1: QC module
 
 ## a) QC: introduction
 
@@ -270,7 +274,7 @@ $ python3 qc_report.py -i /<PROJECT_PATH>/output/QC_module \
 
 * Output is a comma-seperated table file located in `<PATH_PROJECT>/output/QC_module/QC_report.csv`
 
-- - -
+---
 
 # Step 2) Taxonomy profiling
 
@@ -465,7 +469,7 @@ $ python3 generate_bracken_feature_table.py
 | combine\_bracken\_{class}.log | log file output from the combine\_bracken\_table.py script from Bracken tool |
 | generate\_bracken\_feature\_table.py | python script to combine and the feature tables from multiple samples and then split into *counts* and *relative abunances* tables |
 
-- - -
+---
 
 # Step 3) Functional profiling
 
