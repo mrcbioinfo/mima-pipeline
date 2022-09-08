@@ -2,67 +2,96 @@
 title: Installation
 ---
 
-# Installation
+# Install MIMA Pipeline Singularity container
 
-There are two options for using this pipeline
+All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima-pipeline.sif`. Follow the below step-by-step guide to install this container. After installing you can then run the [Data processing with Singularity](tutorial/tutorial-with-singularity) tutorial.
 
-1. Singularity container
-2. Independently without Singularity
+{% include alert.html type="warning" title="warning" content="This section assumes that your terminal already has Singularity installed. You will also need to download the reference databases that are required by the third party tools (see [Requirements](requirements)" %}
 
-Both options require access to external reference databases (see [Requirements]( {{ site.baseurl}}/docs/requirements ))
 
----
+## MIMA pipeline Singularity container
 
-## Option 1) Singularity container
+- Download the [mima-pipeline.sif] image file
 
-* All tools required by the pipeline are encapsulated into a Singularity container, the image named (IMAGE_NAME)
-* You will also need to download the reference databases that are required by the third party tools (see [Requirements]({{ site.baseurl }}/docs/requirements))
+```
+$ wget
+```
 
----
+- If you are on a HPC system with Singularity installed under `modules`, we have to load singularity first with the `module` command
 
-## Option 2) Setting up the MIMA environent
+```
+$ module load singularity
+$ singularity --version
+```
+- at the time of writing this tutorial we were using `singularity version 3.6.4`
 
-In order to use the MIMA pipeline **without Singularity**, you will need to install the following
+{% include tip.html type='tip' title-'tip' content="Usually load the latest version that's installed on your system, or you can specify a specific version using `module load singularity/3.6.4`" %}
 
-1. Install Miniconda [guide](https://docs.conda.io/en/latest/miniconda.html#installing)
-2. Download [`mima.tar.gz`]() from Release
-3. Untar the file:  `tar -xf mima.tar.gz`
-4. There are two directories in the file: `requirements/` and `scripts/`
+## Build a sandbox and configure environment variables
 
-    ```
-    mima.tar.gz
-    ├── requirements/
-    │   ├── mima-conda-env.yml
-    │   ├── Rpackages.R
-    │   └── test_Rpackages.R
-    └── scripts/
-        ├── func_profiling.py
-        ├── qc_module.py
-        ├── qc_report.py
-        ├── taxa_module.py
-        ├── utils/
-        └── visualisation
-            ├── ...
-            ├── taxa_plot_v2.pl
-            └── visualisation.py
+When running commands using a Singularity container, the container needs to be unpacked each time. This can be slow when you need to run multiple commands sequentially. We can speed this up by building a 'sandbox' environment.
 
-    ```
+- build a 'sandbox' called `mima-pipeline`
+- we create an environment variable called `SANDBOX` to store the full path to the sandbox (helps save typing a long filename each time)
 
-5. Create the MIMA environment, in the terminal where you downloaded the `mima-conda-env.yml` file, type
+```
+$ singularity build --sandbox mima-pipeline mima-pipeline.sif
+$ export SANDBOX=`pwd`/mima-pipeline
+```
 
-    ```
-    $ conda env create -f requirements/mima-conda-env.yml
-    ```
+- test that the `SANDBOX` environment variable and the sandbox is working by running the following command
 
-6. Test the installation:
+```
+$ singularity run $SANDBOX
+```
 
-    ```
-    $ conda activate mima
-    ```
+- below is the output, check the line **active environment : mima** is the same as below
+  
+```
+----
+This singularity container contains MIMA conda environment
+v1.0.0 - build: 2022-09-06
 
-7. You can now start using the MIMA scripts from within the `scripts/` folder
+     active environment : mima
+    active env location : /opt/miniconda/envs/mima
+            shell level : 1
+       user config file : /home/z3534482/.condarc
+ populated config files : /home/z3534482/.condarc
+          conda version : 4.12.0
+    conda-build version : not installed
+         python version : 3.9.12.final.0
+       virtual packages : __linux=3.10.0=0
+                          __glibc=2.35=0
+                          __unix=0=0
+                          __archspec=1=x86_64
+       base environment : /opt/miniconda  (read only)
+      conda av data dir : /opt/miniconda/etc/conda
+  conda av metadata url : None
+           channel URLs : https://conda.anaconda.org/biobakery/linux-64
+                          https://conda.anaconda.org/biobakery/noarch
+                          https://conda.anaconda.org/bioconda/linux-64
+                          https://conda.anaconda.org/bioconda/noarch
+                          https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+                          https://conda.anaconda.org/conda-forge/linux-64
+                          https://conda.anaconda.org/conda-forge/noarch
+                          https://conda.anaconda.org/default/linux-64
+                          https://conda.anaconda.org/default/noarch
+          package cache : /opt/miniconda/pkgs
+                          /home/z3534482/.conda/pkgs
+       envs directories : /home/z3534482/.conda/envs
+                          /opt/miniconda/envs
+               platform : linux-64
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/3.10.0-1160.62.1.el7.x86_64 ubuntu/22.04.1 glibc/2.35
+                UID:GID : 13534482:40064
+             netrc file : None
+           offline mode : False
 
-    ```
-    $ cd scripts
-    $ python3 qc_module.py --help
-    ```
+Python 3.10.5
+Rscript (R) version 4.2.1 (2022-06-23)
+humann v3.1.1
+```
+
+Now you're ready to start the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial
