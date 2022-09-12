@@ -9,7 +9,7 @@ tags:
 
 Here we have tutorials with step-by-step instructions on how to run the pipeline
 
- - [Download tutorial data](tutorial-download-data)
+ - [Download tutorial data](download-tutorial-data)
  - [Data processing without Singularity](tutorial-no-singularity)
  - [Data processing with Singularity](tutorial-with-singularity)
  - [Core diversity analysis and visualisation](core-diversity-analysis-visualisation)

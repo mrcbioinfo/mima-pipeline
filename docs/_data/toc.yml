@@ -28,6 +28,8 @@
     - title: Data processing
       url: "docs/tutorials"
       children:
+        - title: Download tutorial Data
+          url: "docs/tutorials/download-tutorial-data"
         - title: Data processing without Singularity
           url: "docs/tutorials/tutorial-no-singularity"
         - title: Data processing with Singularity
