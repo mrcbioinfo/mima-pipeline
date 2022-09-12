@@ -29,9 +29,9 @@ $ singularity --version
 The latest version of {{ site.product_name }} is now available.
 {% endcapture %}
 
-{% include info.html content=download_note %}
+{% include alert.html type='warning' content=download_note %}
 
-{% include info.html type='info' title='info' content="Usually load the latest version that's installed on your system, or you can specify a specific version using `module load singularity/3.6.4`" %}
+{% include alert.html type='info' title='info' content="Usually load the latest version that's installed on your system, or you can specify a specific version using `module load singularity/3.6.4`" %}
 
 ## Build a sandbox and configure environment variables
 
