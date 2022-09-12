@@ -25,7 +25,7 @@ $ singularity --version
 ```
 - at the time of writing this tutorial we were using `singularity version 3.6.4`
 
-{% include tip.html type='tip' title-'tip' content="Usually load the latest version that's installed on your system, or you can specify a specific version using `module load singularity/3.6.4`" %}
+{% include tip.html type='tip' title-'tip' content="Usually load the latest version that's installed on your system, or you can specify a specific version using module load singularity/3.6.4" %}
 
 ## Build a sandbox and configure environment variables
 
