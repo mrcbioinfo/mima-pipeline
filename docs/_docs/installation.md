@@ -6,7 +6,11 @@ title: Installation
 
 All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima-pipeline.sif`. Follow the below step-by-step guide to install this container. After installing you can then run the [Data processing with Singularity](tutorial/tutorial-with-singularity) tutorial.
 
-{% include alert.html type="warning" title="warning" content="This section assumes that your terminal already has Singularity installed. You will also need to download the reference databases that are required by the third party tools (see [Requirements](requirements)" %}
+{% capture environment_note %}
+This section assumes that your HPC/terminal environment already has Singularity installed via `modules`. You will also need to download reference databases required by third party tools, see [Requirements](requirements).
+{% endcapture %}
+
+{% include alert.html type="warning" title="Note" content=environment_node %}
 
 
 ## MIMA pipeline Singularity container
@@ -17,28 +21,22 @@ All tools required by the MIMA pipeline are encapsulated into a Singularity cont
 $ wget
 ```
 
-- If you are on a HPC system with Singularity installed under `modules`, we have to load singularity first with the `module` command
+- We assume you are on a HPC environment with Singularity installed under `modules` (if not skip the `module` line)
+- Load singularity first with the `module` command
 
 ```
 $ module load singularity
 $ singularity --version
 ```
-- at the time of writing this tutorial we were using `singularity version 3.6.4`
-
-{% capture download_note %}
-The latest version of {{ site.product_name }} is now available.
-{% endcapture %}
-
-{% include alert.html type='warning' content=download_note %}
-
-{% include alert.html type='info' title='info' content="Usually load the latest version that's installed on your system, or you can specify a specific version using `module load singularity/3.6.4`" %}
+at the time of writing this tutorial we were using `singularity version 3.6.4`
+  - to specify a specific version, use `module load singularity/3.6.4`
 
 ## Build a sandbox and configure environment variables
 
-When running commands using a Singularity container, the container needs to be unpacked each time. This can be slow when you need to run multiple commands sequentially. We can speed this up by building a 'sandbox' environment.
+When running commands using Singularity, the container needs to be unpacked each time. This can be slow when you need to run multiple commands sequentially. We can speed this up by building a 'sandbox' environment, thus skipping the unpacking step.
 
-- build a 'sandbox' called `mima-pipeline`
-- we create an environment variable called `SANDBOX` to store the full path to the sandbox (helps save typing a long filename each time)
+- Build a *sandbox* called `mima-pipeline` and
+- Create an environment variable called `SANDBOX` to store the full path (helps save typing a long filename each time)
 
 ```
 $ singularity build --sandbox mima-pipeline mima-pipeline.sif
@@ -46,13 +44,13 @@ $ export SANDBOX=`pwd`/mima-pipeline
 ```
 
 - test that the `SANDBOX` environment variable and the sandbox is working by running the following command
+  - if this command is not working then check your `SANDBOX` environment variable using `echo $SANDBOX` which will output the path
 
 ```
 $ singularity run $SANDBOX
 ```
 
-- below is the output, check the line **active environment : mima** is the same as below
-  
+Below is the output, check the line **active environment : mima** is the same as below  
 ```
 ----
 This singularity container contains MIMA conda environment
@@ -101,3 +99,9 @@ humann v3.1.1
 ```
 
 Now you're ready to start the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial
+
+{% capture singularity_bind %}
+By default, Singularity will load the bare minimum filesystem to operate, that is your home directory. It does not automatically have access to other file systems. If you're data is located on another drive or path, then you need to inform Singularity using the `-B` parameter or the `SINGULARITY_BIND` environment variable. See the tutorial for example: [Data processing with Singularity](tutorials/tutorial-with-singularity)
+{% endcapture %}
+
+{% include alert.html type="warning" title="Note" content=singularity_bind %}

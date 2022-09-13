@@ -9,30 +9,27 @@ In both tutorials [Data processing with Singularity](tutorial-with-singularity) 
 > This data set consists of two mock communities: *DNA-mock* and *Cell-mock*. The mock communities consists of bacteria that are mainly detected the human gastrointestinal tract ecosystem with a small mixture of some skin microbiota. The data was processed in three different labs: A, B and C. In the previous tutorial, , we only processed a subset of the samples (n=9). In this tutorial we will be working with the full data set which has been pre-processed using the same pipeline. In total there were 56 samples of which 4 samples fell below the abundance threshold and therefore the final taxonomy abundance table has 52 samples. We will train the random forest classifier to distinguish between the three labs.
 
 - The raw reads are available from NCBI SRA [Project PRJNA747117](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA747117)
-- There are 56 paired-end samples (112 fastq files)
-  - As the data is very big we will work with a smaller subset to speed up processing
-  
+  - There are 56 paired-end samples (112 fastq files)
+- As the data is very big we will work with a smaller subset to speed up processing (n=9 samples, 18 fastq files)
 - This tutorial teaches you how to prepare the required raw files
   
-{% include alert.html type="warning" title="warning" content="You will need about 40GB of disk space" %}
+{% include alert.html type="warning" title="Note" content="You will need about 40GB of disk space" %}
 
 ---
 
 # Step 1) Download tutorial files
 
 - Download and unpack [mima_tutorial.tar.gz]
-
-{% include alert.html type="warning" title="note" content="In this and other tutorial, we will assume that the `mima_tutorial/` directory is located in your `HOME DIRECTORY (~)`. Change the paths accordingly." %}
+- In this and other tutorial, we will assume that the `~/mima_tutorial` directory is located in your *home directory* (indicated by the `~`, tilde symbol). Change the paths accordingly.
 
 ```
 $ wget
 $ tar xf mima_tutorial.tar.gz
-$ cd mima_tutorial
-$ tree .
+$ tree mima_tutorial
 ```
 
 ```
-.
+~/mima_tutorial
 ├── manifest.csv
 ├── metadata.tsv
 ├── pbs_header_func.cfg
@@ -53,7 +50,8 @@ $ tree .
 
 # Step 2) Download SRA files
 
-- We use [sratoolkit](https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/) command line tool to download SRA files and unpack them using `fasterq-dump`
+This section uses the [sratoolkit](https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/) command line tool to download SRA files and unpack them using `fasterq-dump`
+
 - If your system already has the `sratoolkit` then follow [Option A: download with `sratoolkit`](#option-a-download-with-sratoolkit)
 - If not, then follow [Option B: download via MIMA](#option-b-download-via-MIMA)
 
@@ -66,7 +64,7 @@ $ tree .
 $ prefetch --option-file SRA_files --output-directory raw_data
 ```
 
-- Below is the output, wait until all files are downloaded, there should be
+Below is the output, wait until all files are downloaded
 
 ```
 2022-09-08T05:50:42 prefetch.3.0.0: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
@@ -76,8 +74,7 @@ $ prefetch --option-file SRA_files --output-directory raw_data
 ...
 ```
 
-- wait for download to finish
-- check the downloaded files with the `tree` command
+- After download finish, check the downloaded files with the `tree` command
 
 ```
 $ tree raw_data
@@ -106,7 +103,7 @@ raw_data/
 ```
 
 - Extract the fastq files using the `fasterq-dump` command
-- We'll also save some disk space by zipping up the fastq files
+- We'll also save some disk space by zipping up the fastq files using `bzip` (or `pigz`)
 
 ```
 $ cd ~/mima_tutorial/raw_data
@@ -157,16 +154,16 @@ $ tree .
 
 ---
 
-## Option B: download via MIMA
+## Option B: download via MIMA Singularity
 
-- First run [Install MIMA pipeline](installation)
+- First run [Install MIMA Pipeline Singularity container](installation) and set up the `SANDBOX` environment variable
 - Download the SRA files using `prefetch` command
 
 ```
 $ singularity exec $SANDBOX prefetch --option-file SRA_files --output-directory raw_data
 ```
 
-- Below is the output, wait until all files are downloaded, there should be
+- Below is the output, wait until all files are downloaded
 
 ```
 2022-09-08T05:50:42 prefetch.3.0.0: Current preference is set to retrieve SRA Normalized Format files with full base quality scores.
@@ -176,8 +173,7 @@ $ singularity exec $SANDBOX prefetch --option-file SRA_files --output-directory 
 ...
 ```
 
-- wait for download to finish
-- check the downloaded files
+- After download finishes, check the downloaded files
 
 ```
 $ tree raw_data
@@ -206,7 +202,7 @@ raw_data/
 ```
 
 - Extract the fastq files using the `fasterq-dump` command
-- We'll also save some disk space by zipping up the fastq files using `bzip`
+- We'll also save some disk space by zipping up the fastq files using `bzip` (or `pigz`)
 
 ```
 $ cd ~/mima_tutorial/raw_data
@@ -253,6 +249,10 @@ $ tree .
 ├── SRR17380236_1.fastq.gz
 └── SRR17380236_2.fastq.gz
 ```
+
+---
+
+# Check manifest.csv
 
 - check that the filenames (columns 2 and 3) listed in the `manifest.csv` match with the fastq files present
 - if not then update the `manifest.csv` file as required

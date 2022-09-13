@@ -12,46 +12,45 @@ This tutorial depends on the following:
   - OpenPBS system on a high-performance cluster (HPC)
   - System must have `Singularity` installed
 
-{% include alert.html type="danger" title="to-do" content="The tutorial assumes that you will be running the pipeline one a PBS (or have a queuing management system) system with `Singularity` installed via `modules`" %}
+{% include alert.html type="warning" title="to-do" content="The tutorial assumes that you will be running the pipeline on a high-performance computing (HPC) environment with OpenPBS (or similar queuing management system), and `Singularity` installed via `modules`" %}
 
 - **Reference databases**
   - Many of the data processing steps require access to reference databases that are too big to be included in the Singularity container
   - You will need to have these already installed on your system or HPC environment and tell the pipeline of the location (this will be detailed in the relevant steps)
+  - See [Requirements]({{site.baseurl}}/requirements) for details for downloading reference databases
 
-- **Study data assumptions**
-  - Paired-end sequencing with two files \_R1 and \_R2 files
-  - By default the pipeline assumes human-host metagenomics studies and decontamination is done against the human genome, you can provide alternative references (see the tutorial or command usage documentation)
+- **Data suitability**
+  - The pipeline expects paired-end sequences with two files \_R1 and \_R2 files
 
-# The pipeline
 
-The pipeline consists of the following components which are shown in the schema and briefly described below.
+# The pipeline: data processing
+
+This tutorial covers the data processing pipeline, which consists of the following three steps and shown in the below diagram:
+
+1. **Quality control** (QC) of the sequenced reads
+2. **Taxonomy profiling** after QC, for assigning reads to taxon (this step can be run in parallel with step 3)
+3. **Functional profiling** after QC, for assigning reads to genes (this step can be run in parallel with step 2)
+
+{% include alert.html type='warning' title='Pipeline' content="In steps 1 to 3, the pipeline generates one or more PBS scripts, which then have to be submitted to the PBS manager to actually process the reads and generate the output." %}
 
 ![]({{site.baseurl}}/assets/img/tutorials/no-singularity/tut_OverallSchema.png)
 
-## Data processing
-
-1. Quality control (QC) of the sequenced reads
-2. Taxonomy profiling after QC (this step can be run in parallel with step 3)
-3. Functional profiling after QC (this step can be run in parallel with step 2)
-
-In steps 1 to 3, the pipeline generates PBS scripts (currently only supports OpenPBS) which then have to be submitted to the PBS manager to actually process the sequenced reads and generate the output.
-
 ## Analysis and visualisation
 
-Comes after the data has been processed and is covered in a separate tutorial.
+Comes after the data has been processed and is covered in a separate tutorial, [Core diversity analysis and visualisation](core-diversity-analysis-visualisation)
 
 ---
 
 # Getting started
 
-To work with this tutorial, you need to first
+For this tutorial, you need to first
 
 1. [Install MIMA Pipeline Singularity container]({{site.baseurl}}/docs/installation)
 2. [Download tutorial data](download-tutorial-data)
 
 ## Working directory
 
-For this tutorial we will assume that the `mima_tutorial` is the working directory located in your *home directory* (`~`). Hence, we will try to always make sure we are in the right directory first before executing a command, for example, run the commands
+After downloading the tutorial data, we assume that the `mima_tutorial` is the working directory located in your *home directory* (specified by the `~`). Hence, we will try to always make sure we are in the right directory first before executing a command, for example, run the following commands:
 
 ```
 $ cd ~/mima_tutorial
@@ -75,14 +74,15 @@ mima_tutorial
     └── ...
 ```
 
-From here on, `~/mima_tutorial` will refer to the root directory as depicted above. Replace this path if you saved the tutorial data in another location.
+From here on, `~/mima_tutorial` will refer to the project directory as depicted above. Replace this path if you saved the tutorial data in another location.
 
+---
 
-## How this tutorial works
+# How this tutorial works
 
-The tutorial have five sub-sections for each of the three steps mentioned above:
+The tutorial have three steps and each step has five sub-sections:
 
-Step:
+STEP:
     
 a) Brief introduction
 
@@ -100,7 +100,7 @@ e) Post-processing step (some are optional)
 
 ## 1a) QC: introduction
 
-Quality control checks to make sure that the sequenced reads obtained from the sequencing machine is of good quality. Bad quality reads or artefacts due to sequencing error if not removed can lead to spurious results and affect downstream analyses. There are a number of tools available for checking read quality of high-throughput read sequences.
+Quality control (QC) checks to make sure that the sequenced reads obtained from the sequencing machine is of good quality. Bad quality reads or artefacts due to sequencing error if not removed can lead to spurious results and affect downstream analyses. There are a number of tools available for checking read quality of high-throughput read sequences.
 
 This step must be done before Taxonomy and Function profiling.
 
@@ -114,23 +114,22 @@ This pipeline uses the following tools:
 
 The bash scripts generated by this step performs the following 4 key steps. The module also generates $N$ number of PBS scripts (default=4 using the `--num-pbs-jobs` parameter setting), which calls the bash scripts sequentially.
 
-> In this tutorial, we have 9 samples which we will spread across 3 PBS jobs. The output will consists of 9 bash scripts and 3 PBS scripts, where one PBS will execute quality checking for three samples.
+> In this tutorial, we have 9 samples, which we will spread across 3 PBS jobs, so one PBS job executes QC for three samples. The output consists of 9 bash scripts (\*.sh) and 3 PBS scripts (\*.pbs).
 
-Key steps in the quality control module are shown in the figure below and described as follows:
+Key steps in the QC module shown in the figure below, consists of:
 
 ![QC PBS pipeline]({{site.baseurl}}/assets/img/tutorials/no-singularity/tut_QCpipeline.png)
 
-1. **repair** \- uses repair\.sh from BBTools/BBMap tool suite \- repairs the sequenced reads and outputs any singleton reads \(these are orphaned reads that are missing either the forward or reverse partner read\)
-2. **dereplicate** \- uses clumpify\.sh from BBTools/BBMap tool suite and removes duplicate reads\. It also clusters reads for faster downstream processing
-3. **quality check** \- uses fastp\.sh and checks the quality of the reads and removes any reads that are of low quality\, too long or too short
-4. **decontamination** \- uses minimap2\.sh\, which maps sequenced reads against a user\-specified reference genome \(fasta\) file \(e\.g\.\, human\) and removes these host\-reads from the data\. The **cleaned** sequence output then becomes the input for the next steps: taxonomy or function profiling.
-
-There is an optional step in the diagram (QC\_report) that generates a summary report *after all* PBS scripts have been run for all samples in the study.
+1. **repair** - uses repair.sh from BBTools/BBMap tool suite - repairs the sequenced reads and outputs any singleton reads (orphaned reads that are missing either the forward or reverse partner read)
+2. **dereplicate** - uses clumpify.sh from BBTools/BBMap tool suite and removes duplicate reads (it also clusters reads for faster downstream processing)
+3. **quality check** - uses fastp.sh and checks the quality of the reads and removes any reads that are of low quality, too long or too short
+4. **decontamination** - uses minimap2.sh to map sequenced reads against a user-specified reference genome (e.g., human) and removes these host-reads from the data. The **cleaned** sequence output then becomes the input for taxonomy and function profiling
+5. (optional) QC\_report generates a summary report *after all* PBS scripts have been run for all samples in the study
 
 ## 1b) QC: Generate PBS scripts
 
 - The following command is all one line without the backslashes (`\`)
-    - the backslash (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come
+    - the backslashes (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come
     - we break up the command for readability purposes to explain each parameter
 
 ```
@@ -154,6 +153,8 @@ $ singularity run --app mima-qc $SANDBOX -i ~/mima_tutorial/raw_data \
 | `--pbs-config` | yes if `--mode singularity` | path to the pbs configuration file (see below). You must specify this parameter if `--mode singularity` is set. You do not need to set this parameter if running outside of Singularity | 
 
 
+### Manifest file
+
 *Manifest.csv* file example
 
 ```
@@ -166,26 +167,35 @@ SRR17380218,SRR17380218.sra_1.fastq.gz,SRR17380218.sra_2.fastq.gz
 ...
 ```
 
+### PBS configuration files
+
 *pbs_header_qc.cfg* is the PBS settings and Singularity settings that will be copied to the top of all PBS script files. Below is the PBS configuration file we have provided for you.
+  - `#PBS` lines are PBS configuration settings, below specifies the 
+    - `-N`: name of the job
+    - `ncpus`: number of CPUs required
+    - `walltime`: how long the job will take, here it's 2 hours. *Note* check the log files whether your jobs have completed correctly or failed due to not enough time
+    - `-j oe`: standard output logs and error logs are concatenated into one file
+  - Singularity settings
+    - `IMAGE_DIR` specifies the location of the *sandbox* container created in [Install MIMA singularity container], *change this location as required*
+    - `SINGULARITY_BIND` is an environment variable for mounting directory paths that will be used within the Singularity container. By default, the sandbox will only load the bare minimum locations in order to function, such as your home directory. If the files you need to access are located elsewhere then you need to inform where those locations are.
+      - format is comma separated pairs of `<source/path>:<destination/path>`
+  
 ```
 #!/bin/bash
 #PBS -N QC_module_0
 #PBS -l ncpus=8
 #PBS -l walltime=2:00:00
 #PBS -l mem=64GB
-#PBS -m ae
 #PBS -j oe
 
 set -x
 module load singularity/3.6.4
 
-IMAGE_DIR=/home/z3534482/scratch/29_MRC_Pipelines/29.02_MRC_SS/mima-singularity-XYC/mima-pipeline
+IMAGE_DIR=~/mima-pipeline
 export SINGULARITY_BIND="/srv/scratch/z3534482:/srv/scratch/z3534482,/srv/scratch/mrcbio:/srv/scratch/mrcbio,/srv/scratch/mrcgut:/srv/scratch/mrcgut"
 ```
 
-
-
-**Expected output**
+### QC PBS output
 
 * After this command you should get a new `output` directory within `<PROJECT_PATH>`
 * Within `output/`, there will be a sub-drectory `QC_module`
