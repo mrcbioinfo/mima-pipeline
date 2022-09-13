@@ -132,9 +132,8 @@ SINGULARITY_BIND="/opt/refDB:/opt/refDB,/shared/drive:/shared/drive"
 - Repeat for all 3 PBS configuration files (*.cfg)
 {% endcapture %}
 
+{% include alert.html type='danger' title='SINGULARITY_BIND' content=singularity_bind %}
 
-
-{% insert alert.html type='danger' title='SINGULARITY_BIND' content=singularity_bind %}
 ```
 #!/bin/bash
 #PBS -N mima-qc
