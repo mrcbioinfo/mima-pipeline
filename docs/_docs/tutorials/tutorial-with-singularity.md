@@ -83,7 +83,8 @@ From here on, `~/mima_tutorial` will refer to the project directory as depicted 
   - sampleID, 
   - filename of the forward fastq file and 
   - filename of the reverse fastq file
-- Check the filenames are the same as the fastq files extract, update as necessary
+
+Check the filenames are the same as the fastq files extract, update as necessary
 
 ```
 Sample_ID,FileID_R1,FileID_R2
@@ -110,8 +111,8 @@ SRR17380218,SRR17380218.sra_1.fastq.gz,SRR17380218.sra_2.fastq.gz
 
 - Singularity settings
     - `IMAGE_DIR` specifies the location of the *sandbox* container created in [Install MIMA singularity container], **change this location as required**. The path should be the same as your `SANDBOX` environment variable
+    - {% include alert.html type='danger' title='SINGULARITY_BIND' content="Make sure to set the SINGULARITY_BIND environment variable" %}
 
-{% capture singularity_bind %}
 `SINGULARITY_BIND` is an environment variable for mounting directory paths that will be used within the Singularity container. By default, the sandbox will only load the bare minimum locations in order to function, such as your home directory. If the files you need to access are located elsewhere then you need to inform where those locations are.
   - format is comma separated pairs of `<source/path>:<destination/path>`
   - update this line to include the paths to the reference data, for example, let's say we have the following directories for each of the four tools
@@ -130,9 +131,10 @@ SINGULARITY_BIND="/opt/refDB:/opt/refDB,/shared/drive:/shared/drive"
 
 - Find the paths where your reference data are located and update the `SINGULARITY_BIND` environment variable accordingly
 - Repeat for all 3 PBS configuration files (*.cfg)
-{% endcapture %}
 
-{% include alert.html type='danger' title='SINGULARITY_BIND' content=singularity_bind %}
+{{% pageinfo color="primary" %}}
+This is placeholder content.
+{{% /pageinfo %}}
 
 ```
 #!/bin/bash
