@@ -31,10 +31,10 @@ This tutorial covers the data processing pipeline, which consists of the followi
 {{< card header='QC module schema" >}}
 ![]({{site.baseurl}}/assets/img/tutorials/no-singularity/tut_OverallSchema.png)
 {{< /card >}}
+{{< card header="Steps">}}
 1. **Quality control** (QC) of the sequenced reads
 2. **Taxonomy profiling** after QC for assigning reads to taxa (this step can be run in parallel with Step 3)
 3. **Functional profiling** after QC for assigning reads to genes, gene families and pathways (this step can be run in parallel with Step 2)
-{{< card header="Steps">}}
 {{< /card >}}
 {{< /cardpane>}}
 
