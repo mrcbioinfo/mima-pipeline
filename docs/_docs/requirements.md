@@ -2,7 +2,7 @@
 title: Requirements
 ---
 
-# Reference databases
+# Requirements: reference databases
 
 Many steps in the pipeline require access to reference databases. These reference databases can be very big and often are already downloaded by the administators of the high-performance computing clusters. As such they are not included in the Singularity build. To run the pipeline you will need to know where the required reference databases are stored in order to provide the paths as a parameter setting.
 
@@ -10,7 +10,7 @@ Many steps in the pipeline require access to reference databases. These referenc
 
 | Tool | Description | URL                |
 |------|-------------|--------------------|
-| Minimap2 | requires reference genome, we used the Humann reference genome GRCh38.p14 from NCBI (~800MB) | https://www.ncbi.nlm.nih.gov/data-hub/genome/GCF_000001405.40/ (download the Genomic sequence, fasta file) |
+| Minimap2 | requires reference genome, we used the Humann reference genome GRCh38.p14 from NCBI (~800MB) | [https://www.ncbi.nlm.nih.gov/data-hub/genome/GCF_000001405.40/](https://www.ncbi.nlm.nih.gov/data-hub/genome/GCF_000001405.40/){:target="_blank"} (download the Genomic sequence, fasta file) |
 
 
 ## Taxonomy profiling
@@ -18,8 +18,8 @@ Many steps in the pipeline require access to reference databases. These referenc
 
 | Tool | Description | URL |
 |------|-------------|-----|
-| Kraken2 | requires taxonomy reference database | Pre-built: https://benlangmead.github.io/aws-indexes/k2 |
-| Bracken | build indexes from Kraken2 database | Pre-built: https://benlangmead.github.io/aws-indexes/k2 or see tutorial for [Bracken-build](https://ccb.jhu.edu/software/bracken/index.shtml?t=manual#step1){:target="_blank"} |
+| Kraken2 | requires taxonomy reference database | Pre-built: [https://benlangmead.github.io/aws-indexes/k2](https://benlangmead.github.io/aws-indexes/k2){:target="_blank"} |
+| Bracken | build indexes from Kraken2 database | Pre-built: [https://benlangmead.github.io/aws-indexes/k2](https://benlangmead.github.io/aws-indexes/k2){:target="_blank"} or see tutorial for [Bracken-build](https://ccb.jhu.edu/software/bracken/index.shtml?t=manual#step1){:target="_blank"} |
 
 
 ## Functional profiling
@@ -27,8 +27,8 @@ Many steps in the pipeline require access to reference databases. These referenc
 
 | Tool | Description | URL |
 |------|-------------|-----|
-| HUMAnN | requires gene reference databases | See below, https://huttenhower.sph.harvard.edu/humann |
-| Metaphlan3 | requires taxonomy reference database | See below, https://github.com/biobakery/MetaPhlAn |
+| HUMAnN | requires gene reference databases | See below, [https://huttenhower.sph.harvard.edu/humann](https://huttenhower.sph.harvard.edu/humann){:target="_blank"} |
+| Metaphlan3 | requires taxonomy reference database | See below, [https://github.com/biobakery/MetaPhlAn](https://github.com/biobakery/MetaPhlAn){:target="_blank"} |
 
 ### HUMAnN database
 

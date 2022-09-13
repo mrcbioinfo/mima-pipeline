@@ -4,10 +4,10 @@ title: Installation
 
 # Install MIMA Pipeline Singularity container
 
-All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima-pipeline.sif`. Follow the below step-by-step guide to install this container. After installing you can then run the [Data processing with Singularity](tutorial/tutorial-with-singularity) tutorial.
+All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima-pipeline.sif`. Follow the below step-by-step guide to install this container. After installing you can then run the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial.
 
 {% capture environment_note %}
-This section assumes that your HPC/terminal environment already has Singularity installed via `modules`. You will also need to download reference databases required by third party tools, see [Requirements](requirements).
+This section assumes that your HPC/terminal environment already has Singularity installed via `modules`. You will also need to download reference databases required by third party tools, see [Requirements](requirements.md).
 {% endcapture %}
 
 {% include alert.html type="warning" title="Note" content=environment_node %}
