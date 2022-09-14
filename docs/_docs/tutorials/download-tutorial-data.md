@@ -4,59 +4,77 @@ title: Download tutorial data
 
 # Tutorial data
 
-In both tutorials [Data processing with Singularity](tutorial-with-singularity) and [Data processing without Singularity](tutorial-no-singularity), we will use data from the study by [*Tourlousse, et al. (2022)*](https://journals.asm.org/doi/10.1128/spectrum.01915-21), **Characterization and Demonstration of Mock Communities as Control Reagents for Accurate Human Microbiome Community Measures**, Microbiology Spectrum.
+In the tutorials, [Data processing with Singularity](tutorial-with-singularity) and [Data processing without Singularity](tutorial-no-singularity), we will use data from the study by 
 
+> [Tourlousse, *et al.* (2022)](https://journals.asm.org/doi/10.1128/spectrum.01915-21){:target="_blank"}, Characterization and Demonstration of Mock Communities as Control Reagents for Accurate Human Microbiome Community Measures, Microbiology Spectrum.
+> 
 > This data set consists of two mock communities: *DNA-mock* and *Cell-mock*. The mock communities consists of bacteria that are mainly detected the human gastrointestinal tract ecosystem with a small mixture of some skin microbiota. The data was processed in three different labs: A, B and C. In the previous tutorial, , we only processed a subset of the samples (n=9). In this tutorial we will be working with the full data set which has been pre-processed using the same pipeline. In total there were 56 samples of which 4 samples fell below the abundance threshold and therefore the final taxonomy abundance table has 52 samples. We will train the random forest classifier to distinguish between the three labs.
 
-- The raw reads are available from NCBI SRA [Project PRJNA747117](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA747117)
-  - There are 56 paired-end samples (112 fastq files)
-- As the data is very big we will work with a smaller subset to speed up processing (n=9 samples, 18 fastq files)
-- This tutorial teaches you how to prepare the required raw files
+- The raw reads are available from NCBI SRA [Project PRJNA747117](https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA747117){:target="_blank"}, and there are 56 paired-end samples (112 fastq files)
+- As the data is very big we will work with a subset (n=9 samples, 18 fastq files)
+- This tutorial teaches you how to prepare the required raw fastq files
   
-{% include alert.html type="warning" title="Note" content="You will need about 40GB of disk space" %}
+{% include alert.html type="warning" title="Note" content="You will need about 80GB of disk space depending on which option you used for downloading." %}
 
 ---
 
 # Step 1) Download tutorial files
 
-- Download and unpack [mima_tutorial.tar.gz]
-- In this and other tutorial, we will assume that the `~/mima_tutorial` directory is located in your *home directory* (indicated by the `~`, tilde symbol). Change the paths accordingly.
+- Enter the commands below in your terminal
+  - `wget` downloads the zip file [mima_tutorial.zip](https://github.com/xychua/test-gitpages/raw/master/examples/mima_tutorial.zip)
+  - `unzip` unpacks the file
+  - `tree` checks the directory structure
+
+{% include alert.html type='warning' title="Working directory" content="We will assume that the `~/mima_tutorial` directory is located in your *home directory* (indicated by the tilde, `~`, symbol), **change the paths as needed** if you downloaded the files in another location." %}
 
 ```
-$ wget
-$ tar xf mima_tutorial.tar.gz
+$ wget https://github.com/xychua/test-gitpages/raw/master/examples/mima_tutorial.zip
+$ unzip mima_tutorial.zip
 $ tree mima_tutorial
 ```
 
 ```
 ~/mima_tutorial
+├── ftp_download_files.sh
 ├── manifest.csv
-├── metadata.tsv
 ├── pbs_header_func.cfg
 ├── pbs_header_qc.cfg
 ├── pbs_header_taxa.cfg
-└── raw_data
+├── raw_data
+└── SRA_files
 ```
 
 **Data files**
 
-| File | Description |
-|:-----|:------------|
-| SRA_files | contains the SRA identifier of the 9 samples used in the tutorials |
-| manifest.csv | comma separated file of 3 columns, that lists the `sampleID, forward_filename, reverse_filename`|
-| metadata.tsv | tab separated file detailing the metadata for downstream analysis. Usually the first column is the `sampleID` which is the same as the `manifest.csv` file|
-| pbs_header_*.cfg | files are required in the [Data processing with Singularity](tutorial-with-singularity) tutorial (not here) |
+| File                  | Description |
+|:----------------------|:------------|
+| ftp_download_files.sh | direct download FTP links used in [Option A: direct download](#option-a-direct-download) below |
+| SRA_files             | contains the SRA identifier of the 9 samples used in [Option B](#option-b-download-with-sratoolkit) and [Option C](#option-c-download-via-mima-singularity) below |
+| manifest.csv          | comma separated file of 3 columns, that lists the `sampleID, forward_filename, reverse_filename`|
+| pbs_header_*.cfg      | PBS and Singularity configuration files, these are required for [Data processing with Singularity](tutorial-with-singularity) tutorial (not here) |
 
 
 # Step 2) Download SRA files
 
-This section uses the [sratoolkit](https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/) command line tool to download SRA files and unpack them using `fasterq-dump`
+There are 3 options for data download depending on your environment setup.
 
-- If your system already has the `sratoolkit` then follow [Option A: download with `sratoolkit`](#option-a-download-with-sratoolkit)
-- If not, then follow [Option B: download via MIMA](#option-b-download-via-MIMA)
+- [Option A: direct download](#option-a-direct-download) using `curl` command, the files will already be compressed, **you will need ~24GB disk space**. This is specific for this tutorial.
+
+- Options B and C uses the [sratoolkit](https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/) command line tool to download SRA files and unpack them using `fasterq-dump`. **You will need ~75GB disk space before compression**, after compression this will reduce to ~24GB. This option is useful for any public data that is available on NCBI SRA.
+  - Follow [Option B: download with `sratoolkit`](#option-b-download-with-sratoolkit) if your system already have the `sratoolkit` installed or via *modules*
+  - Follow [Option C: download via MIMA](#option-c-download-via-MIMA) if your system does not have `sratoolkit`
 
 
-## Option A: download with `sratoolkit`
+## Option A: direct download
+
+- Run the following command for direct download (for this tutorial)
+
+```
+$ bash FTP_download_files.sh
+```
+
+
+## Option B: download with `sratoolkit`
 
 - Download the SRA files using `prefetch` command
 
@@ -108,7 +126,7 @@ raw_data/
 ```
 $ cd ~/mima_tutorial/raw_data
 $ fasterq-dump --split-files */*.
-$ bzip *.fastq
+$ bzip2 *.fastq
 $ tree .
 ```
 
@@ -154,7 +172,7 @@ $ tree .
 
 ---
 
-## Option B: download via MIMA Singularity
+## Option C: download via MIMA Singularity
 
 - First run [Install MIMA Pipeline Singularity container](installation) and set up the `SANDBOX` environment variable
 - Download the SRA files using `prefetch` command
@@ -206,7 +224,8 @@ raw_data/
 
 ```
 $ cd ~/mima_tutorial/raw_data
-$ singularity exec $SANDBOX fasterq-dump --split-files */*. && bzip *.fastq
+$ singularity exec $SANDBOX fasterq-dump --split-files */*.
+$ singularity exec $SANDBOX bzip2 *.fastq
 $ tree .
 ```
 
