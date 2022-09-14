@@ -43,8 +43,7 @@ Many steps in the pipeline require access to reference databases. These referenc
 ```
 $ singularity exec $SANDBOX humann_databases --available
 ```
-
-- this installs `v201901_v31` database version:
+  
 ```
 HUMAnN Databases ( database : build = location )
 chocophlan : full = http://huttenhower.sph.harvard.edu/humann_data/chocophlan/full_chocophlan.v201901_v31.tar.gz
@@ -56,6 +55,19 @@ uniref : uniref90_ec_filtered_diamond = http://huttenhower.sph.harvard.edu/human
 uniref : DEMO_diamond = http://huttenhower.sph.harvard.edu/humann_data/uniprot/uniref_annotated/uniref90_DEMO_diamond_v201901b.tar.gz
 utility_mapping : full = http://huttenhower.sph.harvard.edu/humann_data/full_mapping_v201901b.tar.gz
 ```
+
+
+{% capture tip_database_version %}
+<p>See <a href='installation'>Install MIMA Pipeline Singularity container</a> for up-to-date details. Briefly,</p>
+
+<ul>
+<li><code class="language-plaintext highlighter-rouge">mima_h350_mpa4.sif</code> requires <code class="language-plaintext highlighter-rouge">v201901_v31</code> version</li>
+<li><code class="language-plaintext highlighter-rouge">mima_h301_mpa3.sif</code> requires <code class="language-plaintext highlighter-rouge">v296_201901b</code> version</li>
+</ul>
+{% endcapture %}
+
+{% include alert.html type='info' title="Database versions" content=tip_database_version %}
+
 
 - enter the command below to install the required databases
   - in the example below we are installing it to the path `~/refDB/humann3` (which is in your home directory), replace this with the location where you want to install the database
@@ -91,9 +103,13 @@ $ mkdir -p ~/refDB/metaphlan_databases
 $ singularity exec $SANDBOX metaphlan --install --bowtie2db ~/refDB/metaphlan_databases/
 ```
 
-- (OPTIONAL), if you want to install to another location, not your home drive then remember to use the `-B` parameter to mount paths when calling `singularity
+**Installing in another location**
+
+- If you want to install to another location, not your home drive then remember to use the `-B` parameter to mount paths when calling `singularity
   - as Singularity loads with minimum settings and won't know your local disk structure
 - For example, below we are installing the metaphlan databases into the path `/another/loc/metaphlan_databases` and first have to use the `-B` parameter
+
 ```
-$ singularity exec -B /another/loc/metaphlan_databases:/another/loc/metaphlan_databases $SANDBOX metaphlan --install --bowtie2db /another/loc/metaphlan_databases
+$ singularity exec -B /another/loc/metaphlan_databases:/another/loc/metaphlan_databases $SANDBOX metaphlan \
+--install --bowtie2db /another/loc/metaphlan_databases
 ```

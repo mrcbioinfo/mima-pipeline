@@ -7,39 +7,61 @@ title: Installation
 All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima-pipeline.sif`. Follow the below step-by-step guide to install this container. After installing you can then run the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial.
 
 {% capture environment_note %}
-This section assumes that your HPC/terminal environment already has Singularity installed via `modules`. You will also need to download reference databases required by third party tools, see [Requirements](requirements.md).
+This section assumes that your HPC/terminal environment already has Singularity installed via `modules`. You will also need to download reference databases required by third party tools, see <a href="requirements">Requirements</a>.
 {% endcapture %}
 
-{% include alert.html type="warning" title="Note" content=environment_node %}
+{% include alert.html type="warning" title="Note" content=environment_note %}
 
 
 ## MIMA pipeline Singularity container
 
-- Download the [mima-pipeline.sif] image file
+There are two versions depending on the reference data you are working with (if you are downloading the reference data from scratch, then it doesn't matter)
+
+| MIMA container file | Humann version | Chocophlan database | Metaphlan version | Metaphlan database|
+|---------------------|---------------:|---------------------|------------------:|-------------------|
+| mima_h350_mpa4.sif  | 3.5            | v201901_v31         | 4.0.1             | v201901_v31 or 202103_vJan21 |
+| mima_h301_mpa3.sif  | 3.0.1          | v296_201901b        | 3.1.0             | v201901_v30       |
+
+- Download the MIMA image file you want (right click above and copy link)
 
 ```
-$ wget
+$ wget 
 ```
 
-- We assume you are on a HPC environment with Singularity installed under `modules` (if not skip the `module` line)
+## Start an interactive PBS job
+
+We assume you are on a HPC environment with Singularity installed under `modules`. Many HPC environments won't allow running Singularity from the login or head node, you will need to start an *interactive* PBS job first.
+
+- In OpenPBS, you can specify an interactive job using the command
+  - this requests an interactive job with 4 CPUs, 4GB ram for 6 hours
+
+```
+$ qsub -I -l select=1:ncpus=4:mem=4gb,walltime=6:00:00
+```
+
+- Once the interactive job has been allocated, load `Singularity` via `modules`
+
+```
+$ module load singularity
+```
+
 - Load singularity first with the `module` command
 
 ```
 $ module load singularity
 $ singularity --version
 ```
-at the time of writing this tutorial we were using `singularity version 3.6.4`
-  - to specify a specific version, use `module load singularity/3.6.4`
+at the time of writing this tutorial we were using `singularity version 3.6.4`. To specify a specific version, use `module load singularity/3.6.4`
 
 ## Build a sandbox and configure environment variables
 
-When running commands using Singularity, the container needs to be unpacked each time. This can be slow when you need to run multiple commands sequentially. We can speed this up by building a 'sandbox' environment, thus skipping the unpacking step.
+When running commands using Singularity, the container needs to be unpacked each time. This can be slow when you need to run multiple commands sequentially. We can speed this up by building a *sandbox* environment, thus skipping the unpacking step.
 
 - Build a *sandbox* called `mima-pipeline` and
 - Create an environment variable called `SANDBOX` to store the full path (helps save typing a long filename each time)
 
 ```
-$ singularity build --sandbox mima-pipeline mima-pipeline.sif
+$ singularity build --sandbox mima-pipeline mima_h301_mpa3.sif
 $ export SANDBOX=`pwd`/mima-pipeline
 ```
 
@@ -53,8 +75,8 @@ $ singularity run $SANDBOX
 Below is the output, check the line **active environment : mima** is the same as below  
 ```
 ----
-This singularity container contains MIMA conda environment
-v1.0.0 - build: 2022-09-06
+This singularity container contains MIMA pipeline
+v1.0.0 - build: 2022-09-14
 
      active environment : mima
     active env location : /opt/miniconda/envs/mima
@@ -88,20 +110,38 @@ v1.0.0 - build: 2022-09-06
        envs directories : /home/z3534482/.conda/envs
                           /opt/miniconda/envs
                platform : linux-64
-             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/3.10.0-1160.62.1.el7.x86_64 ubuntu/22.04.1 glibc/2.35
+             user-agent : conda/4.12.0 requests/2.27.1 CPython/3.9.12 Linux/3.10.0-1160.76.1.el7.x86_64 ubuntu/22.04.1 glibc/2.35
                 UID:GID : 13534482:40064
              netrc file : None
            offline mode : False
 
-Python 3.10.5
+Python 3.10.6
 Rscript (R) version 4.2.1 (2022-06-23)
-humann v3.1.1
+humann v3.0.1
+MetaPhlAn version 3.1.0 (25 Jul 2022)
+java -ea -Xmx138229m -Xms138229m -cp /opt/miniconda/envs/mima/opt/bbmap-38.97-1/current/ clump.Clumpify --version
+BBMap version 38.97
+For help, please run the shellscript with no parameters, or look in /docs/.
+fastp 0.23.2
+2.24-r1122
+Kraken version 2.1.2
+Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)
 ```
+
+The `mima_h301_mpa3.sif` image should return the lines `humann v3.0.1` and `MetaPhlAn version 3.1.0` as above.
+
+The `mima_h350_mpa4.sif` image should return the lines `humann v3.5` and `MetaPhlAn version 4.0.1` (not shown).
+
+----
+
+# Congratulations!
 
 Now you're ready to start the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial
 
 {% capture singularity_bind %}
-By default, Singularity will load the bare minimum filesystem to operate, that is your home directory. It does not automatically have access to other file systems. If you're data is located on another drive or path, then you need to inform Singularity using the `-B` parameter or the `SINGULARITY_BIND` environment variable. See the tutorial for example: [Data processing with Singularity](tutorials/tutorial-with-singularity)
+<p>By default, Singularity will load the bare minimum filesystem to operate, that is your home directory. It does not automatically have access to other file systems. If you're data is located on another drive or path, then you need to inform Singularity using the <code class="language-plaintext highlighter-rouge">-B</code> parameter or the <code class="language-plaintext highlighter-rouge">SINGULARITY_BIND</code> environment variable.</p>
+
+<p>See: <a href="tutorials/tutorial-with-singularity#pbs-configuration-files">Setting environment variable</a> example</p>
 {% endcapture %}
 
-{% include alert.html type="warning" title="Note" content=singularity_bind %}
+{% include alert.html type="info" title="Note" content=singularity_bind %}
