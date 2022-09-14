@@ -18221,12 +18221,13 @@ html body .md-typeset .headerlink {
 }
 
 .td-toc #TableOfContents a {
-    color: #888
+    color: #434343;
 }
 
 .td-toc #TableOfContents a:hover {
     color: #72a1e5;
-    text-decoration: none
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .td-toc ul {
@@ -18320,6 +18321,16 @@ html body .md-typeset .headerlink {
     color: #d95040
 }
 
+.alert-box {
+    border-style: solid;
+    border-color: #6610f2;
+    border-width: 2px 0 0 2px
+}
+
+.alert-box .alert-heading {
+    color: #6610f2
+}
+
 .alert-light {
     border-style: solid;
     border-color: #d3f3ee;
@@ -18355,7 +18366,8 @@ html body .md-typeset .headerlink {
 
 .td-content>h1 {
     font-weight: 700;
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
+    margin-top: 3rem;
 }
 
 .td-content>h2 {

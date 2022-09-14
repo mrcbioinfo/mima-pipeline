@@ -18,8 +18,6 @@ The MRC Metagenomics pipeline consists of four modules:
 This repository contains helper scripts for generating PBS job scripts to process multiple samples.
 Each module will generate outputs in a predefined directory structure and some filenames will be hard-coded. These are used for later modules. 
 
-!!**CAUTION**: Please beware that changing the output file names or paths might not make subsequent scripts in the pipeline work. We are in the process of making this more robust and configurable.
-
 Here you can quickly jump to a particular page.
 
  - [Installation](docs/installation)
