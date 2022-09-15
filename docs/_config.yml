@@ -18,9 +18,7 @@ title: Metagenomics processing pipeline
 email: your-email@domain.com
 author: UNSW MRC Bioinformatics
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Tutorial for running the MIMA pipeline for processing shotgun metagenomics samples.
 
 # Add your baseurl here (your repository) but DO NOT CHANGE THE LINE NUMBER without editing .circleci/circle_urls.sh
 baseurl: "/test-gitpages" # the subpath of your site, e.g. /blog
@@ -68,7 +66,6 @@ fixedNav: 'true' # true or false
 
 #permalink: /:year/:title/
 permalink: /:year/:title
-#markdown: kramdown
 exclude: [_site, CHANGELOG.md, LICENSE, README.md, vendor]
 
 # Collections
@@ -84,8 +81,7 @@ defaults:
       type: "docs"
     values:
       layout: page
-  -
-    scope:
+  - scope:
       path: ""
       type: "pages"
     values:

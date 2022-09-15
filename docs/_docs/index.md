@@ -1,5 +1,5 @@
 ---
-title: Documentation
+title: Getting started
 ---
 
 Here you can quickly jump to a particular section.

@@ -718,7 +718,7 @@ $ singularity run --app mima-func $SANDBOX \
 -o ~/mima_tutorial/output \
 --nucleotide-database </path/to>/humann3/chocophlan \
 --protein-database /<path/to>/humann3/uniref \
---utility-database /<path/to>/humann3/uniref \
+--utility-database /<path/to>/humann3/unitility_mapping \
 --metaphlan-database="--bowtie2db /<path/to>/metaphlan_databases" \
 --mode singularity \
 --pbs-config pbs_header_func.cfg
