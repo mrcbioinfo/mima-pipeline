@@ -11,7 +11,6 @@ Here we have tutorials with step-by-step instructions on how to run the pipeline
 
  - [Download tutorial data](download-tutorial-data)
  - [Data processing with Singularity](tutorial-with-singularity)
- - [Data processing without Singularity](tutorial-no-singularity)
  - [Core diversity analysis and visualisation](core-diversity-analysis-visualisation)
  - [Classification with Random Forest](classification-random-forest)
 

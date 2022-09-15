@@ -4,7 +4,7 @@ title: Download tutorial data
 
 # Tutorial data
 
-In the tutorials, [Data processing with Singularity](tutorial-with-singularity) and [Data processing without Singularity](tutorial-no-singularity), we will use data from the study by 
+In the [Data processing with Singularity](tutorial-with-singularity) tutorial, we will use data from the study by 
 
 > [Tourlousse, *et al.* (2022)](https://journals.asm.org/doi/10.1128/spectrum.01915-21){:target="_blank"}, Characterization and Demonstration of Mock Communities as Control Reagents for Accurate Human Microbiome Community Measures, Microbiology Spectrum.
 > 

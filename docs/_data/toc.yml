@@ -12,8 +12,6 @@
       url: "docs/tutorials/download-tutorial-data"
     - title: Data processing with Singularity
       url: "docs/tutorials/tutorial-with-singularity"
-    - title: Data processing without Singularity
-      url: "docs/tutorials/tutorial-no-singularity"
 - title: Tutorials - analytics
   url: "docs/tutorials"
   links:
