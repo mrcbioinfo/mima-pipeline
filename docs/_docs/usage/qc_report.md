@@ -15,7 +15,7 @@ The table columns are described below.
 # Basic usage
 
 ```
-python qc_report.py -i path/to/input_dir -o path/to/output_dir -m path/to/METADATA
+singularity run --app mima-qc-report $SANDBOX -i <path/to/input_dir> -o <path/to/output_dir> -m <path/to/METADATA>
 ```
 
 ## Required inputs
@@ -57,25 +57,22 @@ The QC report is a tab-separated file with the following columns:
 # Full help
 
 ```
-usage: qc_report.py -i INPUT_DIR -o OUTPUT_DIR -m MANIFEST [-h] [--verbose]
-                    [--debug]
+usage: qc_report.py -i INPUT_DIR -o OUTPUT_DIR -m MANIFEST [-h] [--verbose] [--debug]
 
 Generates QC report of your sequences
 
 [1] Required arguments:
   -i INPUT_DIR, --input-dir INPUT_DIR
-                        path to directory which consists the QCReport folder
-                        from qc_module.py script. The QCReport folder contains
-                        the JSON report from FastP. This script assumes that
-                        the PBS log files are in this directory. It will
-                        search for PBS log files with the suffix
-                        'qc_module.oXXX' where XXX is the PBS job ID.
+                        path to directory which consists the QCReport folder from qc_module.py
+                        script. The QCReport folder contains the JSON report from FastP. This
+                        script assumes that the PBS log files are in this directory. It will
+                        search for PBS log files with the suffix 'qc_module.oXXX' where XXX is
+                        the PBS job ID.
   -o OUTPUT_DIR, --output-dir OUTPUT_DIR
                         path to output directory
   -m MANIFEST, --manifest MANIFEST
-                        path to manifest file in .csv format. The header line
-                        is case sensitive, and must follow the following
-                        format with no spaces between commas.
+                        path to manifest file in .csv format. The header line is case sensitive,
+                        and must follow the following format with no spaces between commas.
                         Sample_ID,FileID_R1,FileID_R2
 
 [2] Optional arguments:

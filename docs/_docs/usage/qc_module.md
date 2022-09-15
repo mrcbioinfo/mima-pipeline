@@ -15,7 +15,7 @@ The bash script is then wrapped within a PBS script for submission to the job ha
 # Basic usage
 
 ```
-$python3 qc_module.py -i </full_path/to/raw_data> -o </full_path/to/output_dir> -m </full_path/to/manifest.csv> -e <email>
+$ singularity run --app mima-qc $SANDBOX -i </full_path/to/raw_data> -o </full_path/to/output_dir> -m </full_path/to/manifest.csv> --num-pbs-jobs 3
 ```
 
 ## Required inputs
@@ -24,8 +24,8 @@ $python3 qc_module.py -i </full_path/to/raw_data> -o </full_path/to/output_dir> 
 |:----------|:------------|
 | `-i <raw_data>` | Path to directory with all the raw read (fastQ) files |
 | `-o <output_dir>` | Path to directory where the bash scripts and PBS wrapper will be generated |
-| `-e <email>` | Email address to include in the PBS wrapper script, notification of job ending or aborting will be sent to this address |
 | `-m <manifest.csv>` | The manifest file is a CSV text file that contains metadata about the raw FastQ files. The current version expected paired-end reads with separate files for the forward and reverse reads. The CSV format contains three columns with the headings: **Sample_ID,FileID_R1,FileID_R2**. The headings are case sensitive with no spaces between commas (see example below) |
+| `--num-pbs-jobs <num>` | Number of PBS jobs where the number of samples processed will be equally distributed amongst the number of jobs [default=4] |
 
 ```
       Sample_ID,FileID_R1,FileID_R2
@@ -65,9 +65,9 @@ The directory structure resembles:
 
 ```
 usage: qc_module.py -i INPUT_DIR -o OUTPUT_DIR -m MANIFEST [-s SUBS] [-r REF]
-                    -e EMAIL [--mode {single,singularity}] [-w WALLTIME]
-                    [-M MEM] [-t THREADS] [--num-pbs-jobs NUM_PBS_JOBS] [-h]
-                    [--verbose] [--debug]
+                    [--mode {single,singularity}] [-w WALLTIME] [-M MEM] [-t THREADS] [-e EMAIL]
+                    [--pbs-config PBS_CONFIG] [--num-pbs-jobs NUM_PBS_JOBS] [-h] [--verbose]
+                    [--debug]
 
 Quality checking module part of the MRC Metagenomics pipeline
 
@@ -77,32 +77,34 @@ Quality checking module part of the MRC Metagenomics pipeline
   -o OUTPUT_DIR, --output-dir OUTPUT_DIR
                         path to output directory
   -m MANIFEST, --manifest MANIFEST
-                        path to manifest file in .csv format. The header line
-                        is case sensitive, and must follow the following
-                        format with no spaces between commas.
+                        path to manifest file in .csv format. The header line is case sensitive,
+                        and must follow the following format with no spaces between commas.
                         Sample_ID,FileID_R1,FileID_R2
-  -e EMAIL, --email EMAIL
-                        PBS setting - email address
 
 [2] QC settings:
-  -s SUBS, --subs SUBS  Maximum number of substitutions allowed between
-                        duplicates used for clumpify.sh from BBTools
+  -s SUBS, --subs SUBS  Maximum number of substitutions allowed between duplicates used for
+                        clumpify.sh from BBTools
   -r REF, --ref REF     file path to reference host genome
 
 [3] PBS settings:
   --mode {single,singularity}
-                        Mode to generate PBS scripts, currently supports
-                        single sample mode only [default=single]
+                        Mode to generate PBS scripts, currently supports single sample mode only
+                        [default=single]
   -w WALLTIME, --walltime WALLTIME
-                        walltime hours required for PBS job of MODE
-                        [default=2]
+                        walltime hours required for PBS job of MODE [default=2]
   -M MEM, --mem MEM     memory (GB) required for PBS job of MODE [default=64]
   -t THREADS, --threads THREADS
                         number of threads for PBS job of MODE [default=8]
+  -e EMAIL, --email EMAIL
+                        PBS setting - email address
+  --pbs-config PBS_CONFIG
+                        Must be set when --mode singularity. Path to PBS configuration file
+                        which must includ PBS headers and any other required settings to run the
+                        singularity image. Contents in the config file will be included at the
+                        top of all generated PBS scripts [default=None]
   --num-pbs-jobs NUM_PBS_JOBS
-                        Number of PBS jobs where the number of samples
-                        processed will be equally distributed amongst the
-                        number of jobs [default=4]
+                        Number of PBS jobs where the number of samples processed will be equally
+                        distributed amongst the number of jobs [default=4]
 
 [4] Optional arguments:
   -h, --help            show this help message and exit

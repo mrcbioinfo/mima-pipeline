@@ -2,19 +2,28 @@
 title: taxa_plot.pl
 ---
 
-This script generates a taxonomy barplot for `top N` taxa given an input feature table for each sample in the study. It also generates a taxonomy barplot where relative abundances are averaged per group as specified by the user for catgorical variable.
+This script generates a taxonomy bar plot for `top N` taxa given an input feature table for each sample in the study. It also generates a taxonomy bar plot where relative abundances are averaged per group as specified by the user for categorical variable.
 
 ***
 
 
-# Usage
+# Basic Usage
 
 ```
-perl taxa_plot.pl <feature_table.tsv> <metadata.tsv> <column_group:g1:g2> <output_dir> <output_prefix> <top_N> <figure_width> <figure_height>
+$ singularity run --app mima-vis-taxa sif-06-mima-pipeline <feature_table.tsv> <metadata.tsv> <column_group:g1:g2> <output_dir> <output_prefix> <top_N> <figure_width> <figure_height>
+```
+
+- below explains each of the parameters
+- **note** output path needs to be create first, see [Core diversity analysis and visualisation]({{site.baseurl}}/docs/tutorials/core-diversity-analysis-visualisation) tutorial
+
+
+```
+USAGE:
+perl /opt/mima/scripts/visualisation/taxa_plot.pl <feature_table.tsv> <metadata.tsv> <column_group:g1:g2> <output_dir> <output_prefix> <top_N> <figure_width> <figure_height>
 
    feature_table.tsv         path to the taxonomic feature table of relative abundances
    metadata.tsv              path to the study metadata table with group information
-   column_group:g1:g2        group-column from metadata table and group levels in the format [column_group:group1:group2]
+   column_grouop:g1:g2       group-column from metadata table and group levels in the format [column_group:group1:group2]
    output_dir                path to output directory
    output_prefix             prefix that will be used for output files
    top_N                     top N taxa to show in the stack bar plot, remaining taxa are grouped together as 'Others'

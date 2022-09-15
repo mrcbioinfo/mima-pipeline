@@ -7,23 +7,48 @@ This script runs Random Forest classification training and testing using
 ***
 
 
-# Usage
+# Basic usage
 
 ```
-Usage: random_forest/classifier_pipeline.R [options]
+$ singularity run --app mima-classifier-RF $SANDBOX \
+-i <path/to/input/file> \
+-m <path/to/metadata> \
+-c column \
+-o <path/to/output>
+```
+
+* see below for parameter explanations
+* **note** the output directory needs to be created first, see [Classification with Random Forest](../tutorials/classification-random-forest) tutorial
+
+***
+
+# Full help
+
+```
+Usage: /opt/mima/scripts/classifier/random_forest/classifier_pipeline.R [options]
+
 
 Options:
-        -i CHARACTER, --input=CHARACTER
-                input file: a list of comma seperated feature tables with rows (first row is header) and columns (first column is sample ID) indicate features and samples, respectively
+        -i INPUT, --input=INPUT
+                input file: a list of tab seperated feature tables
+                with rows (first row is header) and columns (first column is
+                sample ID) indicate features and samples, respectively
 
-        -m CHARACTER, --metadata=CHARACTER
-                input file: a two-column metadata table (first row is header), which is applied to all the feature tables, with first and second columns indicate samples and categories, respectively
+        -m METADATA, --metadata=METADATA
+                input file of study metadata where the first row is
+                header and the first column is assumed to be the same ID. The
+                metadata is applied to all the feature tables
 
-        -o CHARACTER, --output=CHARACTER
+        -c COLUMN, --column=COLUMN
+                column header from the metadata table that contains
+                the grouping categories for classfication
+
+        -o OUTPUT, --output=OUTPUT
                 output directory
 
         -h, --help
                 Show this help message and exit
+
 
 ```
 
