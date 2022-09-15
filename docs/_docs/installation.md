@@ -19,13 +19,13 @@ There are two versions depending on the reference data you are working with (if 
 
 | MIMA container file | Humann version | Chocophlan database | Metaphlan version | Metaphlan database|
 |---------------------|---------------:|---------------------|------------------:|-------------------|
-| mima_h350_mpa4.sif  | 3.5            | v201901_v31         | 4.0.1             | v201901_v31 or 202103_vJan21 |
-| mima_h301_mpa3.sif  | 3.0.1          | v296_201901b        | 3.1.0             | v201901_v30       |
+| [mima_h350_mpa4.sif](https://github.com/xychua/mima-pipeline/releases/download/v1.0.0/mima_h350_mpa401.sif){:target="_blank"} (1.64GB)  | 3.5            | v201901_v31         | 4.0.1             | v201901_v31 or 202103_vJan21 |
+| [mima_h301_mpa3.sif](https://github.com/xychua/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif){:target="_blank"} (1.61GB)  | 3.0.1          | v296_201901b        | 3.1.0             | v201901_v30       |
 
 - Download the MIMA image file you want (right click above and copy link)
 
 ```
-$ wget 
+$ wget https://github.com/xychua/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif
 ```
 
 ## Start an interactive PBS job
