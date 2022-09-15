@@ -77,11 +77,29 @@ $ tree .
 - there should be 4 PDF files and 1 log file
 - the PDF files are figures which are explained in the table below
 
-
-| Output file | Description | Image    |
-|-------------|-------------|----------:|
-| cv_auc.pdf  | plot showing the area under the curve | ![](../../assets/img/tutorials/classifer/random-forest-HMP/cv_auc.png) |
-| roc_classif.randomForest_dataset.pdf | plot showing | ![](../../assets/img/tutorials/classifer/random-forest-HMP/roc_classif.randomForest_dataset.png) |
-| roc_data_1_classifier.pdf | plot showing | | ![](../../assets/img/tutorials/classifer/random-forest-HMP/roc_data_1_classifier.png) |
-| roc_data_1.png | | ![](../../assets/img/tutorials/classifer/random-forest-HMP/roc_data_1.png) |
-
+<table class="table table-borderless">
+<tr>
+  <td>
+    <p>cv_auc.pdf</p> 
+    <img src="{{site.baseurl}}/assets/img/tutorials/classifer/random-forest-HMP/cv_auc.png" height="50%"/>
+    <p>For each input table, cv_auc.pdf has the area under the curve (AUC) values against number of folds (3 to 10 folds)</p>
+  </td>
+  <td>
+    <p>roc_classif.randomForest_dataset.pdf</p> 
+    <img src="{{site.baseurl}}/assets/img/tutorials/classifer/random-forest-HMP/roc_classif.randomForest_dataset.png" height="40%"/>
+    <p>Has the AUC plot for all the data table input in a single figure</p>
+  </td>
+</tr>
+<tr>
+  <td>
+    <p>roc_data_1_classifier.pdf</p> 
+    <img src="{{site.baseurl}}/assets/img/tutorials/classifer/random-forest-HMP/roc_data_1_classifier.png" height="50%"/>
+    <p>roc_data_1_classifier.pdf is for data table 1, plot roc by combining all the classifiers into one figure</p>
+  </td>
+  <td>
+    <p>roc_data_1.pdf</p> 
+    <img src="{{site.baseurl}}/assets/img/tutorials/classifer/random-forest-HMP/roc_data_1.png" height="40%"/>
+    <p>roc_data_1.pdf has the confidence intervals</p>
+  </td>
+</tr>
+s</table>

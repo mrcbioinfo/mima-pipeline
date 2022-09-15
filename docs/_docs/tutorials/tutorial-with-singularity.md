@@ -734,9 +734,10 @@ $ singularity run --app mima-func $SANDBOX \
 | `--protein-database <path>` | yes | directory containing the protein database, (default=/refdb/humann/uniref) |
 | `--utility-database <path>` | yes | directory containing the protein database, (default=/refdb/humann/utility_mapping) |
 | `--metaphlan-database <path>` | yes | directory containing the metaphlan database, (default=/refdb/humann/metaphlan_databases) |
-| `--mpa3` | no | set this parameter if you need to run with Metaphlan 3 algorithm using the MIMA image with Metaphlan 4.0.1 installed|
 | `--mode simgularity` | no (default='single') | set this if you are running in the singularity mode. By default, the PBS scripts generated are for the 'standalone' option, that is without Singularity |
 | `--pbs-config` | yes if `--mode singularity` | path to the pbs configuration file (see below). You must specify this parameter if `--mode singularity` is set. You do not need to set this parameter if running outside of Singularity | 
+| ---------- | --------- | ----------- |
+| `--mpa3` | no | **note!** if you are using mima_h350_mpa401.sif container which contains Metaphlan 4, you can set `--mpa3` for backward compatibility with Metaphlan 3 databases (see [here](https://forum.biobakery.org/t/announcing-metaphlan-4/3994){:target="_blank"}) |
 
 **Expected output**
 
