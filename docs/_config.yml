@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Metagenomics processing pipeline
-email: your-email@domain.com
+email: mrc_bioinformatics_unit@groups.unsw.edu.au
 author: UNSW MRC Bioinformatics
 description: > # this means to ignore newlines until "baseurl:"
   Tutorial for running the MIMA pipeline for processing shotgun metagenomics samples.
@@ -28,9 +28,9 @@ domain: xychua.github.io
 url: "https://xychua.github.io" # the base hostname & protocol for your site
 
 # Social (First three Required)
-repo: "https://github.com/xychua/test-gitpages"
+repo: "https://github.com/xychua/mima-pipeline"
 github_user: "xychua"
-github_repo: "test-gitpages"
+github_repo: "mima-pipeline"
 github_branch: "master"
 
 # Optional
