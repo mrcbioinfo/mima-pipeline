@@ -182,6 +182,8 @@ If the <code class="language-plaintext highlighter-rouge">mima_tutorial</code> f
 
 Check the filenames are the same as the fastq files extract, update as necessary
 
+Note that the filenames don't need to be absolute paths as we will specify the fullpath in step 1 QC module.
+
 ```
 Sample_ID,FileID_R1,FileID_R2
 SRR17380209,SRR17380209.sra_1.fastq.gz,SRR17380209.sra_2.fastq.gz
@@ -311,7 +313,7 @@ $ cat ~/mima_tutorial/output/QC_module/qcModule_0.pbs
 ```
 
 Your PBS script should look something like below, with some differences
-  - the `~` symbols is probably replaced with your actual home directory
+  - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
   - the `SINGULARITY_BIND` will be set to what you have configured above
 
@@ -333,11 +335,11 @@ IMAGE_DIR=~/mima-pipeline
 export SINGULARITY_BIND="..."
 
 
-cd ~/mima_tutorial/output03/QC_module/
+cd /home/user/mima_tutorial/output/QC_module/
 
-singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03/QC_module/SRR17380209.sh > SRR17380209_qc_module.log 2>&1
-singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03/QC_module/SRR17380232.sh > SRR17380232_qc_module.log 2>&1
-singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03/QC_module/SRR17380236.sh > SRR17380236_qc_module.log 2>&1
+singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380209.sh > SRR17380209_qc_module.log 2>&1
+singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380232.sh > SRR17380232_qc_module.log 2>&1
+singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380236.sh > SRR17380236_qc_module.log 2>&1
 ```
 
 - Submit PBS job
@@ -524,7 +526,7 @@ $ cat ~/mima_tutorial/output/Taxonomy_profiling/run_taxa_profiling.pbs
 ```
 
 Your PBS script should look something like below, with some differences
-  - the `~` symbols is probably replaced with your actual home directory
+  - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
   - the `SINGULARITY_BIND` will be set to what you have configured above
 
@@ -548,10 +550,10 @@ IMAGE_DIR=~/mima-pipeline
 export SINGULARITY_BIND="..."
 
 
-cd ~/mima_tutorial/output/Taxonomy_profiling/
+cd /home/user/mima_tutorial/output/Taxonomy_profiling/
 
-singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03/Taxonomy_profiling/SRR17380209.sh
-singularity exec ${IMAGE_DIR} bash /home/z3534482/examples/mini_mock_v2/output03/Taxonomy_profiling/SRR17380232.sh
+singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/Taxonomy_profiling/SRR17380209.sh
+singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/Taxonomy_profiling/SRR17380232.sh
 ...
 ```
 
@@ -768,7 +770,7 @@ $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
 ```
 
 Your PBS script should look something like below, with some differences
-  - the `~` symbols is probably replaced with your actual home directory
+  - the `/home/user` is replaced with the full path to your actual home directory
   - `<path/to/db>` databases will be replaced with what you set above for `--nucleotide-database` etc
   
 - The first few lines come from the `pbs_header_func.cfg` configuration file (see [PBS configuration files](#pbs-configuration-files))
@@ -790,12 +792,12 @@ IMAGE_DIR=~/mima-pipeline
 export SINGULARITY_BIND="..."
 
 
-cd ~/mima_tutorial/output/Function_profiling/
+cd /home/user/mima_tutorial/output/Function_profiling/
 
 # Execute HUMAnN3
-cat ~/mima_tutorial/output/QC_module/CleanReads/SRR17380209_clean_1.fq.gz ~/mima_tutorial/output/QC_module/CleanReads/SRR17380209_clean_2.fq.gz > ~/mima_tutorial/output/Function_profiling/SRR17380209_combine.fq.gz
+cat /home/user/mima_tutorial/output/QC_module/CleanReads/SRR17380209_clean_1.fq.gz ~/mima_tutorial/output/QC_module/CleanReads/SRR17380209_clean_2.fq.gz > ~/mima_tutorial/output/Function_profiling/SRR17380209_combine.fq.gz
 
-outdir=~/mima_tutorial/output/Function_profiling/
+outdir=/home/user/mima_tutorial/output/Function_profiling/
 singularity exec ${IMAGE_DIR} humann -i ${outdir}SRR17380209_combine.fq.gz --threads 28 \
 -o $outdir --memory-use maximum \
 --nucleotide-database </path/to/humann3>/chocophlan \
