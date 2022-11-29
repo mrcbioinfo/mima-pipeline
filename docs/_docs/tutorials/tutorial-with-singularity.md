@@ -463,7 +463,7 @@ Key steps in the taxonomy profiling module are:
 - **Make sure** to change the path for `--reference-path` parameter below to where your Kraken database is located
 
 ```
-$ singularity run --app mima-taxa \
+$ singularity run --app mima-taxa-profiling $SANDBOX\
 -i ~/mima_tutorial/output/QC_module/CleanReads \
 -o ~/mima_tutorial/output \
 --reference-path </path/to/Kraken2_db> \
@@ -715,7 +715,7 @@ One PBS script per sample will be generated in this module. The key steps are sh
 - **Make sure** to change the paths for all the `--*-database` parameter settings to where your reference database are located
 
 ```
-$ singularity run --app mima-func $SANDBOX \
+$ singularity run --app mima-function-profiling $SANDBOX \
 -i ~/mima_tutorial/output/QC_module/CleanReads \
 -o ~/mima_tutorial/output \
 --nucleotide-database </path/to>/humann3/chocophlan \
