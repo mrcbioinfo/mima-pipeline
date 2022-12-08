@@ -318,7 +318,7 @@ $ cat ~/mima_tutorial/output/QC_module/qcModule_0.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
-  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where minimap2 database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
+  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where **minimap2** database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
 
 ``` bash
 #!/bin/bash
@@ -528,7 +528,7 @@ $ cat ~/mima_tutorial/output/Taxonomy_profiling/run_taxa_profiling.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
-  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where Kraken2 database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
+  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where **Kraken2** database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
   - note that walltime is set to 10 hours, increase this if you have more samples
   - note that memory this time is set to 300GB, increase if you need
 
@@ -770,7 +770,7 @@ $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - `<path/to/db>` databases will be replaced with what you set above for `--nucleotide-database` etc
-  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where Kraken2 database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
+  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where **HUMAnN** and **MetaPhlAn** databases are stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
   - note that the walltime is set to 8 hours, you might need to increase this for your own samples if they are larger than the examples used in this tutorial
 
 ``` bash
