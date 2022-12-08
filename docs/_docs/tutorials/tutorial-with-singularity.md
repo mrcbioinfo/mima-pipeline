@@ -256,6 +256,7 @@ $ singularity run --app mima-qc $SANDBOX \
 -o ~/mima_tutorial/output \
 -m ~/mima_tutorial/manifest.csv \
 --num-pbs-jobs 3 \
+--ref <path/to/human/GRCh38_latest_genome.fna>
 --mode singularity \
 --pbs-config pbs_header_qc.cfg
 ```
@@ -267,6 +268,8 @@ $ singularity run --app mima-qc $SANDBOX \
 | `-i <input>` | yes | must be *full path* to where the raw sequenced reads are stored (these files often have the \*.fastq.gz or \*.fq.gz extension). This path is used to find the *FileID\_R1* and *FileID\_R2* columns specified in the *manifest.csv* file provided (see below). |
 | `-o <output>` | yes | must be the *full path* to where you would like the output files to be saved. The `<output>` path will be created if it does not exists. **Note** if there are already existing subdirectories in the `<output>` path, then this step will fail. |
 | `-m <manifest.csv>` | yes | a comma-seperated file (\*.csv) that has three columns with the headers: **Sample\_ID, FileID\_R1, FileID\_R2** see the example below. *Note* the fileID\_R1 and fileID\_R2 are relative to the `-i <input>` path provided. |
+| `--num-pbs-jobs` | no (default=4) | number of PBS scripts to generate by default 4 jobs are created with samples split equally between the jobs |
+| `--ref` | yes | path to the host genome file GRCh38_latest_genome.fna |
 | `--mode simgularity` | no (default='single') | set this if you are running in the singularity mode. By default, the PBS scripts generated are for the 'standalone' option, that is without Singularity |
 | `--pbs-config` | yes if `--mode singularity` | path to the pbs configuration file (see below). You must specify this parameter if `--mode singularity` is set. You do not need to set this parameter if running outside of Singularity | 
 
@@ -315,7 +318,7 @@ $ cat ~/mima_tutorial/output/QC_module/qcModule_0.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
-  - remember to configure the `SINGULARITY_BIND` environment variable mentioned above in [PBS configuration files](#pbs-configuration-files)
+  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where minimap2 database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
 
 ``` bash
 #!/bin/bash
@@ -329,7 +332,7 @@ set -x
 module load singularity/3.6.4
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="..."
+export SINGULARITY_BIND="/path/to/humann/GRCh38:/opt/refDB"
 
 
 cd /home/user/mima_tutorial/output/QC_module/
@@ -525,7 +528,7 @@ $ cat ~/mima_tutorial/output/Taxonomy_profiling/run_taxa_profiling.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
-  - remember to configure the `SINGULARITY_BIND` environment variable mentioned above in [PBS configuration files](#pbs-configuration-files)
+  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where Kraken2 database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
   - note that walltime is set to 10 hours, increase this if you have more samples
   - note that memory this time is set to 300GB, increase if you need
 
@@ -542,7 +545,7 @@ set -x
 module load singularity/3.6.4
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="..."
+export SINGULARITY_BIND="/path/to/kraken2/reference_database:/path/to/kraken2/reference_database"
 
 
 cd /home/user/mima_tutorial/output/Taxonomy_profiling/
@@ -767,7 +770,7 @@ $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - `<path/to/db>` databases will be replaced with what you set above for `--nucleotide-database` etc
-  - remember to configure the `SINGULARITY_BIND` environment variable mentioned above in [PBS configuration files](#pbs-configuration-files)
+  - remember to configure the `SINGULARITY_BIND` environment variable to include the directory where Kraken2 database is stored (see above [PBS configuration files](#pbs-configuration-files) for explanation)
   - note that the walltime is set to 8 hours, you might need to increase this for your own samples if they are larger than the examples used in this tutorial
 
 ``` bash
@@ -782,7 +785,7 @@ set -x
 module load singularity/3.6.4
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="..."
+export SINGULARITY_BIND="/path/to/humann3_database:/path/to/humann3_database,/path/to/metaphlan_databases:path/to/metaphlan_databases"
 
 
 cd /home/user/mima_tutorial/output/Function_profiling/
