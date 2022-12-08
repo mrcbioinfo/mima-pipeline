@@ -40,7 +40,7 @@ This tutorial covers the data processing pipeline, which consists of the followi
 
 {% include alert.html type='warning' title='Note' content="In steps 1 to 3, the pipeline generates one or more PBS scripts, which then have to be submitted to the PBS manager to actually process the reads and generate the output." %}
 
----
+----
 
 # Getting started
 
@@ -163,7 +163,7 @@ set -x
 module load singularity/3.6.4
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="</path/to/source1/>:</path/to/destination1>,</path/to/source2>:</path/to/destination2>"
+export SINGULARITY_BIND="</path/to/source1>:</path/to/destination1>,</path/to/source2>:</path/to/destination2>"
 ```
 
 {% capture tip_export %}
@@ -194,7 +194,7 @@ SRR17380218,SRR17380218.sra_1.fastq.gz,SRR17380218.sra_2.fastq.gz
 ...
 ```
 
----
+----
 
 # How this tutorial works
 
@@ -315,10 +315,7 @@ $ cat ~/mima_tutorial/output/QC_module/qcModule_0.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
-  - the `SINGULARITY_BIND` will be set to what you have configured above
-
-- The first few lines are the same as `pbs_header_qc.cfg` configuration file as it has been directly inserted (see above [PBS configuration files](#pbs-configuration-files) for explanation)
-  - the `SINGULARITY_BIND` will be set to what you have configured above
+  - remember to configure the `SINGULARITY_BIND` environment variable mentioned above in [PBS configuration files](#pbs-configuration-files)
 
 ``` bash
 #!/bin/bash
@@ -528,11 +525,9 @@ $ cat ~/mima_tutorial/output/Taxonomy_profiling/run_taxa_profiling.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - your IMAGE_DIR might be in a different location
-  - the `SINGULARITY_BIND` will be set to what you have configured above
-
-- The first few lines are the same as `pbs_header_taxa.cfg` configuration file as it has been directly inserted (see above [PBS configuration files](#pbs-configuration-files) for explanation)
+  - remember to configure the `SINGULARITY_BIND` environment variable mentioned above in [PBS configuration files](#pbs-configuration-files)
   - note that walltime is set to 10 hours, increase this if you have more samples
-  - note that memory this time is set to 300GB
+  - note that memory this time is set to 300GB, increase if you need
 
 
 ``` bash
@@ -772,10 +767,8 @@ $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
 Your PBS script should look something like below, with some differences
   - the `/home/user` is replaced with the full path to your actual home directory
   - `<path/to/db>` databases will be replaced with what you set above for `--nucleotide-database` etc
-  
-- The first few lines come from the `pbs_header_func.cfg` configuration file (see [PBS configuration files](#pbs-configuration-files))
-  - note that the walltime is set to 8 hours, you might need to increase this for your own samples which may be larger than the example
-  - the `SINGULARITY_BIND` will be set to what you have configured above
+  - remember to configure the `SINGULARITY_BIND` environment variable mentioned above in [PBS configuration files](#pbs-configuration-files)
+  - note that the walltime is set to 8 hours, you might need to increase this for your own samples if they are larger than the examples used in this tutorial
 
 ``` bash
 #!/bin/bash
