@@ -123,7 +123,7 @@ From here on, `~/mima_tutorial` will refer to the project directory as depicted 
   <li>format is comma separated pairs of <code class="language-plaintext highlighter-rouge"></local/source/path>:</singularity/bind/path></code> (both source and bind path can be the same, see example below)</li>
   <li>for example, let's say we have reference databases locations for each of the four tools</li>
     <ul>
-      <li>minimap2: <code class="language-plaintext highlighter-rouge">/opt/refDB/humann/GRCh38</code>,</li>
+      <li>minimap2: <code class="language-plaintext highlighter-rouge">/opt/refDB/human/GRCh38</code>,</li>
       <li>kraken2: <code class="language-plaintext highlighter-rouge">/shared/drive/GTDB_Kraken2</code>,</li>
       <li>humann: <code class="language-plaintext highlighter-rouge">/shared/drive/humann</code></li>
       <li>metaphlan: <code class="language-plaintext highlighter-rouge">/opt/refDB/metaphlan_databases</code></li>
@@ -332,7 +332,7 @@ set -x
 module load singularity/3.6.4
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="/path/to/humann/GRCh38:/opt/refDB"
+export SINGULARITY_BIND="/path/to/human/GRCh38:/path/to/human/GRCh38"
 
 
 cd /home/user/mima_tutorial/output/QC_module/
@@ -785,7 +785,7 @@ set -x
 module load singularity/3.6.4
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="/path/to/humann3_database:/path/to/humann3_database,/path/to/metaphlan_databases:path/to/metaphlan_databases"
+export SINGULARITY_BIND="/path/to/humann3_database:/path/to/humann3_database,/path/to/metaphlan_databases:/path/to/metaphlan_databases"
 
 
 cd /home/user/mima_tutorial/output/Function_profiling/
