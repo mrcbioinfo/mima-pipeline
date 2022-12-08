@@ -24,14 +24,14 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "/mima-pipeline" # the subpath of your site, e.g. /blog
 
 # This is mostly for testing
-domain: xychua.github.io
-url: "https://xychua.github.io" # the base hostname & protocol for your site
+domain: mrcbioinfo.github.io
+url: "https://mrcbioinfo.github.io" # the base hostname & protocol for your site
 
 # Social (First three Required)
-repo: "https://github.com/xychua/mima-pipeline"
-github_user: "xychua"
+repo: "https://github.com/mrcbioinfo/mima-pipeline"
+github_user: "mrcbioinfo"
 github_repo: "mima-pipeline"
-github_branch: "master"
+github_branch: "master/docs"
 
 # Optional
 #twitter: vsoch

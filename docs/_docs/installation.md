@@ -4,7 +4,7 @@ title: Installation
 
 # Install MIMA Pipeline Singularity container
 
-All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima-pipeline.sif`. Follow the below step-by-step guide to install this container. After installing you can then run the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial.
+All tools required by the MIMA pipeline are encapsulated into a Singularity container called `mima_hXXX_mpaX.sif`, where the XXX depends on the version. Follow the guide below to install this container. After installing you can then run the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial.
 
 {% capture environment_note %}
 This section assumes that your HPC/terminal environment already has Singularity installed via `modules`. You will also need to download reference databases required by third party tools, see <a href="requirements">Requirements</a>.
@@ -15,17 +15,18 @@ This section assumes that your HPC/terminal environment already has Singularity 
 
 ## MIMA pipeline Singularity container
 
-There are two versions depending on the reference data you are working with (if you are downloading the reference data from scratch, then it doesn't matter)
+There are two Singularity container versions depending on the HUMAnN and MetaPhlAn reference database you have installed in your environment. If you are going to download the reference data from scratch, then it doesn't matter which container file you select.
 
-| MIMA container file | Humann version | Chocophlan database | Metaphlan version | Metaphlan database|
-|---------------------|---------------:|---------------------|------------------:|-------------------|
-| [mima_h350_mpa4.sif](https://github.com/xychua/mima-pipeline/releases/download/v1.0.0/mima_h350_mpa401.sif){:target="_blank"} (1.64GB)  | 3.5            | v201901_v31         | 4.0.1             | v201901_v31 or 202103_vJan21 |
-| [mima_h301_mpa3.sif](https://github.com/xychua/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif){:target="_blank"} (1.61GB)  | 3.0.1          | v296_201901b        | 3.1.0             | v201901_v30       |
+| Singularity container | [mima_h350_mpa4.sif](https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h350_mpa401.sif){:target="_blank"} (1.64GB) | [mima_h301_mpa3.sif](https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif){:target="_blank"} (1.61GB) |
+|-----------------------|-------------------------------|-----------------------------|
+| Tools included in the image | HUMAnN version 3.5<br/> MetaPhlAn version 4.0.1 | HUMAnN version 3.0.1<br/> MetaPhlAn version 3.1.0 |
+| Required database | ChocoPhlAn database v201901_v31<br/> MetaPhlAn database v201901_v31 or 202103_vJan21 | ChocoPhlAn database v296_201901b<br/> MetaPhlAn database v201901_v30 |
 
-- Download the MIMA image file you want (right click above and copy link)
+
+- Download the MIMA image file you want (right click and copy link)
 
 ```
-$ wget https://github.com/xychua/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif
+$ wget https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif
 ```
 
 ## Start an interactive PBS job
@@ -135,6 +136,8 @@ The `mima_h350_mpa4.sif` image should return the lines `humann v3.5` and `MetaPh
 ----
 
 # Congratulations!
+
+If you don't already have the required reference databases installed in your environment, then refer to the [Requirements](requirements) page.
 
 Now you're ready to start the [Data processing with Singularity](tutorials/tutorial-with-singularity) tutorial
 

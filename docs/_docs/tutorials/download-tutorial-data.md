@@ -21,14 +21,14 @@ In the [Data processing with Singularity](tutorial-with-singularity) tutorial, w
 # Step 1) Download tutorial files
 
 - Enter the commands below in your terminal
-  - `wget` downloads the zip file [mima_tutorial.zip](https://github.com/xychua/test-gitpages/raw/master/examples/mima_tutorial.zip)
+  - `wget` downloads the zip file [mima_tutorial.zip](https://github.com/mrcbioinfo/mima-pipeline/raw/master/examples/mima_tutorial.zip)
   - `unzip` unpacks the file
   - `tree` checks the directory structure
 
 {% include alert.html type='warning' title="Working directory" content="We will assume that the `~/mima_tutorial` directory is located in your *home directory* (indicated by the tilde, `~`, symbol), **change the paths as needed** if you downloaded the files in another location." %}
 
 ```
-$ wget https://github.com/xychua/test-gitpages/raw/master/examples/mima_tutorial.zip
+$ wget https://github.com/mrcbioinfo/mima-pipeline/raw/master/examples/mima_tutorial.zip
 $ unzip mima_tutorial.zip
 $ tree mima_tutorial
 ```

@@ -115,7 +115,7 @@ From here on, `~/mima_tutorial` will refer to the project directory as depicted 
     - `IMAGE_DIR` specifies the location of the *sandbox* container created in [Install MIMA singularity container], **change this location as required**. The path should be the same as your `SANDBOX` environment variable
 
 {% capture box_singularity_bind %}
-<p><b>Make sure to check and see if you need to set the <code class="language-plaintext highlighter-rouge">SINGULARITY_BIND</code> environment variable if the data is not located in your home directory.</b> You skip this step if all data is located in your home directory.</p>
+<p><b>Make sure to check and see if you need to set the <code class="language-plaintext highlighter-rouge">SINGULARITY_BIND</code> environment variable if the data is not located in your home directory.</b> You can skip this step if all data is located in your home directory.</p>
 
 <p><code class="language-plaintext highlighter-rouge">SINGULARITY_BIND</code> is an environment variable for mounting directory paths that will be used within the Singularity container. By default, the sandbox will only load the bare minimum locations in order to function, such as your home directory. If the files you need to access are located elsewhere then you need to inform the Singularity container of those locations. (If you have softlinks in your home directory that point to elsewhere, then you also need to bind to the original locations.)</p>
 
