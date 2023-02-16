@@ -689,7 +689,7 @@ $ tree .
 
 ## 3a) Function: introduction
 
-Functional profiling, like taxonomy profiling, takes the cleaned sequenced reads as input and matches them against a reference database of previously characterised gene sequences. There are different types of functional classification tools available. This pipeline uses [HUMAnN](https://huttenhower.sph.harvard.edu/humann/), which comes with its own reference databases. You will need to download these on to the HPC environment you are working with if it's not already done so. If it's already downloaded, then you will need to know the paths to the reference databases for this step. See [Requirements](requirements) guide.
+Functional profiling, like taxonomy profiling, takes the cleaned sequenced reads as input and matches them against a reference database of previously characterised gene sequences. There are different types of functional classification tools available. This pipeline uses [HUMAnN](https://huttenhower.sph.harvard.edu/humann/), which comes with its own reference databases. You will need to download these on to the HPC environment you are working with if it's not already done so. If it's already downloaded, then you will need to know the paths to the reference databases for this step. See [Requirements]({{site.baseurl}}/docs/requirements) guide.
 
 **Pipeline**
 
