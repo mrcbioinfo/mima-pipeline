@@ -437,7 +437,7 @@ SRR17380122,43683114,41809064,0.24366,41697506,0.2668273080688915,1548,0.0037124
 
 ## 2a) Taxa: introduction
 
-Taxonomy profiling takes the cleaned sequence reads as input and matches them against a reference database of previously characterised sequences for taxonomy classification. There are many different classification tools, for example: Kraken2, Metaphlan, Clark, Centrifuge, MEGAN, and many more. This pipeline uses Kraken2, which comes with its own reference database but you can also generate your own, see [Requirements](requirements) guide. In this pipeline, we will use the [GTDB](https://gtdb.ecogenomic.org/) database (release 95) and have built a Kraken2 database.
+Taxonomy profiling takes the cleaned sequence reads as input and matches them against a reference database of previously characterised sequences for taxonomy classification. There are many different classification tools, for example: Kraken2, Metaphlan, Clark, Centrifuge, MEGAN, and many more. This pipeline uses Kraken2, which comes with its own reference database but you can also generate your own, see [Requirements]({{site.baseurl}}/docs/requirements) guide. In this pipeline, we will use the [GTDB](https://gtdb.ecogenomic.org/) database (release 95) and have built a Kraken2 database.
 
 **Pipeline**
 

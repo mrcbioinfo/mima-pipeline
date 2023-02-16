@@ -174,7 +174,7 @@ $ tree .
 
 ## Option C: download via MIMA Singularity
 
-- First run [Install MIMA Pipeline Singularity container](installation) and set up the `SANDBOX` environment variable
+- First run [Install MIMA Pipeline Singularity container]({{site.baseurl}}/docs/installation) and set up the `SANDBOX` environment variable
 - Download the SRA files using `prefetch` command
 
 ```

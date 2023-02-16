@@ -23,7 +23,7 @@ We will use a real data from human stool microbiome, from the Human Microbiome P
   - Set the `SANDBOX` environment variable
   - If needed, [set the `SINGULARITY_BIND` environment variable](tutorial-with-singularity#pbs-configuration-files)
 
-2. Download example data set: [HMPv1-stool-samples.tar.gz](https://github.com/mrcbioinfo/mima-pipeline/raw/master/examples/HMPv1-stool-samples.gz) or use the `wget` command below
+2. Download example data set: [HMPv1-stool-samples.tar.gz](https://github.com/mrcbioinfo/mima-pipeline/raw/master/examples/HMPv1-stool-samples.tar.gz) or use the `wget` command below
 3. Extract the files using the following commands
 4. Check directory structure
 
