@@ -176,15 +176,15 @@ Other files:
 
 | Output file | Description |
 |-------------|-------------|
-| \*.average.table.txt |  |
-| \*.average.top_7_separategroup\* |  |
-| \*.average.top_7\* | |
-| \*.meta.txt | |
-| \*.table_top_7_separategroup.\* | 
-| \*.table_top_7\* |  |
+| \*.average.top_7\* | mean group abundances for the overall top 7 taxa across the entire study |
+| \*.average.top_7_separategroup\* | mean group abundances for the top 7 taxa within each group |
+| \*.meta.txt | study metadata specific for the plots |
+| \*.table_top_7\* | sample abundances of the overall top 7 taxa across the entire study |
+| \*.table_top_7_separategroup.\* | sample abundances of the top 7 taxa within each group |
 | \*.pdf | stacked bar plots |
+| \*.R | R scripts that generates the PDF plots |
 
-PDF figures below
+Example PDF figures below
 
 <table class="table table-borderless">
 <tr>
@@ -205,7 +205,7 @@ PDF figures below
   - the backslash (`\`) is for readability and tells the terminal the command is not yet finished
 
 ```
-$ singularity run --app mima-visualiasation $SANDBOX \
+$ singularity run --app mima-visualisation $SANDBOX \
 --feature-table Taxonomy_profiling/featureTables/bracken_FT_species_counts \
 --metadata metadata.tsv \
 --study-groups lab \

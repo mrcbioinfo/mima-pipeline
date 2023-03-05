@@ -50,8 +50,8 @@ HMPv1-stool-samples
 $ cd HMPv1-stool-samples
 $ mkdir output
 $ singularity run --app mima-classifier-RF $SANDBOX \
--i hmp1-stool-visit-1.features.tsv \
--m hmp1-stool-visit-1.metadata.tsv \
+-i ~/mima_tutorial/HMPv1-stool-samples/hmp1-stool-visit-1.features.tsv \
+-m ~/mima_tutorial/HMPv1-stool-samples/hmp1-stool-visit-1.metadata.tsv \
 -c Gender \
 -o output
 ```
@@ -102,4 +102,4 @@ $ tree .
     <p>roc_data_1.pdf has the confidence intervals</p>
   </td>
 </tr>
-s</table>
+</table>
