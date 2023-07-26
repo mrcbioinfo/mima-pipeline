@@ -52,7 +52,7 @@ $ tree .
 Only a subset of the files are shown below and `...` means "and others"
 
 ```
-.
+~/vis-tutorial/
 ├── metadata.tsv
 ├── taxonomy-feature-table.tar.gz
 └── Taxonomy_profiling
@@ -69,6 +69,9 @@ Only a subset of the files are shown below and `...` means "and others"
         ├── combine_bracken_species.log
         └── generate_bracken_feature_table.py
 ```
+
+{% include alert.html type="danger" title="! Note" content="This tutorial assumes the 'vis-tutorial' directory is in your home directory as indicated by the ~ (tilde) sign. If you have put the files in another location then replace all occurrences of ~ with the full path." %}
+
 
 Brief overview of the directory and files
 
@@ -103,7 +106,7 @@ $ tree -d .
 You should see the following directory structure
 
 ```
-.
+~/vis-tutorial
 ├── analysis
 └── Taxonomy_profiling
     └── featureTables
@@ -114,13 +117,14 @@ You should see the following directory structure
 
 - Enter the following command, all on one line without the backslash `\`
   - the backslash (`\`) is for readability and tells the terminal the command is not yet finished
+  - (optional) if your files are not in the (~/vis-tutorial) location then you need to place this path with where you extracted the files
  
 ```bash
 $ singularity run --app mima-vis-taxa $SANDBOX \
-Taxonomy_profiling/featureTables/bracken_FT_species_relAbund \
-metadata.tsv \
+~/vis-tutorial/Taxonomy_profiling/featureTables/bracken_FT_species_relAbund \
+~/vis-tutorial/metadata.tsv \
 lab:labA:labB:labC \
-analysis \
+~/vis-tutorial/analysis \
 LAB 7 8 6
 ```
 
@@ -203,13 +207,14 @@ Example PDF figures below
 
 - Enter the following command, all on one line without the backslash `\`
   - the backslash (`\`) is for readability and tells the terminal the command is not yet finished
-
+  - (optional) if your files are not in the (~/vis-tutorial) location then you need to place this path with where you extracted the files
+  
 ```
 $ singularity run --app mima-visualisation $SANDBOX \
---feature-table Taxonomy_profiling/featureTables/bracken_FT_species_counts \
---metadata metadata.tsv \
+--feature-table ~/vis-tutorial/Taxonomy_profiling/featureTables/bracken_FT_species_counts \
+--metadata ~/vis-tutorial/metadata.tsv \
 --study-groups lab \
---output-dir analysis > visualisation.log
+--output-dir ~/vis-tutorial/analysis > ~/vis-tutorial/analysis/visualisation.log
 ```
 
 **Parameters explained**
