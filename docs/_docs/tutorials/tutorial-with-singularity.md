@@ -55,7 +55,7 @@ For this tutorial, you need to first
 
 ## Working directory
 
-After downloading the tutorial data, we assume that the `mima_tutorial` is the working directory located in your *home directory* (specified by the tilde, `~`). Hence, we will try to always make sure we are in the right directory first before executing a command, for example, run the following commands:
+After [downloading the tutorial data](download-tutorial-data), we assume that the `mima_tutorial` is the working directory located in your *home directory* (specified by the tilde, `~`). Hence, we will try to always make sure we are in the right directory first before executing a command, for example, run the following commands:
 
 ```
 $ cd ~/mima_tutorial
@@ -66,16 +66,16 @@ $ tree .
 
 ```
 mima_tutorial
+├── ftp_download_files.sh
 ├── manifest.csv
 ├── pbs_header_func.cfg
 ├── pbs_header_qc.cfg
 ├── pbs_header_taxa.cfg
-└── raw_data/
-    ├── SRR17380115
-    │   └── SRR17380115.sra
+├── raw_data/
     ├── SRR17380115_1.fastq.gz
     ├── SRR17380115_2.fastq.gz
-    └── ...
+    ├── ...
+...
 ```
 
 From here on, `~/mima_tutorial` will refer to the project directory as depicted above. Replace this path if you saved the tutorial data in another location.
@@ -182,15 +182,15 @@ If the <code class="language-plaintext highlighter-rouge">mima_tutorial</code> f
 
 Check the filenames are the same as the fastq files extract, update as necessary
 
-Note that the filenames don't need to be absolute paths as we will specify the fullpath in step 1 QC module.
+Note that the filenames do not need to be absolute paths as we will specify the fullpath in step 1 QC module.
 
 ```
 Sample_ID,FileID_R1,FileID_R2
-SRR17380209,SRR17380209.sra_1.fastq.gz,SRR17380209.sra_2.fastq.gz
-SRR17380232,SRR17380232.sra_1.fastq.gz,SRR17380232.sra_2.fastq.gz
-SRR17380236,SRR17380236.sra_1.fastq.gz,SRR17380236.sra_2.fastq.gz
-SRR17380231,SRR17380231.sra_1.fastq.gz,SRR17380231.sra_2.fastq.gz
-SRR17380218,SRR17380218.sra_1.fastq.gz,SRR17380218.sra_2.fastq.gz
+SRR17380209,SRR17380209_1.fastq.gz,SRR17380209_2.fastq.gz
+SRR17380232,SRR17380232_1.fastq.gz,SRR17380232_2.fastq.gz
+SRR17380236,SRR17380236_1.fastq.gz,SRR17380236_2.fastq.gz
+SRR17380231,SRR17380231_1.fastq.gz,SRR17380231_2.fastq.gz
+SRR17380218,SRR17380218_1.fastq.gz,SRR17380218_2.fastq.gz
 ...
 ```
 
