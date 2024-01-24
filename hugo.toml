@@ -1,4 +1,4 @@
-baseURL = '/'
+baseURL = 'https://mrcbioinfo.github.io/mima-pipeline/'
 languageCode = 'en-us'
 title = 'UNSW MRC Shotgun Metagenomics processing pipeline'
 
