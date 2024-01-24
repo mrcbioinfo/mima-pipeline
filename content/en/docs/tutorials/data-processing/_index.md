@@ -18,7 +18,7 @@ This section covers the data processing pipeline, which consists of three main m
 </tr>
 <tr>
   <td><b>Quality control</b> (QC) of the sequenced reads</td>
-  <td rowspan=4 style="width:40%"><img src="/images/tutorials/pipeline/tut_OverallSchema.png"/></td>
+  <td rowspan=4 style="width:40%"><img src="images/tutorials/pipeline/tut_OverallSchema.png"/></td>
 </tr>
 <tr><td><b>Taxonomy profiling</b> after QC, for assigning reads to taxon (this step can be run in parallel with step 3)</td></tr>
 <tr><td><b>Functional profiling</b> after QC, for assigning reads to genes (this step can be run in parallel with step 2)</td></tr>
