@@ -1,0 +1,12 @@
+{
+  "comments": {
+    "dependencies": {},
+    "devDependencies": {}
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss-cli": "^11.0.0"
+  },
+  "name": "docs",
+  "version": "0.1.0"
+}
