@@ -44,13 +44,14 @@ If you are missing any reference datasets, see below for download information.
 - Estimated disk space: ~53GB (you might need several hours for downloading)
 - After [installing MIMA container](../installation), ensure you have [set the `SANDBOX` environment variable](../installation/#build-a-sandbox)
 - You can check required database version using the command:
-```
-$ singularity exec $SANDBOX humann_databases --available
+
+```Shell
+apptainer exec $SANDBOX humann_databases --available
 ```
   
 *output:*
 
-```
+```Text
 HUMAnN Databases ( database : build = location )
 chocophlan : full = http://huttenhower.sph.harvard.edu/humann_data/chocophlan/full_chocophlan.v201901_v31.tar.gz
 chocophlan : DEMO = http://huttenhower.sph.harvard.edu/humann_data/chocophlan/DEMO_chocophlan.v201901_v31.tar.gz
@@ -76,9 +77,12 @@ $ apptainer exec $SANDBOX humann_databases --download utility_mapping full ~/ref
 
 - After installation, check the files
 
+```Shell
+tree -d ~/refDB/humann3
 ```
-$ tree -d ~/refDB/humann3
-.
+
+```Text
+~/refDB/humann3
 ├── chocophlan
 ├── uniref
 └── utility_mapping
@@ -93,9 +97,9 @@ $ tree -d ~/refDB/humann3
   - the example below installs it in your home directory (`~`)
 - Replace `~/refDB/metaphlan_databases/` with your preferred location as needed, if [installing to external path](#installing-to-external-path) remember to set path binding.
 
-```
-$ mkdir -p ~/refDB/metaphlan_databases
-$ apptainer exec $SANDBOX metaphlan --install --bowtie2db ~/refDB/metaphlan_databases/
+```Shell
+mkdir -p ~/refDB/metaphlan_databases
+apptainer exec $SANDBOX metaphlan --install --bowtie2db ~/refDB/metaphlan_databases/
 ```
 
 
@@ -104,6 +108,7 @@ $ apptainer exec $SANDBOX metaphlan --install --bowtie2db ~/refDB/metaphlan_data
 If you are using the MIMA container to install reference databases to a location other than your home directory, remember to set [path binding](../what-is-container/#path-binding).
 
 The example below uses `-B` parameter:
-```
-$ apptainer exec -B /another/loc/metaphlan_databases:/another/loc/metaphlan_databases $SANDBOX metaphlan --install --bowtie2db /another/loc/metaphlan_databases
+
+```Shell
+apptainer exec -B /another/loc/metaphlan_databases:/another/loc/metaphlan_databases $SANDBOX metaphlan --install --bowtie2db /another/loc/metaphlan_databases
 ```

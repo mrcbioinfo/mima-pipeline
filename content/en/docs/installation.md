@@ -6,10 +6,10 @@ weight: 20
 
 All tools required by the MIMA pipeline are encapsulated into a [Container image](../what-is-container) file with the `mima_XXX.sif` naming scheme, where XXX denotes different versions.
 
-1. [Choose a version and download](#mima-container-version)
-2. HPC uses: [start an interactive PBS job](#start-an-interactive-pbs-job)
-3. [Build a sandbox](#build-a-sandbox)
-4. [Confirm installation](#confirm-installation)
+- [MIMA container version](#mima-container-version)
+- [Start an interactive PBS job](#start-an-interactive-pbs-job)
+- [Build a sandbox](#build-a-sandbox)
+- [Confirm installation](#confirm-installation)
 
 ## MIMA container version
 
@@ -49,8 +49,8 @@ url="https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h
 
 - Right click > copy link, download using the following command
 
-```
-$ curl -L https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif
+```Shell
+curl -L https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif
 ```
 
 ## Start an interactive PBS job
@@ -59,15 +59,15 @@ We assume you are on a HPC environment with a job scheduling system. Many HPC en
 
 - In OpenPBS, specify the following to request an interactive job with 4 CPUs, 4GB ram for 6 hours
 
-```
-$ qsub -I -l select=1:ncpus=4:mem=4gb,walltime=6:00:00
+```Shell
+qsub -I -l select=1:ncpus=4:mem=4gb,walltime=6:00:00
 ```
 
 - **Optional**: if `apptainer` (or `singularity`) is installed via *Modules* on your host machine, then run the following 
 
-```
-$ module load apptainer
-$ apptainer --version
+```Shell
+module load apptainer
+apptainer --version
 ```
 
 at the time of writing this tutorial we were using `apptainer version 1.2.4-1el.8`
@@ -82,21 +82,36 @@ As mentioned previously, to [skip repeated unpacking of the container image](../
 {{< tabpane text=true right=false >}}
   {{% tab header="**Image version**:" disabled=true /%}}
   {{% tab header="mima_h350_mpa401" lang="en" %}}
-```
-$ apptainer build --sandbox mima-pipeline mima_h350_mpa401.sif
-INFO:    Starting build...
-INFO:    Verifying bootstrap image mima_h350_mpa401.sif
-INFO:    Creating sandbox directory...
-INFO:    Build complete: 
+  ```Shell
+  apptainer build --sandbox mima-pipeline mima_h350_mpa401.sif
+  ```
 
-$ export SANDBOX=`pwd`/mima-pipeline
-```
+  ```
+  INFO:    Starting build...
+  INFO:    Verifying bootstrap image mima_h350_mpa401.sif
+  INFO:    Creating sandbox directory...
+  INFO:    Build complete: 
+  ```
+
+  ```Shell
+  export SANDBOX=`pwd`/mima-pipeline
+  ```
   {{% /tab %}}
   {{% tab header="mima_h301_mpa310" lang="en" %}}
-```
-$ apptainer build --sandbox mima-pipeline mima_h301_mpa310.sif
-$ export SANDBOX=`pwd`/mima-pipeline
-```
+  ```Shell
+  apptainer build --sandbox mima-pipeline mima_h301_mpa310.sif
+  ```
+
+  ```
+  INFO:    Starting build...
+  INFO:    Verifying bootstrap image mima_h350_mpa401.sif
+  INFO:    Creating sandbox directory...
+  INFO:    Build complete: 
+  ```
+
+  ```Shell
+  export SANDBOX=`pwd`/mima-pipeline
+  ```
   {{% /tab %}}
 {{< /tabpane >}}
 
@@ -106,16 +121,16 @@ $ export SANDBOX=`pwd`/mima-pipeline
 - test `SANDBOX` environment variable is working. 
 - if this command is not working then check your `SANDBOX` environment variable using `echo $SANDBOX` which will output the path
 
-```
-$ apptainer run $SANDBOX
+```Shell
+apptainer run $SANDBOX
 ```
 
 Below is the output, check the line **active environment : mima** is the same as below  
 
-{{< tabpane text=true >}}
+{{< tabpane text=true right=false >}}
   {{% tab header="**Image version**:" disabled=true /%}}
   {{% tab header="mima_h305_mpa401" disabled=false lang="en" %}}
-  ```bash
+  ```Text
 ----
 This is the MIMA pipeline Container
 v1.1.0 - build: 20240118
@@ -171,7 +186,7 @@ Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)
   ```
   {{% /tab %}}
   {{% tab header="mima_h301_mpa310" lang="en" %}}
-  ```bash
+  ```Text
 ----
 This is the MIMA pipeline Container
 v1.1.0 - build: 20240122
@@ -222,9 +237,7 @@ Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)
 
 
 {{% alert color="warning" title=Reminder %}}
-Remember that by default containers are loaded with basic access and you might need to explicitly [set up some path bindings](../what-is-container/#path-binding)
+By default Containers are deployed with very minimum filesystem access and you might need to [bind paths](../what-is-container/#path-binding)
 {{% /alert %}}
-
-# Congratulations!
 
 Next [check the data-dependencies](../data-dependencies)

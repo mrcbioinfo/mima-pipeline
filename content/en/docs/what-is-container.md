@@ -27,8 +27,8 @@ Every time you deploy a container from an image file (*.sif extension), the plat
 
 You can bypass this by building a **sandbox** that unpacks the files *once* into a directory (container in a directory) and then repeatedly use that directory. This removes the need to keep unpacking each time.
 
-```
-$ apptainer build --sandbox <container-directory> <image.sif>
+```Shell
+apptainer build --sandbox <container-directory> <image.sif>
 ```
 
 ### Containers need explicit instructions to access your files {#path-binding}

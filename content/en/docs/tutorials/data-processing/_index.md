@@ -53,7 +53,7 @@ For this set of tutorials, you need
 
   - Access to High-performance cluster (HPC) with a job scheduling system like OpenPBS
     - HPC system must have `Apptainer` or `Singularity` installed
-  - [Install MIMA Pipeline Singularity container](/docs/installation) 
+  - [Install MIMA Container image](/docs/installation) 
    - start an interactive PBS job
    - create the image *sandbox*
    - set the `SANDBOX` environment variable
