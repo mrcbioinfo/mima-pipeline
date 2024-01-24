@@ -1,12 +1,12 @@
 ---
-title: MRC Shotgun metagenomics Pipeline (MIMA)
-type: docs
+title: Documentation
+linkTitle: Docs
 no_list: true
 hide_feedback: true
-params:
-  ui:
-    breadcrumb_disable: true
-    taxonomy_breadcrumb_disable: true
+menu:
+  main:
+    weight: 10
+    pre: <i class='fa-solid fa-book'></i>
 ---
 
 ## MIMA Pipeline
@@ -22,7 +22,7 @@ The MIMA Pipeline contains two fundamental components and the tutorials are spli
    - core biodiversity analysis (e.g., alpha-diversity, beta-diversity and differential abundance analyses) and comparisons between groups
    - classification analysis
 
-![pipeline-schema](images/mima_pipeline.svg)
+![pipeline-schema](/images/mima_pipeline.svg)
 
 
 ## Getting started
