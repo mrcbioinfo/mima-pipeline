@@ -14,7 +14,7 @@ For taxonomy features, the biodiversity bar plots can be generated for each taxo
 
 ## Example data
 
-The data set used for this tutorial is based on the *full* data set from the [data processing tutorials](../data-processing/) <a href="https://journals.asm.org/doi/10.1128/spectrum.01915-21" target="_blank">(Tourlousse, *et al.*, 2022)</a> that was pre-process with the same pipeline. There are 56 samples in total from the study, but after taxonomy profiling with Kraken2 and Bracken, 4 samples fell below the abundance threshold and therefore the final taxonomy abundance table has 52 samples.
+The data set used for this tutorial is based on the *full* data set from the [data processing tutorials]({{< ref "data-processing" >}}) <a href="https://journals.asm.org/doi/10.1128/spectrum.01915-21" target="_blank">(Tourlousse, *et al.*, 2022)</a> that was pre-process with the same pipeline. There are 56 samples in total from the study, but after taxonomy profiling with Kraken2 and Bracken, 4 samples fell below the abundance threshold and therefore the final taxonomy abundance table has 52 samples.
 
 This data set consists of two mock communities: (i) *DNA-mock* and (ii) *Cell-mock* processed in three different labs: A, B and C.
 
@@ -23,7 +23,7 @@ This data set consists of two mock communities: (i) *DNA-mock* and (ii) *Cell-mo
 For this set of tutorial, you need
 
   - System with `Apptainer` or `Singularity` installed (currently only tested on UNIX-based system)
-  - [Install MIMA Pipeline Singularity container](/docs/installation) and check that you have
+  - [Install MIMA Pipeline Singularity container]({{< ref "installation" >}}) and check that you have
     - started an interactive PBS job
     - build the *sandbox* container
     - set the `SANDBOX` environment variable
@@ -39,7 +39,7 @@ cd vis-tutorial
 ```
 
   - Download [taxonomy-feature-table.tar.gz](https://github.com/mrcbioinfo/mima-pipeline/raw/master/examples/taxonomy-feature-table.tar.gz)
-    - *Note* only the processed feature tables are provided in this download; intermediate files from the [data processing pipeline](../data-processing) are not provided.
+    - *Note* only the processed feature tables are provided in this download; intermediate files from the [data processing pipeline]({{< ref "data-processing" >}}) are not provided.
 
 ```Shell
 wget https://github.com/mrcbioinfo/mima-pipeline/raw/master/examples/taxonomy-feature-table.tar.gz
@@ -87,7 +87,7 @@ If you have put the files in another location then replace all occurrences of `~
 | Directory / File | Description |
 |------------------|-------------|
 | `metadata.tsv`   | is a tab-separated text file of the study metadata |
-| `Taxonomy_profiling/featureTables` | <p>directory contains the [taxonomy feature tables](../data-processing/mima-apptainer-taxonomy/#step-5-generate-taxonomy-abundance-table) using Kraken2 and Bracken. </p><p>There are feature tables for each taxonomy rank from Phylum to Species. As some analysis tools might require feature table input to be discrete counts while others might require relative abundances, two formats are provided with the suffixes:</p><ul><li>`*_count` files have discrete counts of features (row) per samples (columns)</li><li>`*_relAbund` files ahve the relative abundances of features (row) per samples (columns)</li></ul> |
+| `Taxonomy_profiling/featureTables` | <p>directory contains the [taxonomy feature tables]({{< ref "mima-apptainer-taxonomy.md#step-5-generate-taxonomy-abundance-table" >}}) using Kraken2 and Bracken. </p><p>There are feature tables for each taxonomy rank from Phylum to Species. As some analysis tools might require feature table input to be discrete counts while others might require relative abundances, two formats are provided with the suffixes:</p><ul><li>`*_count` files have discrete counts of features (row) per samples (columns)</li><li>`*_relAbund` files ahve the relative abundances of features (row) per samples (columns)</li></ul> |
 
 
 - Confirm you have the following 3 files (if they don't exists, there will be an error message)
@@ -156,13 +156,13 @@ s__Escherichia sp000208585  0.00321      0.0033       0.00326      0.00334      
 ## Step 3) Generate taxonomy bar plots
 
 - Enter the following command
-  - if `/vis-tutorial` is not in your home directory (`~`), change the `~/vis-tutorial/` to the [absolute path](../data-processing/need-to-know/#use-absolute-paths) where you [downloaded the tutorial data](#data-preparation)
+  - if `/vis-tutorial` is not in your home directory (`~`), change the `~/vis-tutorial/` to the [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) where you [downloaded the tutorial data](#step-1-data-preparation)
   - the backslash (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come (we broke up the command for readability purposes to explain each parameter below)
   - *note* if you enter the command as one line, remove the backslashes
   
 
-{{< highlight Bash "linenos=table,linenostart=1" >}}
-$ apptainer run --app mima-vis-taxa $SANDBOX \
+{{< highlight Tcsh "linenos=table,linenostart=1" >}}
+apptainer run --app mima-vis-taxa $SANDBOX \
 ~/vis-tutorial/Taxonomy_profiling/featureTables/bracken_FT_genus_relAbund \
 ~/vis-tutorial/metadata.tsv \
 lab:labA:labB:labC \
@@ -193,7 +193,7 @@ The parameters must be in the same order described above.
 
 ## Step 4) Check output files
 
-* You should have the following output files after running Step 2.
+* You should have the following output files after running [Step 2](#step-2-examine-input-files)
 
 ```Shell
 tree ~/vis-tutorial/analysis

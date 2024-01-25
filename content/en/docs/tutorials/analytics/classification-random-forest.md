@@ -35,7 +35,7 @@ Our question is *"how well can we distinguish between Sex using the human stool 
 For this set of tutorial, you need
 
   - System with `Apptainer` or `Singularity` installed (currently only tested on UNIX-based system)
-  - [Install MIMA Pipeline Singularity container](/docs/installation) and check that you have
+  - [Install MIMA Pipeline Singularity container]({{< ref "installation" >}}) and check that you have
     - started an interactive PBS job
     - build the *sandbox* container
     - set the `SANDBOX` environment variable
@@ -266,7 +266,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
 {{< tabpane text=true right=false >}}
 {{% tab header="**roc_data_7_classifier.pdf**" disabled=true /%}}
 {{% tab header="cv_3" disabled=false lang="en" %}}
-  {{< figure src="/images/tutorials/classifer/random-forest-HMP/roc_data_7_cv3.png"
+  {{< figure src="images/random-forest-HMP/roc_data_7_cv3.png"
               caption="This shows the ROC curve for the Species relative abundance table (data_7) when using 3-fold cross-validation."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" 

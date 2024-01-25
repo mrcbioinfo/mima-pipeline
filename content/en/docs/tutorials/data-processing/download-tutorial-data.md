@@ -4,7 +4,7 @@ description: metadata and sequence data files for shotgun metagenomics data-proc
 weight: 90
 ---
 
-In the [data processing tutorials](../data-processing), we will use data from the study by 
+In the [data processing tutorials]({{< ref "data-processing" >}}), we will use data from the study by 
 
 {{% pageinfo %}}
 [Tourlousse, *et al.* (2022)](https://journals.asm.org/doi/10.1128/spectrum.01915-21), Characterization and Demonstration of Mock Communities as Control Reagents for Accurate Human Microbiome Community Measures, Microbiology Spectrum.
@@ -55,17 +55,17 @@ tree mima_tutorial
 ```
 
 {{% alert color=warning title="Note! Assumed working directory" %}}
-This tutorial assumes the `~/mima_tutorial` directory is located in your *home directory* as indicated by the `~` (tilde) sign. If you have put the files in another location then replace all occurrences of `~/mima_tutorial` with your location (remember to use [absolute paths](../need-to-know#use-absolute-paths)).
+This tutorial assumes the `~/mima_tutorial` directory is located in your *home directory* as indicated by the `~` (tilde) sign. If you have put the files in another location then replace all occurrences of `~/mima_tutorial` with your location (remember to use [absolute paths]({{< ref "need-to-know.md#use-absolute-paths" >}})).
 {{% /alert %}}
 
 **Data files**
 
 | File                  | Description |
 |:----------------------|:------------|
-| ftp_download_files.sh | direct download FTP links used in [Option A: direct download](#option-a-direct-download) below |
-| SRA_files             | contains the SRA identifier of the 9 samples used in [Option B](#option-b-download-with-sratoolkit) and [Option C](#option-c-download-via-mima-singularity) below |
+| ftp_download_files.sh | direct download FTP links used in [Option A: direct download]({{< ref "download-tutorial-data.md#option-a-direct-download" >}}) below |
+| SRA_files             | contains the SRA identifier of the 9 samples used in [Option B]({{< ref "download-tutorial-data.md#option-b-download-with-sratoolkit" >}} ) and [Option C]({{< ref "download-tutorial-data.md#option-c-download-via-mima-singularity" >}}) below |
 | manifest.csv          | comma separated file of 3 columns, that lists the `sampleID, forward_filename, reverse_filename`|
-| pbs_header_*.cfg      | PBS and Singularity configuration files, these are required for [Data processing with Singularity](tutorial-with-singularity) tutorial (not here) |
+| pbs_header_*.cfg      | [PBS configuration files]({{< ref "need-to-know.md#pbs-configureion-files" >}}) that contain specific parameters for job submissions |
 
 
 ## Step 2) Download Sequence files
@@ -75,7 +75,7 @@ Choose from the 3 options for downloading the tutorial data depending on your en
 | Option | Tool | Est. size | Description |
 |--------|------|-----------|-------------|
 | [A](#option-a-direct-download)      | `curl` | 24GB      | direct download using `curl` command, files are already compressed |
-| [B](#option-b-download-with-sratoolkit)      | <a href="https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/" target="_blank;">sratoolkit</a><br/>(installed on system) | 75GB | <p>download using `sratoolkit` which is available on your system or via *modules*</p><p>Thefiles are not compressed when downloaded; compression is a post-processing step</p> |
+| [B](#option-b-download-with-sratoolkit)      | <a href="https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/" target="_blank;">sratoolkit</a><br/>(installed on system) | 75GB | <p>download using `sratoolkit` which is available on your system or via *modules*</p><p>The files are not compressed when downloaded; compression is a post-processing step</p> |
 | [C](#option-c-download-via-mima)      | sratoolkit<br/>(installed in MIMA) | 75GB | installed in MIMA container; same as option B downloaded files are not compressed |
 
 
@@ -187,7 +187,7 @@ tree .
 
 ### Option C: download via MIMA
 
-- Assume have [installed](/docs/installation) MIMA and set up the `SANDBOX` environment variable
+- This options assumes you have [installed MIMA]({{< ref "installation" >}}) and set up the `SANDBOX` environment variable
 - Download the SRA files using the following command
 
 ```Shell
@@ -310,8 +310,8 @@ SRR17380122,SRR17380122_1.fastq.gz,SRR17380122_2.fastq.gz
 
 {{% alert color=warning title="Manifest file formats" %}}
   - the first row is the header and is case sensitive, it must have the three columns: `Sample_ID,FileID_R1,FileID_R2`
-  - the filenames in columns 2 and 3 do not need to be [absolute paths](../need-to-know/#use-absolute-paths) as the directory where the files are located will be specified during [quality checking](../mima-apptainer-qc)
+  - the filenames in columns 2 and 3 do not need to be [absolute paths]({{< ref "need-to-know.md#use-absolute-paths" >}}) as the directory where the files are located will be specified during [quality checking]({{< ref "mima-apptainer-qc" >}})
 {{% /alert %}}
 
 
-Remember to check out what else you [need to know](../need-to-know) before jumping into [quality checkking](../mima-apptainer-qc)
+Remember to check out what else you [need to know]({{< ref "need-to-know" >}}) before jumping into [quality checking]({{< ref "mima-apptainer-qc" >}})

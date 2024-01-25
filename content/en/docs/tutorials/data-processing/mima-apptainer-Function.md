@@ -7,9 +7,9 @@ weight: 130
 
 ## Introduction to Functional Profiling
 
-Functional profiling, like taxonomy profiling, takes the cleaned sequenced reads after [QC checking](../mima-apptainer-qc) as input and matches them against a reference database of previously characterised gene sequences.
+Functional profiling, like taxonomy profiling, takes the cleaned sequenced reads after [QC checking]({{< ref "mima-apptainer-qc" >}}) as input and matches them against a reference database of previously characterised gene sequences.
 
-There are different types of functional classification tools available. This pipeline uses the <a href="https://huttenhower.sph.harvard.edu/humann/">HUMAnN3</a> pipeline, which also comes with its own [reference databases](/docs/data-dependencies/#function-profiling).
+There are different types of functional classification tools available. This pipeline uses the <a href="https://huttenhower.sph.harvard.edu/humann/">HUMAnN3</a> pipeline, which also comes with its own [reference databases]({{< ref "data-dependencies.md#function-profiling" >}}).
 
 ### Workflow description
 
@@ -39,8 +39,8 @@ Steps in the functional profiling module:
 
 ## Step 1. Generate PBS scripts
 
-  - After [QC checking](../mima-apptainer-qc) your sequence samples and generating a set of `CleanReads`
-  - Find the [absolute paths](../need-to-know/#use-absolute-paths) for the **HUMAnN3** and **MetaPhlAn** reference databases depending on the [MIMA version you installed](/docs/installation)
+  - After [QC checking]({{< ref "mima-apptainer-qc" >}}) your sequence samples and generating a set of `CleanReads`
+  - Find the [absolute paths]({{< ref "need-to-know.md#use-absolute-paths" >}}) for the **HUMAnN3** and **MetaPhlAn** reference databases depending on the [MIMA version you installed]({{< ref "installation" >}})
   - Replace the highlighted lines with the absolute path for the reference databases
     - `path/to/humann3/chocophlan`
     - `path/to/humann3/uniref`
@@ -113,10 +113,10 @@ $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
 ```
 
 * Your PBS script should look something like below, with some differences
-  - line 10: `IMAGE_DIR` should be where you installed MIMA and [build the sandbox](/docs/installation/#build-a-sandbox)
-  - line 11: `APPTAINER_BIND` should be setup during installation when [binding paths](/docs/what-is-container/#path-binding)
+  - line 10: `IMAGE_DIR` should be where you installed MIMA and [build the sandbox]({{< ref "installation.md#build-a-sandbox" >}})
+  - line 11: `APPTAINER_BIND` should be setup during installation when [binding paths]({{< ref "what-is-container.md#path-binding" >}})
     - make sure to include the path where the host reference genome file is located
-  - line 14: `/home/user` is replaced with the [absolute path](need-to-know#use-absolute-paths) to your actual home directory
+  - line 14: `/home/user` is replaced with the [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) to your actual home directory
   - lines 22-25: ensure the paths to the reference databases are all replaced
   - note that the walltime is set to 8 hours
 
@@ -250,4 +250,4 @@ If you prefer other mappings than change this line accordingly before running th
 
 You have completed processing your shotgun metagenomics data and are now ready for further analyses
 
-Analyses usually take in either the [taxonomy feature tables](../mima-apptainer-taxonomy/#step-5-generate-taxonomy-abundance-table) or [functional feature tables](#step-5-generate-function-feature-tables)
+Analyses usually take in either the [taxonomy feature tables]({{< ref "mima-apptainer-taxonomy.md#step-5-generate-taxonomy-abundance-table" >}}) or [functional feature tables](#step-5-generate-function-feature-tables)

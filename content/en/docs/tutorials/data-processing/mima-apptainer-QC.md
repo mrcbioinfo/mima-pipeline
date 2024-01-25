@@ -15,9 +15,9 @@ Quality control (QC) checks the sequenced reads obtained from the sequencing mac
 
 This pipeline uses the following tools:
 
-* [BBTool suite](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/)
-* [Fastp](https://github.com/OpenGene/fastp)
-* [Minimap2](https://github.com/lh3/minimap2)
+* <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/" target="_blank">BBTool suite</a>
+* <a href="https://github.com/OpenGene/fastp" target="_blank">FastP</a>
+* <a href="https://github.com/lh3/minimap2" target="_blank">Minimap2</a>
 
 ### Workflow description
 
@@ -40,14 +40,14 @@ This tutorial has 9 samples spread across 3 PBS jobs. One PBS job will execute t
 <tr><td>The (optional) last step generates a QC report text file with summary statistics for each file. This step is run <b>after all</b> PBS scripts have been executed for all samples in the study.</td></tr>
 </table>
 
-For details about the tool versions, you can [check the MIMA container image](/docs/installation/#confirm-installation)
+For details about the tool versions, you can [check the MIMA container image installed]({{< ref "installation.md#confirm-installation" >}})
 
 
 ## Step 1. Generate QC PBS scripts
 
-- Tick off the [check list](../#check-list)
-- Find the [absolute path](../need-to-know/#use-absolute-paths) to the host reference genome file (e.g., Human host might use GRCh38_latest_genome.fna)
-- Replace the highlighted line `--ref <path/to/human/GRCh38_latest_genome.fna>` with the path from above
+- Tick off the [check list]({{< ref "data-processing#check-list" >}})
+- Find the [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) to the host reference genome file (e.g., Human host might use GRCh38_latest_genome.fna)
+- Replace the highlighted line `--ref <path/to/human/GRCh38_latest_genome.fna>` to the location of your host reference genome file
 - Enter the following command 
   - the backslash (`\`) at the end of each line informs the terminal that the command has not finished and there's more to come (we broke up the command for readability purposes to explain each parameter below)
   - *note* if you enter the command as one line, remove the backslashes
@@ -72,15 +72,15 @@ For MRC users, see <a href="https://unsw.sharepoint.com/:w:/r/sites/mrc_bioinfor
 
 ### Parameters explained
 
-| <div style="width:150px">Parameter</div> | Required? | Description |
+| <div style="width:150px">Parameter</div> | <div style="width:150px">Required?</div> | Description |
 | ---------- | ---------| ----------- |
-| `-i <input>` | yes | must be *full path* to where the raw sequenced reads are stored (these files often have the \*.fastq.gz or \*.fq.gz extension). This path is used to find the *FileID\_R1* and *FileID\_R2* columns specified in the *manifest.csv* file provided (see below). |
-| `-o <output>` | yes | must be the *full path* to where you would like the output files to be saved. The `<output>` path will be created if it does not exists. **Note** if there are already existing subdirectories in the `<output>` path, then this step will fail. |
-| `-m <manifest.csv>` | yes | a comma-seperated file (\*.csv) that has three columns with the headers: **Sample\_ID, FileID\_R1, FileID\_R2** see the example below. *Note* the fileID\_R1 and fileID\_R2 are relative to the `-i <input>` path provided. |
-| `--num-pbs-jobs` | default=4 | number of PBS scripts to generate by default 4 jobs are created with samples split equally between the jobs |
+| `-i <input>` | yes | must be [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) to the directory where fastq files are stored. FastQ files often have the \*.fastq.gz or \*.fq.gz extension. This path is used to find the *FileID\_R1* and *FileID\_R2* columns specified in the `manifest.csv` file |
+| `-o <output>` | yes | <p>absolute path output directory where results will be saved. The `<output>` path will be created if it does not exists.</p><p><small>**Note** if there are already existing subdirectories in the `<output>` path, then this step will fail.</small></p> |
+| `-m <manifest.csv>` | yes | <p>a comma-separated file (\*.csv) that has three columns with the headers: **Sample\_ID, FileID\_R1, FileID\_R2** see the example below.</p><p><small>**Note** the fileID\_R1 and fileID\_R2 are relative to the `-i <input>` path provided.</small></p> |
+| `--num-pbs-jobs` | no<br/><small>(default=4)</small> | number of PBS scripts to generate by default 4 jobs are created with samples split equally between the jobs |
 | `--ref` | yes | path to the host genome file GRCh38_latest_genome.fna |
-| `--mode container` | default='single' | set this if you are running as a Container. |
-| `--pbs-config` | yes if `--mode container` | path to the pbs configuration file (see below). You must specify this parameter if `--mode container` is set. | 
+| `--mode container` | no<br/><small>(default='single')</small> | set this if you are running as a Container |
+| `--pbs-config` | yes if<br/> `--mode container` | path to the pbs configuration file, must specify this parameter if `--mode container` is set | 
 
 {{% alert color=info title=tip %}}
 These commands can get really long, you can use Notepad to
@@ -133,10 +133,10 @@ cat ~/mima_tutorial/output/QC_module/qcModule_0.pbs
 ```
 
 * Your PBS script should look something like below, with some differences
-  - line 10: `IMAGE_DIR` should be where you installed MIMA and [build the sandbox](/docs/installation/#build-a-sandbox)
-  - line 11: `APPTAINER_BIND` should be setup during installation when [binding paths](/docs/what-is-container/#path-binding)
+  - line 10: `IMAGE_DIR` should be where you installed MIMA and [build the sandbox]({{< ref " installation.md#build-a-sandbox" >}})
+  - line 11: `APPTAINER_BIND` should be setup during installation when [binding paths]({{< ref "what-is-container.md#path-binding" >}})
     - make sure to include the path where the host reference genome file is located
-  - line 14: `/home/user` is replaced with the [absolute path](need-to-know#use-absolute-paths) to your actual home directory
+  - line 14: `/home/user` is replaced with the [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) to your actual home directory
 
 {{< highlight Bash "linenos=table,hl_lines=10-11 14,linenostart=1" >}}
 #!/bin/bash
@@ -173,8 +173,8 @@ qsub qcModule_0.pbs
 - Wait until all PBS jobs have completed
 
 {{% alert color=warning title="PBS log files" %}}
-- Usually by default, a PBS job will generate a log file in the same directory from where the job was submitted
-- As such we changed directory to where the PBS scripts are saved, as the log files are required for the [generating the QC report (optional).](#step-5-optional-generate-qc-report)
+- Usually a PBS job will generate a log file in the same directory from where the job was submitted
+- As such we changed directory to where the PBS scripts are saved to submit the jobs because the log files are required for the [Step 5. Generating the QC report.](#step-5-optional-generate-qc-report)
 {{% /alert %}}
 
 ## Step 4. Check QC outputs
@@ -209,7 +209,7 @@ tree ~/mima_tutorial/output/QC_module
 └── ...
 ```
 
-## Step 5. (optional) generate QC report
+## Step 5. (optional) Generate QC report
 
 - You can generate a summary QC Report after all samples have been quality checked
 - This step can be run directly from the command line
@@ -222,7 +222,7 @@ $ apptainer run --app mima-qc-report $SANDBOX \
 ```
 
 {{% alert color=warning title="Troubleshoot" %}}
-If your sequence read files are not saved in your home directory, check you have set up the APPTAINER_BIND environment variable when [binding paths](/docs/what-is-container/#path-binding).
+If your sequence read files are not saved in your home directory, check you have set up the APPTAINER_BIND environment variable when [binding paths]({{< ref "what-is-container.md#path-binding" >}}).
 {{% /alert %}}
 
 
@@ -251,4 +251,4 @@ Beware that if you have failed PBS log files (*.o) in your input directory, the 
 
 ---
 
-**Next:** you can now proceed with either [Taxonomy Profiling with MIMA](mima-apptainer-Taxonomy) or [Function Profiling with MIMA](mima-apptainer-Function).
+**Next:** you can now proceed with either [Taxonomy Profiling with MIMA]({{< ref "mima-apptainer-taxonomy" >}}) or [Function Profiling with MIMA]({{< ref "mima-apptainer-function" >}}).
