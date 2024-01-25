@@ -314,13 +314,13 @@ tree ~/vis-tutorial/analysis/Kraken_alpha
 {{< card header="**Comparing Observed Richness between Labs**" 
         subtitle="File: observed_lab_dotplot.png"
         footer="There is significant differences between Labs A-vs-B, A-vs-C and B-vs-C when comparing their Observed richness (number of species detected in a sample)." >}}
-  <img src="images/observed_lab_dotplot.png"/>
+  <img src="{{ .Site.BaseURL }}/images/tutorials/visualisation/observed_lab_dotplot.png"/>
 {{< /card >}}
 
 {{< card header="**Comparing Evenness between Labs**" 
         subtitle="File: evenness_lab_dotplot.png"
         footer="There is significant differences between Labs A-vs-B, A-vs-C and B-vs-C when comparing their Evenness (a measure to describe the abundance distribution of species detected in a sample/community, e.g., their dominance/rareness)." >}}
-  <img src="evenness_lab_dotplot.png" />
+  <img src="{{ .Site.BaseURL }}/images/tutorials/visualisation/evenness_lab_dotplot.png" />
 {{< /card >}}
 {{< /cardpane >}}
 
@@ -363,7 +363,7 @@ tree ~/vis-tutorial/analysis/Kraken_beta
 
 #### Example figures
 
-{{< figure src="/images/tutorials/visualisation/PCoA-Bray-Curtis-lab.png"
+{{< figure src="{{ .Site.BaseURL }}/images/tutorials/visualisation/PCoA-Bray-Curtis-lab.png"
            caption="Principal co-ordinate analysis plot of the beta-diversity measured using Bray-Curtis dissimilarity between samples grouped by the three labs."
            class="figure"
            img-class="figure-img img-fluid rounded mx-auto d-block border border-medium"
@@ -425,13 +425,13 @@ tree ~/vis-tutorial/analysis/Kraken_diff-abundance/
 
 {{< cardpane >}}
   {{< card header="Example marker 1" >}}
-    {{< figure src="/images/tutorials/visualisation/s__Acetivibrio_A.ethanolgignens_lab_dotplot.png"
+    {{< figure src="{{ .Site.BaseURL }}/images/tutorials/visualisation/s__Acetivibrio_A.ethanolgignens_lab_dotplot.png"
               caption="The univariate comparison suggests there is significant lab differences after adjustment for multiple comparison in species *Acetivibrio A ethanolgignens*."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" >}}
   {{< /card >}}
   {{< card header="Example marker 2" >}}
-    {{< figure src="/images/tutorials/visualisation/s__Bifidobacterium.callitrichos_lab_dotplot.png"
+    {{< figure src="{{ .Site.BaseURL }}/images/tutorials/visualisation/s__Bifidobacterium.callitrichos_lab_dotplot.png"
               caption="Another example of significant lab differences after adjustment for multiple comparison in species *Bifidobacterium callitrichos*."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" >}}

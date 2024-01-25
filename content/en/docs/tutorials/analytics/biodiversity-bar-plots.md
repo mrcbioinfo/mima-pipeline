@@ -236,7 +236,7 @@ analysis_v3/
 {{< card header="**Relative abundances across all samples**" 
         subtitle="File: LAB.select.top_8_.barchart.pdf"
         footer="This plot shows the relative abundances for the top 8 genera for each sample, where the top 8 genera is across all samples in the study.">}}
-  <img src="/images/tutorials/visualisation/LAB.select.top_8_.barchart.png" height="75%"/>
+  <img src="{{ .Site.BaseURL }}/images/tutorials/visualisation/LAB.select.top_8_.barchart.png" height="75%"/>
 {{< /card >}}
 
 &nbsp;
@@ -244,7 +244,7 @@ analysis_v3/
 {{< card header="**Overall top 8 Genera**" 
           subtitle="File: LAB.select.average.top_8_.barchart.pdf"
           footer="This plot shows the mean relative abundances for the top 8 genera occurring across all samples in the study. All other detected taxa not in the top 7 are aggregated as *Others*. In this example, *Pseudomonas E* is the most abundant in samples processed by Lab-C.">}}
-  <img src="/images/tutorials/visualisation/LAB.select.average.top_8_.barchart.png"/>
+  <img src="{{ .Site.BaseURL }}/images/tutorials/visualisation/LAB.select.average.top_8_.barchart.png"/>
 {{< /card >}}
 
 
