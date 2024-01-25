@@ -213,9 +213,14 @@ tree ~/mima_tutorial/output/QC_module
 
 - You can generate a summary QC Report after all samples have been quality checked
 - This step can be run directly from the command line
+- First navigate to the `QC_module` directory that have the `qc_module.log` files
 
+```Shell
+cd ~/mima_tutorial/output/QC_module
 ```
-$ apptainer run --app mima-qc-report $SANDBOX \
+
+```Tcsh
+apptainer run --app mima-qc-report $SANDBOX \
 -i ~/mima_tutorial/output/QC_module \
 -o ~/mima_tutorial/output \
 --manifest ~/mima_tutorial/manifest.csv
@@ -226,28 +231,30 @@ If your sequence read files are not saved in your home directory, check you have
 {{% /alert %}}
 
 
-The output is a comma separated text file located in `~/mima_tutorial/output/QC_module/QC_report.csv`. You can inspect the first few lines using the `head` command:
+The output is a comma separated text file located in `~/mima_tutorial/output/QC_module/QC_report.csv`. 
+
+- Examine the output report using `head`
+  - `column` formats the text file as columns like a table for readabilty
+
 ```Shell
-head ~/mima_tutorial/output/QC_module/QC_report.csv
+head ~/mima_tutorial/output/QC_module/QC_report.csv | column -t -s ','
 ```
+
+- Your output should resemble something like below 
+  - (the numbers can be different due to different tool versions)
 
 ```Text
-SampleId,Rawreads_seqs,Derep_seqs,PCR_duplicates(%),Post_QC_seqs,low_quality_reads(%),Host_seqs,Host(%),Clean_reads
-SRR17380209,14072002,14045392,0.0809091,9568710,31.87295876113675,482,0.005037251625349707,9568228
-SRR17380232,11822934,11713130,0.0706387,11102358,5.214421764293575,62,0.0005584399278063273,11102296
-SRR17380236,11756456,11656800,0.0688868,10846582,6.950603939331549,48,0.0004425357223132596,10846534
-SRR17380231,12223354,12104874,0.069757,11414164,5.7060486544510916,16,0.00014017671377421947,11414148
-SRR17380218,14913690,14874174,0.0856518,11505850,22.645452446636703,256,0.002224955131520053,11505594
-SRR17380222,16927002,16905928,0.0980011,11692516,30.83777477344042,320,0.0027367933471290525,11692196
-SRR17380118,40510808,40299722,0.235332,40148912,0.3742209437573788,324,0.0008069957163471828,40148588
-SRR17380115,40393998,40186880,0.234584,40048860,0.3434454229838196,194,0.00048440829526733096,40048666
-SRR17380122,43683114,41809064,0.24366,41697506,0.2668273080688915,1548,0.003712452250741327,41695958
+SampleId     Rawreads_seqs  Derep_seqs  PCR_duplicates(%)  Post_QC_seqs  low_quality_reads(%)  Host_seqs  Host(%)                 Clean_reads
+SRR17380209  14072002       14045392    0.0809091          9568710       31.87295876113675     426        0.004452010772611982    9568284
+SRR17380232  11822934       11713130    0.0706387          11102358      5.214421764293575     62         0.0005584399278063273   11102296
+SRR17380236  11756456       11656800    0.0688868          10846582      6.950603939331549     46         0.00042409673388354047  10846536
+SRR17380231  12223354       12104874    0.069757           11414164      5.7060486544510916    14         0.00012265462455244203  11414150
+SRR17380218  14913690       14874174    0.0856518          11505850      22.645452446636703    234        0.002033748049905048    11505616
+SRR17380222  16927002       16905928    0.0980011          11692516      30.83777477344042     294        0.002514428887674817    11692222
+SRR17380118  40510808       40299722    0.235332           40148912      0.3742209437573788    308        0.0007671440760337416   40148604
+SRR17380115  40393998       40186880    0.234584           40048860      0.3434454229838196    190        0.00047442049536491177  40048670
+SRR17380122  43683114       41809064    0.24366            41697506      0.2668273080688915    1404       0.0033671078553235297   41696102
 ```
-
-{{% alert color="warning" title="Troubleshoot" %}}
-Beware that if you have failed PBS log files (*.o) in your input directory, the QC report module may fail. Examine the error messages.
-{{% /alert %}}
-
 
 ---
 
