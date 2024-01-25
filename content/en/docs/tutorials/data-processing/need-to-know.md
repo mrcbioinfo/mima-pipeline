@@ -6,7 +6,7 @@ type: docs
 ---
 
 
-## Working directory
+## Project working directory
 
 After [downloading the tutorial data]({{< ref "download-tutorial-data" >}}), we assume that the `mima_tutorial` is the working directory located in your *home directory* (specified by the tilde, `~`). Hence, we will try to always make sure we are in the right directory first before executing a command, for example, run the following commands:
 
@@ -44,6 +44,12 @@ For example, the command below lets you edit the `pbs_head_qc.cfg` text file
 vim pbs_header_qc.cfg
 ```
 {{% /alert %}}
+
+
+## Containers and binding paths
+
+When deploying images, make sure you check if you need to [bind any paths]({{< ref "what-is-container.md#path-binding" >}}).
+
 
 ## PBS configuration files
 

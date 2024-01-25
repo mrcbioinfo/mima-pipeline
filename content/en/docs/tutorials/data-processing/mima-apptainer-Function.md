@@ -39,6 +39,8 @@ Steps in the functional profiling module:
 
 ## Step 1. Generate PBS scripts
 
+Before starting, have you understood the [need to know]({{< ref "need-to-know" >}}) points?
+
   - After [QC checking]({{< ref "mima-apptainer-qc" >}}) your sequence samples and generating a set of `CleanReads`
   - Find the [absolute paths]({{< ref "need-to-know.md#use-absolute-paths" >}}) for the **HUMAnN3** and **MetaPhlAn** reference databases depending on the [MIMA version you installed]({{< ref "installation" >}})
   - Replace the highlighted lines with the absolute path for the reference databases

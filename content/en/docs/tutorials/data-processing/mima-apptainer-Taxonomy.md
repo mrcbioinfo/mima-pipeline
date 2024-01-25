@@ -40,6 +40,8 @@ Steps in the taxonomy profiling module:
 
 ## Step 1. Generate PBS script
 
+Before starting, have you understood the [need to know]({{< ref "need-to-know" >}}) points?
+
 - After [QC checking]({{< ref "mima-apptainer-qc" >}}) your sequence samples and generating a set of `CleanReads`
 - Find the [absolute paths]({{< ref "need-to-know.md#use-absolute-paths" >}}) for the **Kraken2** and **Bracken** reference databases on your HPC system (**!!** they need to be in the same directory)
 - Replace the highlighted line `--reference-path <path/to/Kraken2_db>` with the Kraken2 absolute path

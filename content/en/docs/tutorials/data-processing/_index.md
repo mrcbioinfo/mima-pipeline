@@ -62,6 +62,7 @@ For this set of tutorials, you need
   - Kraken2 and Bracken reference database (same directory for the two tools)
   - HUMAnN reference databases
   - MetaPhlAn reference databases
+- Understand the [need to know]({{< ref "need-to-know" >}}) points
 - Data processing worked on <u>paired-end sequenced reads</u> with two files per sample
   - forward read fastQ files usually has some variation of _R1.fq.gz or _1.fq.gz filename suffix, and
   - reverse read fastQ files usually some variation of _R2.fq.gz or _1.fq.gz filename suffix
