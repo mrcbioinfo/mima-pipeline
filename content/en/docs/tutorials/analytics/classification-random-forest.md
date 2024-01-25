@@ -266,7 +266,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
 {{< tabpane text=true right=false >}}
 {{% tab header="**roc_data_7_classifier.pdf**" disabled=true /%}}
 {{% tab header="cv_3" disabled=false lang="en" %}}
-  {{< figure src="../../../../images/tutorials/classifier/random-forest-HMP/roc_data_7_cv3.png"
+  {{< figure src="../images/random-forest-HMP/roc_data_7_cv3.png"
               caption="This shows the ROC curve for the Species relative abundance table (data_7) when using 3-fold cross-validation."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" 

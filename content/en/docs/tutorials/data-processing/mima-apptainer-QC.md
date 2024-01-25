@@ -32,7 +32,7 @@ This tutorial has 9 samples spread across 3 PBS jobs. One PBS job will execute t
 </tr>
 <tr>
   <td>1. <b>repair.sh</b> from BBTools/BBMap tool suite, repairs the sequenced reads and separates out any singleton reads (orphaned reads that are missing either the forward or reverse partner read) into its own text file.</td>
-  <td rowspan=5 style="width:40%"><img src="/images/tutorials/pipeline/tut_QCpipeline.png"/></td>
+  <td rowspan=5 style="width:40%"><img src="../images/tut_QCpipeline.png"/></td>
 </tr>
 <tr><td>2. <b>dereplication</b> using clumpify.sh from BBTools/BBMap tool suite, removes duplicate reads and clusters reads for faster downstream processing</td></tr>
 <tr><td>3. <b>quality checking</b> is done with fastp.sh and checks the quality of the reads and removes any reads that are of low quality, too long or too short</td></tr>

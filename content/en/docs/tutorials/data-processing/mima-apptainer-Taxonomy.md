@@ -27,7 +27,7 @@ Steps in the taxonomy profiling module:
 </tr>
 <tr>
   <td><b>Kraken2</b> assigns each read to a lowest common ancestor by matching the sequenced reads against a reference database of previously classified species</td>
-  <td rowspan=3 style="width:40%"><img src="/images/tutorials/pipeline/tut_TAXApipeline.png"/></td>
+  <td rowspan=3 style="width:40%"><img src="../images/tut_TAXApipeline.png"/></td>
 </tr>
 <tr>
   <td><b>Bracken</b> takes the Kraken2 output to estimate abundances for a given taxonomic rank. This is repeated from Phylum to Species rank.</td>

@@ -22,7 +22,7 @@ The MIMA Pipeline contains two fundamental components and the tutorials are spli
    - core biodiversity analysis (e.g., alpha-diversity, beta-diversity and differential abundance analyses) and comparisons between groups
    - classification analysis
 
-![pipeline-schema](/images/mima_pipeline.svg)
+![pipeline-schema](../images/mima_pipeline.svg)
 
 
 ## Getting started

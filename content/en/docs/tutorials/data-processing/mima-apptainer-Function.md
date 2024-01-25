@@ -29,7 +29,7 @@ Steps in the functional profiling module:
     <li>pathway abundances</li>
     <li>pathway coverage</li>
   </ol>
-  <td rowspan=2 style="width:40%"><img src="/images/tutorials/pipeline/tut_function_pipeline.png"/></td>
+  <td rowspan=2 style="width:40%"><img src="../images/tut_function_pipeline.png"/></td>
 </tr>
 <tr>
   <td><b>Generate feature table</b> is performed after <i>all samples</i> have been processed. This combines the output and generates a <i>feature table</i> that contains the abundance of gene/pathway X in sample Y.</td>
