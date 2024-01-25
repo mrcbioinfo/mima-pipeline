@@ -58,7 +58,7 @@ apptainer run --app mima-function-profiling $SANDBOX \
 --nucleotide-database </path/to>/humann3/chocophlan \
 --protein-database /<path/to>/humann3/uniref \
 --utility-database /<path/to>/humann3/utility_mapping \
---metaphlan-options "--bowtie2db /<path/to>/metaphlan_databases" \
+--metaphlan-options "++bowtie2db /<path/to>/metaphlan_databases" \
 --mode container \
 --pbs-config ~/mima_tutorial/pbs_header_func.cfg
 {{< /highlight >}}
@@ -78,7 +78,7 @@ For MRC users, see <a href="https://unsw.sharepoint.com/:w:/r/sites/mrc_bioinfor
 | `--nucleotide-database <path>` | yes | directory containing the nucleotide database, (default=`/refdb/humann/chocophlan`) |
 | `--protein-database <path>` | yes | directory containing the protein database, (default=`/refdb/humann/uniref`) |
 | `--utility-database <path>` | yes | directory containing the protein database, (default=`/refdb/humann/utility_mapping`) |
-| `--metaphlan-options <string>` | yes | additional MetaPhlAn settings, like specifying the bowtie2 reference database (default=`"--bowtie2db /refdb/humann/metaphlan_databases"`). Use `++` for additional parameter settings e.g. `"--bowtie2db <path> ++index <index_version>"` |
+| `--metaphlan-options <string>` | yes | additional MetaPhlAn settings, like specifying the bowtie2 reference database (default=`"++bowtie2db /refdb/humann/metaphlan_databases"`). Enclose parameters in double quotes and use `++` for parameter settings. |
 | `--mode container` | no (default='single') | set this if you are running in the Container mode |
 | `--pbs-config` | yes if `--mode container` | path to the pbs configuration file (see below). You must specify this parameter if `--mode container` is set. You do not need to set this parameter if running outside of Singularity | 
 | `--mpa3` | no | this parameter is only applicable for MIMA container with MetaPhlAn4. You can set `--mpa3` for <a href="https://forum.biobakery.org/t/announcing-metaphlan-4/3994" target="_blank;">backward compatibility with MetaPhlAn3 databases</a> |
