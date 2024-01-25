@@ -10,7 +10,7 @@ A Container Image is an *image* file with packaged code (software applications) 
 
 Since the image is unchangeable after it is built, it allows for consistent and repeatable deployment. For example, let's say an image was built with Ubuntu as the operating system, and you deploy this image on your Windows 11 PC (host). A Ubuntu *"container"* will be created and the programs inside this container will run under the Ubuntu settings.
 
-Different *platforms* are available for building and deploying these container images, for example, [Apptainer](https://apptainer.org/), [SingularityCE](https://sylabs.io/docs/) or [Docker]().
+Different *platforms* are available for building and deploying these container images, for example, <a href="https://apptainer.org/" target="_blank;">Apptainer</a>, <a href="https://sylabs.io/docs/" target="_blank">SingularityCE</a> or <a href="https://www.docker.com/" target="_blank">Docker</a>.
 
 For the MIMA Pipeline we use Apptainer.
 
@@ -37,27 +37,31 @@ A container is deployed with the bare minimum filesystem to operate, meaning tha
 
 It does not automatically have access to other filesystems or disks. If your data is located on another drive or path, then you need to explicitly provide this information using either
 
-{{< card code=true header="option 1) **-B** parameter" lang="bash" footer="the binding only exists during the life of the container" >}}
-$ apptainer run -B /hostPC/studyABC:/study/data,/hostPC/refDB:/reference/data
-{{< /card >}}
+**Option 1)** `-B` parameter: the binding only exists during the life of the container
 
-&nbsp;
+```Shell
+apptainer run -B /home/jsmith/studyABC:/study/data,/srv/shared/refDB:/reference/data
+```
+**Option 2)** `APPTAINER_BIND` environmental variable: the binding exists during your terminal session (multiple deployed containers)
 
-{{< card code=true header="option 2) **APPTAINER_BIND** environmental variable" lang="base" footer="the binding exists during your terminal session (multiple deployed containers)" >}}
-$ export APPTAINER_BIND="/hostPC/studyABC:/study/data,/hostPC/refDB:/reference/data"
-{{< /card >}}
+```Shell
+export APPTAINER_BIND="/home/jsmith/studyABC:/study/data,/srv/shared/refDB:/reference/data"
+```
 
-&nbsp;
+The path binding format is: `<host-PC>:<container>` where the:
 
-In the above examples, the left-side of the colon (**:**) represents the directory on the host PC, and the right-side is the mapped location after the container has been created.
+* Left of the colon (**:**) is the [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) of the directory found on the host PC
+* Right of the colon (**:**) is the path that the *Container* sees when it's deployed
 
-| Path on **host PC** | Path in Container | Description            |
+The above example:
+
+| <div style="width:150px">Path on Host PC (left)</div> | <div style="width:150px">Path in Container (right)</div> | Description            |
 |---------------------|-------------------|------------------------|
-| /hostPC/studyABC    | /study/data       | `/hostPC/studyABC` directory on the hostPC, is accessed from the container using `/study/data` |
-| /hostPC/refDB       | /reference/data   | `/hostPC/refDB` directory on the hostPC, is accessed from the container using `/reference/data` |
+| `/home/jsmith/studyABC`    | `/study/data`       | The `studyABC` directory on the host PC is in the home directory of user jsmith (`/home/jsmith`).<br/> Applications running in the Container can access the data from `/study/data` |
+| `/srv/shared/refDB`       | `/reference/data`   | The `refDB` directory on the hostPC is in a shared located `/srv/shared`.<br/> Applications running in the Container can access this data from `/reference/data` |
 
 
-{{% alert color=warning title="Shortcuts and softlinks" pre="fa-solid fa-plus" %}}
+{{% alert color=warning title="Shortcuts/softlinks also need binding" pre="fa-solid fa-plus" %}}
 If you have shortcuts or softlinks in your home directory pointing to elsewhere, you also need to bind the original locations using the `-B` parameter or the environment variable setting.
 {{% /alert %}}
 

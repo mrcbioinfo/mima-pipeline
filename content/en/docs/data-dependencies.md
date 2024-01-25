@@ -6,7 +6,7 @@ weight: 30
 Many steps in the pipeline require access to reference databases. These reference databases are very big and are often already downloaded by the system administrators. As such they are not included in the container images.
 
 {{% pageinfo color=warning %}}
-To run the pipeline you need to know the [absolute paths](/docs/tutorials/data-processing/need-to-know/#use-absolute-paths) for the below reference databases. 
+To run the pipeline you need to know the [absolute paths]({{< ref "need-to-know.md#use-absolute-paths" >}}) for the below reference databases. 
 
 * minimap2
 * kraken2 and bracken
@@ -15,7 +15,7 @@ To run the pipeline you need to know the [absolute paths](/docs/tutorials/data-p
   * uniref
 * metaphlan CHOCOPhlAn database
 
-You might also need to set up [path binding](../what-is-container/#path-binding) when deploying the containers.
+You might also need to set up [path binding]({{< ref "what-is-container#path-binding" >}}) when deploying the containers.
 {{% /pageinfo %}}
 
 If you are missing any reference datasets, see below for download information.
@@ -91,7 +91,7 @@ tree -d ~/refDB/humann3
 
 ### MetaPhlAn database
 
-- Estimated disk space: ~26GB or see the <a href=" [https://github.com/biobakery/MetaPhlAn" target="_blank">developer's documentation</a>
+- Estimated disk space: ~26GB or see the <a href="https://github.com/biobakery/MetaPhlAn" target="_blank">developer's documentation</a>
 - After [installing MIMA container](../installation), ensure you have [set the `SANDBOX` environment variable](../installation/#build-a-sandbox)
 - The command below installs the required Bowtie2 database where the `--bowtie2db` parameter lets you set the path
   - the example below installs it in your home directory (`~`)
@@ -105,7 +105,7 @@ apptainer exec $SANDBOX metaphlan --install --bowtie2db ~/refDB/metaphlan_databa
 
 ## Installing to external path
 
-If you are using the MIMA container to install reference databases to a location other than your home directory, remember to set [path binding](../what-is-container/#path-binding).
+If you are using the MIMA container to install reference databases to a location other than your home directory, remember to set [path binding]({{< ref "what-is-container.md#path-binding" >}}).
 
 The example below uses `-B` parameter:
 

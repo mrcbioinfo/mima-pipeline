@@ -3,15 +3,9 @@ title: Installation
 weight: 20
 ---
 
+## MIMA Container image
 
-All tools required by the MIMA pipeline are encapsulated into a [Container image](../what-is-container) file with the `mima_XXX.sif` naming scheme, where XXX denotes different versions.
-
-- [MIMA container version](#mima-container-version)
-- [Start an interactive PBS job](#start-an-interactive-pbs-job)
-- [Build a sandbox](#build-a-sandbox)
-- [Confirm installation](#confirm-installation)
-
-## MIMA container version
+All tools required by the MIMA pipeline are encapsulated into a [Container image]({{< ref "what-is-container.md" >}}) file with the `mima_XXX.sif` naming scheme, where XXX denotes different versions.
 
 Two MIMA container versions are provided, differing in the HUMAnN and MetaPhlAn tools and their reference database. If you are downloading the reference data from scratch, then it doesn't matter which container file you select.
 
@@ -19,35 +13,33 @@ Two MIMA container versions are provided, differing in the HUMAnN and MetaPhlAn 
 {{% blocks/download icon="fa-solid fa-download"
 title="**MIMA_h350m401.sif**"
 url="https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h350_mpa401.sif" %}}
-  **Tools**
 
-    - HUMAnN v3.5.0
-    - MetaPhlAn v4.0.1
+**Tools**
+- HUMAnN v3.5.0
+- MetaPhlAn v4.0.1
 
-  **Reference database**
-
-    - ChocoPhlAn v201901_v31
-    - MetaPhlAn DB: 
-    v201901_v31 or 202103_vJan21
+**Reference database**
+- ChocoPhlAn v201901_v31
+- MetaPhlAn:  v201901_v31 <br/>(or 202103_vJan21)
 {{% /blocks/download %}}
 {{% blocks/download icon="fa-solid fa-download"
 title="**MIMA_h301m310.sif**"
 url="https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif" %}}
-**Tools** 
 
-    - HUMAnN v3.0.1
-    - MetaPhlAn v3.1.0
+**Tools**
+- HUMAnN v3.0.1
+- MetaPhlAn v3.1.0
   
 **Reference database**
-
-    - ChocoPhlAn v296_201901b
-    - MetaPhlAn DB v201901_v30
+- ChocoPhlAn v296_201901b
+- MetaPhlAn: v201901_v30
 {{% /blocks/download %}}
 {{< /blocks/section >}}
 
 &nbsp;
 
-- Right click > copy link, download using the following command
+- Right click on the `download` button above > "Copy link address" (paste the URL in command below)
+- Download using `curl` command (or `wget`)
 
 ```Shell
 curl -L https://github.com/mrcbioinfo/mima-pipeline/releases/download/v1.0.0/mima_h301_mpa310.sif
@@ -74,10 +66,10 @@ at the time of writing this tutorial we were using `apptainer version 1.2.4-1el.
 
 ## Build a sandbox
 
-As mentioned previously, to [skip repeated unpacking of the container image](../what-is-container/#build-a-sandbox), we will build a *sandbox* container.
+As mentioned previously, to [skip repeated unpacking the image]({{< ref "what-is-container.md/#build-a-sandbox" >}}) when we deploy containers, we will build a *sandbox* container.
 
-- Build a *sandbox* called `mima-pipeline`
-- Create a `SANDBOX` environment variable to store the full directory path (saves typing a long paths!)
+- Build a sandbox called `mima-pipeline`
+  - below shows command for the two MIMA versions
 
 {{< tabpane text=true right=false >}}
   {{% tab header="**Image version**:" disabled=true /%}}
@@ -85,41 +77,37 @@ As mentioned previously, to [skip repeated unpacking of the container image](../
   ```Shell
   apptainer build --sandbox mima-pipeline mima_h350_mpa401.sif
   ```
-
-  ```
+  ```Text
   INFO:    Starting build...
   INFO:    Verifying bootstrap image mima_h350_mpa401.sif
   INFO:    Creating sandbox directory...
   INFO:    Build complete: 
-  ```
-
-  ```Shell
-  export SANDBOX=`pwd`/mima-pipeline
   ```
   {{% /tab %}}
   {{% tab header="mima_h301_mpa310" lang="en" %}}
+
   ```Shell
   apptainer build --sandbox mima-pipeline mima_h301_mpa310.sif
   ```
-
-  ```
+  ```Text
   INFO:    Starting build...
   INFO:    Verifying bootstrap image mima_h350_mpa401.sif
   INFO:    Creating sandbox directory...
   INFO:    Build complete: 
-  ```
-
-  ```Shell
-  export SANDBOX=`pwd`/mima-pipeline
   ```
   {{% /tab %}}
 {{< /tabpane >}}
 
+- Create a `SANDBOX` environment variable to store the full directory path (saves typing a long paths!)
+
+```Shell
+export SANDBOX=`pwd`/mima-pipeline
+```
 
 ## Confirm installation
 
-- test `SANDBOX` environment variable is working. 
-- if this command is not working then check your `SANDBOX` environment variable using `echo $SANDBOX` which will output the path
+- Test `SANDBOX` environment variable is working
+- If this command is not working then check your `SANDBOX` environment variable using `echo $SANDBOX` which should output the path where you build the sandbox
 
 ```Shell
 apptainer run $SANDBOX
@@ -129,7 +117,7 @@ Below is the output, check the line **active environment : mima** is the same as
 
 {{< tabpane text=true right=false >}}
   {{% tab header="**Image version**:" disabled=true /%}}
-  {{% tab header="mima_h305_mpa401" disabled=false lang="en" %}}
+  {{% tab header="mima_h350_mpa401" disabled=false lang="en" %}}
   ```Text
 ----
 This is the MIMA pipeline Container
@@ -237,7 +225,7 @@ Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)
 
 
 {{% alert color="warning" title=Reminder %}}
-By default Containers are deployed with very minimum filesystem access and you might need to [bind paths](../what-is-container/#path-binding)
+By default Containers are deployed with very minimum filesystem access and you might need to [bind paths]({{< ref "what-is-container.md#path-binding" >}})
 {{% /alert %}}
 
-Next [check the data-dependencies](../data-dependencies)
+Next check you have all the required [data-dependencies]({{< ref "data-dependencies.md" >}}).
