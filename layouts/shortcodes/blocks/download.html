@@ -4,12 +4,14 @@
 <div class="mb-4 h1">
   <i class="{{ if not (or (hasPrefix $icon "fas ") (hasPrefix $icon "fab ")) }}fas {{ end }}{{ $icon }}"></i>
 </div>
-<h4 class="h4">
+<h4 class="h5">
   {{- .Get "title" | markdownify -}}
 </h4>
-<div class="mb-0">
+<div class="mt-4 mb-4">
 {{ .Inner | markdownify }}
 </div>
-{{ with .Get "url" }}<p><a class="btn btn-light btn-sm mb-4" href="{{ . }}">{{ with $url_text }}{{ $url_text }}{{ else }}{{ T "ui_download" }}{{ end }}</a><br\>{{ end }}
-(or right click > "Copy link address") </p>
+{{ with .Get "url" }}
+  <p><a class="btn btn-light btn-sm" href="{{ . }}">{{ with $url_text }}{{ $url_text }}{{ else }}{{ T "ui_download" }}{{ end }}</a>
+{{ end }}<br/>
+<small style="font-size:0.75em;">or right click > Copy link address</small></p>
 </div>
