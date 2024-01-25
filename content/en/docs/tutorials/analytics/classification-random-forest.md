@@ -266,7 +266,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
 {{< tabpane text=true right=false >}}
 {{% tab header="**roc_data_7_classifier.pdf**" disabled=true /%}}
 {{% tab header="cv_3" disabled=false lang="en" %}}
-  {{< figure src="{{ .Site.BaseURL }}/images/random-forest-HMP/roc_data_7_cv3.png"
+  {{< figure src="../../../../images/tutorials/classifier/random-forest-HMP/roc_data_7_cv3.png"
               caption="This shows the ROC curve for the Species relative abundance table (data_7) when using 3-fold cross-validation."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" 
@@ -274,7 +274,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
               width="75%" >}}
 {{% /tab %}}
 {{% tab header="cv_4" lang="en" %}}
-  {{< figure src="{{ .Site.BaseURL }}/images/tutorials/classifer/random-forest-HMP/roc_data_7_cv4.png"
+  {{< figure src="../images/random-forest-HMP/roc_data_7_cv4.png"
               caption="This figure shows the ROC curve for the Species relative abundance table (data_7) when using 4-fold cross-validation."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" 
@@ -283,7 +283,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
 {{% /tab %}}
 {{% tab header="..." disabled=true lang="en" /%}}
 {{% tab header="cv_8" lang="en" %}}
-  {{< figure src="{{ .Site.BaseURL }}/images/tutorials/classifer/random-forest-HMP/roc_data_7_cv8.png"
+  {{< figure src="../images/random-forest-HMP/roc_data_7_cv8.png"
               caption="This figure shows the ROC curve for the Species relative abundance table (data_7) when using 8-fold cross-validation."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" 
@@ -291,7 +291,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
               width="75%">}}
 {{% /tab %}}
 {{% tab header="cv_9" lang="en" %}}
-  {{< figure src="{{ .Site.BaseURL }}/images/tutorials/classifer/random-forest-HMP/roc_data_7_cv9.png"
+  {{< figure src="../images/random-forest-HMP/roc_data_7_cv9.png"
               caption="This figure shows the ROC curve for the Species relative abundance table (data_7) when using 10-fold cross-validation."
               class="figure"
               img-class="figure-img img-fluid rounded mx-auto d-block" 
@@ -304,7 +304,7 @@ The **area under the ROC curve (AUC)** is the overall accuracy of a classifier, 
 
 In this plot, we observe that when using Species (data_7) abundances as the feature table, the classifier accuracy ranges between 0.7 to 0.8 with a peak performance occurring at cv_8 (8-fold cross validation). In general, when there is more data for training (higher cv) there is better performance (higher AUC).
 
-{{< figure src="{{ .Site.BaseURL }}/images/tutorials/classifer/random-forest-HMP/cv_auc_data_7.png"
+{{< figure src="../images/random-forest-HMP/cv_auc_data_7.png"
           caption="This plot compares accuracy (AUC) for Random Forest classifiers trained on the Species abundance tables (input 7 == page 7). The AUC values correspond to the area under the curve of the above `roc_data_7_classifier.pdf` file. In this plot, we observe that when using Species (data_7) abundances as the feature table, the classifier accuracy ranges between 0.7 to 0.8 with a peak performance occurring at cv_8 (8-fold cross validation). In general, when there is more data for training (higher cv) there is better performance (higher AUC)."
           class="figure"
           img-class="figure-img img-fluid rounded mx-auto d-block"
@@ -318,7 +318,7 @@ This PDF combines the individual plots from the set of `roc_data_*_classifier.pd
 
 The plot below tells us that when using 8-fold CV for training, the best performing classifier to distinguish between males and females, in this set is `data_7` with an accuracy of 0.787 (or 78.7%). This classifier was trained using Species rank abundance table. Strain level is comparable with accuracy of 0.779, while Kingdom classifiers perform very poorly (accuracy = 0.519) which are pretty much random guesses. There was no improvement to the classify if we combined all the features (data_9) together.
  
-{{< figure src="{{ .Site.BaseURL }}/images/tutorials/classifer/random-forest-HMP/roc_classif.randomForest_dataset_cv8.png"
+{{< figure src="../images/random-forest-HMP/roc_classif.randomForest_dataset_cv8.png"
            caption="The ROC curves of Random Forest classifiers trained using 8-fold cross-validation (cv_8) for input data from Kingdom (data_1) to Strain (data_8) and the combined dataset which merges all input data as one table (data_9). When using 8-fold CV the best performing classifier has accuracy of 0.787 using the Species input data (data_7). See text description for further interpretation."
            class="figure"
            img-class="figure-img img-fluid rounded mx-auto d-block" 

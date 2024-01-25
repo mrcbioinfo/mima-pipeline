@@ -233,19 +233,27 @@ analysis_v3/
 
 ### Example plots
 
-{{< card header="**Relative abundances across all samples**" 
-        subtitle="File: LAB.select.top_8_.barchart.pdf"
-        footer="This plot shows the relative abundances for the top 8 genera for each sample, where the top 8 genera is across all samples in the study.">}}
-  <img src="{{ .Site.BaseURL }}/images/tutorials/visualisation/LAB.select.top_8_.barchart.png" height="75%"/>
-{{< /card >}}
+**Relative abundances across all samples**
 
-&nbsp;
+This plot shows the relative abundances for the top 8 genera for each sample, where the top 8 genera is across all samples in the study.
 
-{{< card header="**Overall top 8 Genera**" 
-          subtitle="File: LAB.select.average.top_8_.barchart.pdf"
-          footer="This plot shows the mean relative abundances for the top 8 genera occurring across all samples in the study. All other detected taxa not in the top 7 are aggregated as *Others*. In this example, *Pseudomonas E* is the most abundant in samples processed by Lab-C.">}}
-  <img src="{{ .Site.BaseURL }}/images/tutorials/visualisation/LAB.select.average.top_8_.barchart.png"/>
-{{< /card >}}
+{{< figure src="../images/biodiversity/LAB.select.top_8_.barchart.png" 
+           caption="File: LAB.select.top_8_.barchart.pdf"
+           class="figure"
+           img-class="figure-img img-fluid mx-auto d-block" 
+           height="75%"
+           width="75%" >}}
+
+**Mean relative abundances by group**
+
+This plot shows the mean relative abundances for the top 8 genera occurring across all samples in the study. All other detected taxa not in the top 7 are aggregated as *Others*. In this example, *Pseudomonas E* is the most abundant in samples processed by Lab-C."
+
+{{< figure src="../images/biodiversity/LAB.select.average.top_8_.barchart.png"
+          caption="File: LAB.select.average.top_8_.barchart.pdf"
+          class="figure"
+          img-class="figure-img img-fluid mx-auto d-block"
+          height="75%"
+          width="75%" >}}
 
 
 {{% alert color=primary title="Plots from Phylum to Species" %}}
