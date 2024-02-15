@@ -222,7 +222,6 @@ cd ~/mima_tutorial/output/QC_module
 ```Tcsh
 apptainer run --app mima-qc-report $SANDBOX \
 -i ~/mima_tutorial/output/QC_module \
--o ~/mima_tutorial/output \
 --manifest ~/mima_tutorial/manifest.csv
 ```
 
@@ -241,19 +240,20 @@ head ~/mima_tutorial/output/QC_module/QC_report.csv | column -t -s ','
 ```
 
 - Your output should resemble something like below 
-  - (the numbers can be different due to different tool versions)
+  - the numbers can be different due to different tool versions
+- The `log_status` column specify if log files were found, other values mean
+  - *missing QC log*: missing *qc_module.log file for the corresponding sample
+  - *missing JSON log*: missing fastp *.json file for the corresponding sample
 
 ```Text
-SampleId     Rawreads_seqs  Derep_seqs  PCR_duplicates(%)  Post_QC_seqs  low_quality_reads(%)  Host_seqs  Host(%)                 Clean_reads
-SRR17380209  14072002       14045392    0.0809091          9568710       31.87295876113675     426        0.004452010772611982    9568284
-SRR17380232  11822934       11713130    0.0706387          11102358      5.214421764293575     62         0.0005584399278063273   11102296
-SRR17380236  11756456       11656800    0.0688868          10846582      6.950603939331549     46         0.00042409673388354047  10846536
-SRR17380231  12223354       12104874    0.069757           11414164      5.7060486544510916    14         0.00012265462455244203  11414150
-SRR17380218  14913690       14874174    0.0856518          11505850      22.645452446636703    234        0.002033748049905048    11505616
-SRR17380222  16927002       16905928    0.0980011          11692516      30.83777477344042     294        0.002514428887674817    11692222
-SRR17380118  40510808       40299722    0.235332           40148912      0.3742209437573788    308        0.0007671440760337416   40148604
-SRR17380115  40393998       40186880    0.234584           40048860      0.3434454229838196    190        0.00047442049536491177  40048670
-SRR17380122  43683114       41809064    0.24366            41697506      0.2668273080688915    1404       0.0033671078553235297   41696102
+SampleId     log_status      Rawreads_seqs  Derep_seqs  dedup_percentage  Post_QC_seqs  low_quality_reads(%)  Host_seqs  Host(%)                 Clean_reads
+SRR17380209  OK              14072002       14045392.0  0.0809091         9568710       31.87295876113675     426.0      0.004452010772611982    9568284.0
+SRR17380232  OK              11822934       11713130.0  0.0706387         11102358      5.214421764293575     62.0       0.0005584399278063273   11102296.0
+SRR17380236  OK              11756456       11656800.0  0.0688868         10846582      6.950603939331549     46.0       0.00042409673388354047  10846536.0
+SRR17380231  OK              12223354       12104874.0  0.069757          11414164      5.7060486544510916    14.0       0.00012265462455244203  11414150.0
+SRR17380218  OK              14913690       14874174.0  0.0856518         11505850      22.645452446636703    234.0      0.002033748049905048    11505616.0
+SRR17380222  OK              16927002       16905928.0  0.0980011         11692516      30.83777477344042     294.0      0.002514428887674817    11692222.0
+SRR17380118  OK              40393998       40186880.0  0.234584          40148912      0.09447859599949038   100242.0   0.2496755080187478      40048670.0
 ```
 
 ---
