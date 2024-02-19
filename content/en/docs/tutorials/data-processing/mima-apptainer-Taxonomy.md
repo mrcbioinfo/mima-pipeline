@@ -98,7 +98,7 @@ tree ~/mima_tutorial/output/Taxonomy_profiling
 ```
 
 Expected directory structure
-  - **braken/** and **kraken2/** are subdirectories created by Step 2 to store the output files after PBS job is executed
+  - **bracken/** and **kraken2/** are subdirectories created by Step 2 to store the output files after PBS job is executed
 
 ```Text
 .
@@ -150,7 +150,7 @@ apptainer exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/Taxonomy_profil
 {{< /highlight >}}
 
 {{% alert color=info title="Tip: when running your own study" %}}
-- increase the walltime if you have alot of samples
+- increase the wall-time if you have a lot of samples
 - increase the memory as needed
 {{% /alert %}}
 
@@ -297,14 +297,14 @@ apptainer run --app mima-bracken-report $SANDBOX \
 - The output is a tab separated text file
 - By default, the output file `bracken-summary.tsv` will be in the same location as the input directory. You can override this using the `-o` parameter to specify the full path to the output file.
 - Examine the output report using `head`
-  - `column` formats the text file as columns like a table for readabilty
+  - `column` formats the text file as columns like a table for readability
 
 ```Shell
 head ~/mima_tutorial/output/Taxonomy_profiling/bracken-summary.tsv | column -t
 ```
 
 - Your output should resemble something like below (only the first 9 columns are shown in the example below)
-  - numbers might be different depending on the threhsold setting or tool version
+  - numbers might be different depending on the threshold setting or tool version
 
 
 ```Text
