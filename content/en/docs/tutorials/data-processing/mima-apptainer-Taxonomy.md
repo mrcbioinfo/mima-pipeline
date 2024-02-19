@@ -281,6 +281,46 @@ tree .
 └── generate_bracken_feature_table.py
 ```
 
+## Step 6. (optional) Generate summary report
+
+- You can generate a summary report after the Bracken abundance estimation step
+- This step can be run directly from the command line
+- You need to specify the [absolute input path]({{< ref "need-to-know.md#use-absolute-paths" >}}) (`-i` parameter)
+  - this is the directory that contains the `*_bracken.log` files, by default these should be in the `output/Taxonomy_profiling` directory
+  - update this path if you have the `*_bracken.log` files in another location
+
+```Tcsh
+apptainer run --app mima-bracken-report $SANDBOX \
+-i ~/mima_tutorial/output/Taxonomy_profiling
+```
+
+- The output is a tab separated text file
+- By default, the output file `bracken-summary.tsv` will be in the same location as the input directory. You can override this using the `-o` parameter to specify the full path to the output file.
+- Examine the output report using `head`
+  - `column` formats the text file as columns like a table for readabilty
+
+```Shell
+head ~/mima_tutorial/output/Taxonomy_profiling/bracken-summary.tsv | column -t
+```
+
+- Your output should resemble something like below (only the first 9 columns are shown in the example below)
+  - numbers might be different depending on the threhsold setting or tool version
+
+
+```Text
+sampleID     taxon_rank  log_status             threshold  num_taxon  num_tx_above_thres  num_tx_below_thres  total_reads  reads_above_thres
+SRR17380209  phylum      ok-reads_unclassified  100        96         21                  75                  4784142      4449148
+SRR17380209  class       ok-reads_unclassified  100        230        21                  209                 4784142      4438812
+SRR17380209  order       ok-reads_unclassified  100        524        53                  471                 4784142      4404574
+SRR17380209  family      ok-reads_unclassified  100        1087       103                 984                 4784142      4363888
+SRR17380209  genus       ok-reads_unclassified  100        3260       228                 3032                4784142      4239221
+SRR17380209  species     ok-reads_unclassified  100        8081       571                 7510                4784142      3795061
+SRR17380232  phylum      ok-reads_unclassified  100        87         21                  66                  5551148      5216610
+SRR17380232  class       ok-reads_unclassified  100        207        19                  188                 5551148      5201532
+SRR17380232  order       ok-reads_unclassified  100        464        51                  413                 5551148      5165978
+SRR17380232  family      ok-reads_unclassified  100        949        105                 844                 5551148      5126854
+```
+
 ---
 
 **Next:** if you haven't already, you can also [generate functional profiles]({{< ref "mima-apptainer-function" >}}) with your shotgun metagenomics data.
