@@ -142,7 +142,7 @@ cd /home/user/mima_tutorial/output/Function_profiling/
 cat /home/user/mima_tutorial/output/QC_module/CleanReads/SRR17380209_clean_1.fq.gz ~/mima_tutorial/output/QC_module/CleanReads/SRR17380209_clean_2.fq.gz > ~/mima_tutorial/output/Function_profiling/SRR17380209_combine.fq.gz
 
 outdir=/home/user/mima_tutorial/output/Function_profiling/
-singularity exec ${IMAGE_DIR} humann -i ${outdir}SRR17380209_combine.fq.gz --threads 28 \
+apptainer exec ${IMAGE_DIR} humann -i ${outdir}SRR17380209_combine.fq.gz --threads 28 \
 -o $outdir --memory-use maximum \
 --nucleotide-database </path/to/humann3>/chocophlan \
 --protein-database </path/to/humann3>/uniref \

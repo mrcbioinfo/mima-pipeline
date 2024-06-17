@@ -154,9 +154,9 @@ export APPTAINER_BIND="/path/to/human/GRCh38:/path/to/human/GRCh38"
 
 cd /home/user/mima_tutorial/output/QC_module/
 
-singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380209.sh > SRR17380209_qc_module.log 2>&1
-singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380232.sh > SRR17380232_qc_module.log 2>&1
-singularity exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380236.sh > SRR17380236_qc_module.log 2>&1
+apptainer exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380209.sh > SRR17380209_qc_module.log 2>&1
+apptainer exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380232.sh > SRR17380232_qc_module.log 2>&1
+apptainer exec ${IMAGE_DIR} bash /home/user/mima_tutorial/output/QC_module/SRR17380236.sh > SRR17380236_qc_module.log 2>&1
 {{< /highlight >}}
 
 

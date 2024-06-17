@@ -139,7 +139,7 @@ cat ~/mima_tutorial/output/Taxonomy_profiling/run_taxa_profiling.pbs
 set -x
 
 IMAGE_DIR=~/mima-pipeline
-export SINGULARITY_BIND="/path/to/kraken2/reference_database:/path/to/kraken2/reference_database"
+export APPTAINER_BIND="/path/to/kraken2/reference_database:/path/to/kraken2/reference_database"
 
 
 cd /home/user/mima_tutorial/output/Taxonomy_profiling/
