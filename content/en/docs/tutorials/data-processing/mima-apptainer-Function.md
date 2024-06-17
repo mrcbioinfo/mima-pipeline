@@ -119,7 +119,7 @@ $ cat ~/mima_tutorial/output/Function_profiling/SRR17380209.pbs
   - line 11: `APPTAINER_BIND` should be setup during installation when [binding paths]({{< ref "what-is-container.md#path-binding" >}})
     - make sure to include the path where the host reference genome file is located
   - line 14: `/home/user` is replaced with the [absolute path]({{< ref "need-to-know.md#use-absolute-paths" >}}) to your actual home directory
-  - lines 22-25: ensure the paths to the reference databases are all replaced
+  - lines 22-25: ensure the paths to the reference databases are all replaced (the example below uses the vJan21 database version and the parameter `index` is sent to MetaPhlAn to disable autocheck of index)
   - note that the walltime is set to 8 hours
 
 {{< highlight shell "linenos=table,hl_lines=10-11 14 22-25,linenostart=1" >}}
@@ -147,7 +147,7 @@ apptainer exec ${IMAGE_DIR} humann -i ${outdir}SRR17380209_combine.fq.gz --threa
 --nucleotide-database </path/to/humann3>/chocophlan \
 --protein-database </path/to/humann3>/uniref \
 --utility-database </path/to/humann3>/utility_mapping \
---metaphlan-options="--bowtie2db --bowtie2db </path/to/>metaphlan_databases" \
+--metaphlan-options \"++bowtie2db /path/to/metaphlan_databases ++index mpa_vJan21_CHOCOPhlAnSGB_202103\" \
 --search-mode uniref90
 {{< /highlight >}}
 
