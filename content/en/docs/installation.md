@@ -41,10 +41,10 @@ As mentioned previously, to [skip repeated unpacking the image]({{< ref "what-is
 
 {{< tabpane text=true right=false >}}
   {{% tab header="**Image version**:" disabled=true /%}}
-  {{% tab header="mima_h301_mpa310" lang="en" %}}
+  {{% tab header="mima4_v2.0.0_20240409" lang="en" %}}
 
   ```Shell
-  apptainer build --sandbox mima4_v2.0.0_20240409.sif
+  apptainer build --sandbox mima-pipeline mima4_v2.0.0_20240409.sif
   ```
   ```Text
   INFO:    Starting build...
